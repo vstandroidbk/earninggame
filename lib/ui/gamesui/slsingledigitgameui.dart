@@ -230,6 +230,7 @@ class _SlSingleDigitGameUiState extends State<SlSingleDigitGameUi> {
                               digit: singleDigitController.text,
                               points: pointController.text,
                             );
+                            
                             singleDigitController.clear();
                             pointController.clear();
                             setState(() {
