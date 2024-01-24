@@ -2,7 +2,7 @@ String? idUser;
 String? nameUser;
 String? numberUser;
 String? tokenUser;
-String galidisswar = "Gali Disswar";
+String galidisswar = "Gali Disawar";
 String noInternetMsg = "No internet connection found.";
 String serverErrortMsg = "Server error.";
 
@@ -42,6 +42,12 @@ class Constants {
       "${baseUrl}api-check-starline-game-status";
   static String ksSingleDigitGameSumitApiUrl =
       "${baseUrl}api-starline-submit-bid";
+
+  //gali dishavar games api
+  static String gdGameStatusCheckApiUrl =
+      "${baseUrl}api-check-galidisswar-game-status";
+  static String gdCommonGameSumitApiUrl =
+      "${baseUrl}api-galidisswar-submit-bid";
 }
 
 class GameArray {

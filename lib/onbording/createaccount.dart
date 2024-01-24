@@ -1,5 +1,5 @@
 import 'dart:developer';
-
+import 'package:email_validator/email_validator.dart';
 import 'package:earninggame/onbording/loginui.dart';
 import 'package:earninggame/onbording/mobilenoui.dart';
 import 'package:earninggame/onbording/setpinui.dart';
@@ -103,7 +103,18 @@ class _CreateAccountUiState extends State<CreateAccountUi> {
                   const SizedBox(
                     height: 10,
                   ),
-                  customInputField(passController, TextInputType.text),
+                  Consumer<CreateUserProvider>(
+                      builder: (context, createUserProvider, child) {
+                    return customInputField(passController, TextInputType.text,
+                        suffixicon: InkWell(
+                            onTap: () {
+                              createUserProvider.setPassVisibility(
+                                  !createUserProvider.isPassVisible);
+                            },
+                            child: createUserProvider.isPassVisible
+                                ? Icon(Icons.visibility_off)
+                                : Icon(Icons.visibility)),obscureText:!createUserProvider.isPassVisible);
+                  }),
                   Text(
                     "*Enter Confirm Password",
                     style: TextStyle(fontSize: 15, color: blackClr),
@@ -111,7 +122,18 @@ class _CreateAccountUiState extends State<CreateAccountUi> {
                   const SizedBox(
                     height: 10,
                   ),
-                  customInputField(conPassController, TextInputType.text),
+                  Consumer<CreateUserProvider>(
+                      builder: (context, createUserProvider, child) {
+                        return customInputField(conPassController, TextInputType.text,
+                            suffixicon: InkWell(
+                                onTap: () {
+                                  createUserProvider.setConPassVisibility(
+                                      !createUserProvider.isConPassVisible);
+                                },
+                                child: createUserProvider.isConPassVisible
+                                    ? Icon(Icons.visibility_off)
+                                    : Icon(Icons.visibility)),obscureText:!createUserProvider.isConPassVisible);
+                      }),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -160,18 +182,42 @@ class _CreateAccountUiState extends State<CreateAccountUi> {
                                   customSnackbar(context,
                                       "Password and Confirm passward do not match.");
                                 } else {
-                                  Map<String, dynamic> userData = {
-                                    "env_type": Constants.envType,
-                                    "mobile": widget.mobileNo,
-                                    "name": userNameController.text.trim(),
-                                    "email": emailController.text.trim(),
-                                    "password": passController.text.trim(),
-                                    "security_pin": mpinController.text.trim(),
-                                  };
-                                  log(userData.toString());
+                                  if (emailController.text.isNotEmpty) {
+                                    bool isvalidEmail = EmailValidator.validate(
+                                        emailController.text);
+                                    if (!isvalidEmail) {
+                                      customSnackbar(
+                                          context, "Please enter valid email");
+                                    } else {
+                                      Map<String, dynamic> userData = {
+                                        "env_type": Constants.envType,
+                                        "mobile": widget.mobileNo,
+                                        "name": userNameController.text.trim(),
+                                        "email": emailController.text.trim(),
+                                        "password": passController.text.trim(),
+                                        "security_pin":
+                                            mpinController.text.trim(),
+                                      };
+                                      log(userData.toString());
 
-                                  createUserProvider.createUserApicall(
-                                      context, userData);
+                                      createUserProvider.createUserApicall(
+                                          context, userData);
+                                    }
+                                  } else {
+                                    Map<String, dynamic> userData = {
+                                      "env_type": Constants.envType,
+                                      "mobile": widget.mobileNo,
+                                      "name": userNameController.text.trim(),
+                                      "email": emailController.text.trim(),
+                                      "password": passController.text.trim(),
+                                      "security_pin":
+                                          mpinController.text.trim(),
+                                    };
+                                    log(userData.toString());
+
+                                    createUserProvider.createUserApicall(
+                                        context, userData);
+                                  }
                                 }
                               }),
                             );

@@ -47,7 +47,7 @@ class _SetPinUiState extends State<SetPinUi> {
                   width: 10,
                 ),
                 Text(
-                  "VALIDATE YOUR\n PIN ",
+                  "VERIFY YOUR\n PIN ",
                   style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 24,
@@ -82,60 +82,16 @@ class _SetPinUiState extends State<SetPinUi> {
                   Center(
                     child: SizedBox(
                       // width: 300,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Flexible(
-                              // width: 80,
-                              // height: 100,
-                              child: customInputFieldPin(oneMpinController,
-                                  TextInputType.number, context,
-                                  maxlength: 1,
-                                  horizontalpad: 10.0,
-                                  textalign: true,
-                                  verticalpad: 25.0)),
-                          const SizedBox(
-                            width: 15,
-                          ),
-                          Flexible(
-                              // width: 50,
-                              child: customInputFieldPin(twoMpinController,
-                                  TextInputType.number, context,
-                                  maxlength: 1,
-                                  textalign: true,
-                                  horizontalpad: 10.0,
-                                  verticalpad: 25.0)),
-                          const SizedBox(
-                            width: 15,
-                          ),
-                          Flexible(
-                              // width: 50,
-                              child: customInputFieldPin(
-                                  threeMpinController,
-                                  textalign: true,
-                                  TextInputType.number,
-                                  context,
-                                  maxlength: 1,
-                                  horizontalpad: 10.0,
-                                  verticalpad: 25.0)),
-                          const SizedBox(
-                            width: 15,
-                          ),
-                          Flexible(
-                              // width: 50,
-                              child: customInputFieldPin(
-                                  fourMpinController,
-                                  textalign: true,
-                                  TextInputType.number,
-                                  context,
-                                  maxlength: 1,
-                                  horizontalpad: 10.0,
-                                  verticalpad: 25.0)),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                        ],
-                      ),
+                      child:
+                      Consumer<OtpCheckProvider>(builder:(context, otpCheckProvider,child){
+                        return customPinCodeTextfield(context,
+                            controller: oneMpinController, onComplete: (val) {
+                              String mpinEntered =
+                              oneMpinController.text.toString();
+                              otpCheckProvider.checkOTPApicall(context,
+                                  widget.userData['user_id'], mpinEntered);
+                            }) ;
+                      })
                     ),
                   ),
                   const SizedBox(
@@ -148,25 +104,8 @@ class _SetPinUiState extends State<SetPinUi> {
                           : SizedBox(
                               width: double.infinity,
                               child: customElevatedButton(context, "Next", () {
-                                String mpinEntered =
-                                    "${oneMpinController.text.trim()}${twoMpinController.text.trim()}${threeMpinController.text.trim()}${fourMpinController.text.trim()}";
-                                if (oneMpinController.text.trim().isEmpty ==
-                                    true) {
-                                  customSnackbar(
-                                      context, "All fields are required.");
-                                } else if (twoMpinController.text
-                                    .trim()
-                                    .isEmpty) {
-                                  customSnackbar(
-                                      context, "All fields are required.");
-                                } else if (threeMpinController.text
-                                    .trim()
-                                    .isEmpty) {
-                                  customSnackbar(
-                                      context, "All fields are required.");
-                                } else if (fourMpinController.text
-                                    .trim()
-                                    .isEmpty) {
+                                String mpinEntered =oneMpinController.text.toString();
+                                if (oneMpinController.text.trim().length < 4) {
                                   customSnackbar(
                                       context, "All fields are required.");
                                 } else {

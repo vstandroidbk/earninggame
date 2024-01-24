@@ -31,6 +31,7 @@ class SlSingleDigitGameUi extends StatefulWidget {
 class _SlSingleDigitGameUiState extends State<SlSingleDigitGameUi> {
   TextEditingController singleDigitController = TextEditingController();
   TextEditingController pointController = TextEditingController();
+  TextEditingValue texEditVal=TextEditingValue();
   String? dropValue;
   @override
   void initState() {
@@ -43,9 +44,17 @@ class _SlSingleDigitGameUiState extends State<SlSingleDigitGameUi> {
     });
   }
 
-  String selectedFruit = '';
+  bool clearDigit = false;
   @override
   Widget build(BuildContext context) {
+    print("build  ==${singleDigitController.text}= ========");
+    fun(){
+      print("fun called=======${this.singleDigitController.text}= =====");
+      singleDigitController.clear();
+      setState(() {
+
+      });
+    }
     return Scaffold(
       appBar: appBarComman(Text(widget.gameTitle.toString())),
       body: Column(
@@ -89,19 +98,38 @@ class _SlSingleDigitGameUiState extends State<SlSingleDigitGameUi> {
                                           singleDigitController,
                                           focus,
                                           onedtingComplete) {
+                                        // singleDigitController.text='';
+                                        print("=====me =  =${singleDigitController.text}=======");
                                         return SingleChildScrollView(
                                           physics:
                                               const NeverScrollableScrollPhysics(),
                                           child: Column(
-                                            children: [
-                                              customInputField(
-                                                  singleDigitController,
-                                                  TextInputType.number,
-                                                  textalign: true,
-                                                  focus: focus,
-                                                  onedtingConmplete:
-                                                      onedtingComplete),
-                                            ],
+                                            children:
+                                            [
+                                              Builder(
+                                                builder: (context) {
+                                                  print("new  build called ===${singleDigitController.text.isEmpty}  =");
+                                                  if(clearDigit==true ){
+                                                    if(singleDigitController.text.isEmpty ==false){
+                                                      singleDigitController.text="";
+                                                      print("new build ======== $singleDigitController");
+                                                    }
+                                                  }else{
+                                                    clearDigit= false;
+                                                  }
+
+                                                  return customInputField(
+                                                      singleDigitController,
+                                                      TextInputType.number,
+                                                      textalign: true,
+                                                      focus: focus,
+                                                      onedtingConmplete:
+                                                      onedtingComplete
+                                                  );
+                                                }
+                                              ),
+                                            ]
+
                                           ),
                                         );
                                       },
@@ -109,8 +137,7 @@ class _SlSingleDigitGameUiState extends State<SlSingleDigitGameUi> {
                                           ? (TextEditingValue
                                               textEditingValue) {
                                               if (textEditingValue.text == '') {
-                                                return const Iterable<
-                                                    GameArray>.empty();
+                                                return const Iterable<GameArray>.empty();
                                               }
                                               return GameArray.singlePanaArray
                                                   .where((String option) {
@@ -121,6 +148,7 @@ class _SlSingleDigitGameUiState extends State<SlSingleDigitGameUi> {
                                                         .toLowerCase());
                                               });
                                             }
+
                                           : widget.gameNo == 3
                                               ? (TextEditingValue
                                                   textEditingValue) {
@@ -141,7 +169,7 @@ class _SlSingleDigitGameUiState extends State<SlSingleDigitGameUi> {
                                                   });
                                                 }
                                               : (TextEditingValue
-                                                  textEditingValue) {
+                                      textEditingValue) {
                                                   if (textEditingValue.text ==
                                                       '') {
                                                     return const Iterable<
@@ -153,17 +181,22 @@ class _SlSingleDigitGameUiState extends State<SlSingleDigitGameUi> {
                                                     return option
                                                         .toString()
                                                         .contains(
-                                                            textEditingValue
+                                                        textEditingValue
                                                                 .text
                                                                 .toLowerCase());
                                                   });
                                                 },
                                       // },
                                       // fieldViewBuilder:
+
                                       onSelected: (Object Game) {
+
                                         setState(() {
+
                                           singleDigitController.text =
                                               Game.toString();
+                                          clearDigit=false;
+                                        print("selected==========${this.singleDigitController.text}===");
                                         });
                                       },
                                     ),
@@ -176,9 +209,9 @@ class _SlSingleDigitGameUiState extends State<SlSingleDigitGameUi> {
                     )
                   ],
                 ),
-                const SizedBox(
-                  height: 40,
-                ),
+               widget.gameNo !=1? const SizedBox(
+                  height:30,
+                ):const SizedBox(),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -220,24 +253,29 @@ class _SlSingleDigitGameUiState extends State<SlSingleDigitGameUi> {
                             pointController.clear();
                           }
                         } else {
+                          print("${ singleDigitController.text} =======else==========");
                           if (singleDigitController.text.isEmpty) {
                             customSnackbar(context, "Please enter valid Digit");
                           } else if (pointController.text.isEmpty) {
                             customSnackbar(context, "Please enter points");
                           } else {
+                            setState(() {
+                              clearDigit=true;
+                            });
                             Provider.of<SlGameProvider>(context, listen: false)
                                 .addTotalBids(
                               digit: singleDigitController.text,
                               points: pointController.text,
                             );
-                            
+                                             print("values========== ${this.singleDigitController}");
                             singleDigitController.clear();
                             pointController.clear();
-                            setState(() {
-
-                            });
                           }
                         }
+                        setState(() {
+                          singleDigitController.text="";//clean@67!
+                          // TextEditingValue.text="";
+                        });
                         // else if (widget.gameNo == 3) {
                         // } else if (widget.gameNo == 4) {
                         // } else {
@@ -252,6 +290,7 @@ class _SlSingleDigitGameUiState extends State<SlSingleDigitGameUi> {
               ],
             ),
           ),
+
           const SizedBox(
             height: 10,
           ),
@@ -417,12 +456,14 @@ class _SlSingleDigitGameUiState extends State<SlSingleDigitGameUi> {
                                           bidamount: totalpoints,
                                           data: totalBids);
                                     } else {
+                                      print("calledd===================");
                                       return popupWorkingMoneyReduction(context,
                                           () {
                                         Navigator.pop(context);
                                         popUpInsufficientBalance(context);
                                       },
-                                          totalbid: totalBids.length,
+                                          data: totalBids,
+                                          totalbid: totalBids.length ?? 0,
                                           bidamount: totalpoints);
                                     }
                                   },

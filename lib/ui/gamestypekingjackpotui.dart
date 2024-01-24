@@ -1,14 +1,20 @@
 import 'package:earninggame/ui/gamesui/digitbasedjodigameui.dart';
+import 'package:earninggame/ui/gamesui/gdgamescommonui.dart';
 import 'package:earninggame/ui/gamesui/groupjodigameui.dart';
 import 'package:earninggame/ui/gamesui/jodidigitbulkgameui.dart';
 import 'package:earninggame/ui/gamesui/jodidigitgameui.dart';
 import 'package:earninggame/ui/gamesui/singledigitgameui.dart';
 import 'package:earninggame/utils/colors.dart';
+import 'package:earninggame/utils/components.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'gamesui/slsingledigitgameui.dart';
+
 class GamesTypeKingJackpotUi extends StatefulWidget {
-  const GamesTypeKingJackpotUi({super.key});
+  final String? gameName;
+  final String? gameId;
+  const GamesTypeKingJackpotUi({super.key,this.gameName,this.gameId});
 
   @override
   State<GamesTypeKingJackpotUi> createState() => _GamesTypeKingJackpotUiState();
@@ -16,10 +22,10 @@ class GamesTypeKingJackpotUi extends StatefulWidget {
 
 class _GamesTypeKingJackpotUiState extends State<GamesTypeKingJackpotUi> {
   List<Map> gameTypes = [
-    {"image": "assets/images/twoo.png", "name": "Jodi Digits"},
-    {"image": "assets/demoimages/dicetwo.png", "name": "jodi Digits Bulk"},
-    {"image": "assets/demoimages/ludo.png", "name": "Group Jodi"},
-    {"image": "assets/images/groupj.png", "name": "Digits Based Jodi"},
+    {"image": "assets/demoimages/dicetwo.png", "name": "Left Digit"},
+    {"image": "assets/images/twoo.png", "name": "Jodi Digit"},
+    {"image": "assets/images/groupj.png", "name": "Right Digit"},
+    {"image": "assets/images/groupj.png", "name": "Right Digit"},
   ];
   int logNum = 0;
   @override
@@ -29,7 +35,7 @@ class _GamesTypeKingJackpotUiState extends State<GamesTypeKingJackpotUi> {
         backgroundColor: clrTranaparent,
         elevation: 0,
         foregroundColor: blackClr,
-        title: const Text("KING JACKPOT GAME"),
+        title: const Text("GALI DISAVAR GAME"),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -41,6 +47,7 @@ class _GamesTypeKingJackpotUiState extends State<GamesTypeKingJackpotUi> {
                 child: Column(
                   children: [
                     GridView.builder(
+
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         gridDelegate:
@@ -60,36 +67,59 @@ class _GamesTypeKingJackpotUiState extends State<GamesTypeKingJackpotUi> {
                           }
                           return InkWell(
                             onTap: () {
-                              if (index == 0) {
+                              if(index == 3){}else{
+                                if(index == 0) {
                                 Navigator.push(context,
                                     CupertinoPageRoute(builder: (context) {
-                                  return const JodiDigitGameUi();
+                                  return GdGamesCommonUi(
+                                    gameNo: 1,
+                                    gameTitle: "Left Digit Game",
+                                    gameName: widget.gameName,
+                                    gameId: widget.gameId,
+                                  );// JodiDigitGameUi();
                                 }));
+
                               } else if (index == 1) {
-                                Navigator.push(context,
-                                    CupertinoPageRoute(builder: (context) {
-                                  return const JodiDigitBulkGameUi();
-                                }));
+                                  // Navigator.push(context,
+                                  //     CupertinoPageRoute(builder: (context) {
+                                  //   return const GroupJodiGameUi();
+                                  // }));
+                                  Navigator.push(context,
+                                      CupertinoPageRoute(builder: (context) {
+                                        return GdGamesCommonUi(
+                                          gameNo: 2,
+                                          gameTitle: "Right Digit Game",
+                                          gameName: widget.gameName,
+                                          gameId: widget.gameId,
+                                        );// JodiDigitGameUi();
+                                      }));
+
                               } else if (index == 2) {
-                                Navigator.push(context,
-                                    CupertinoPageRoute(builder: (context) {
-                                  return const GroupJodiGameUi();
-                                }));
-                              } else if (index == 3) {
-                                Navigator.push(context,
-                                    CupertinoPageRoute(builder: (context) {
-                                  return const DigitBasedJodiGameUi();
-                                }));
+                                  // Navigator.push(context,
+                                  //     CupertinoPageRoute(builder: (context) {
+                                  //   return const JodiDigitBulkGameUi();
+                                  // }));
+                                  Navigator.push(context,
+                                      CupertinoPageRoute(builder: (context) {
+                                        return GdGamesCommonUi(
+                                          gameNo: 3,
+                                          gameTitle: "Jodi Digit Game",
+                                          gameName: widget.gameName,
+                                          gameId: widget.gameId,
+                                        );// JodiDigitGameUi();
+                                      }));
                               } else {
-                                Navigator.push(context,
-                                    CupertinoPageRoute(builder: (context) {
-                                  return const SingleDigitGameUi();
-                                }));
+                                // Navigator.push(context,
+                                //     CupertinoPageRoute(builder: (context) {
+                                //   return const SingleDigitGameUi();
+                                // }));
+                                  customSnackbar(context, "Something went wrong.");
+                              }
                               }
                             },
                             child: Container(
                               color: clrWhite,
-                              child: Column(
+                              child:  index == 3 ?const SizedBox() :Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Container(

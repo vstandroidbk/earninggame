@@ -156,4 +156,5 @@ class StarlineGamesProvider with ChangeNotifier {
     isGameTimeStatusloading = false;
     notifyListeners();
   }
+
 }

@@ -493,11 +493,19 @@ class _WithdrawFundUiState extends State<WithdrawFundUi> {
                                               customSnackbar(context,
                                                   "Maximum ${modelData.maxWithdrawal} amount can be withdraws.");
                                             } else {
-                                              Provider.of<WithDrawMethodProvider>(
-                                                      context,
-                                                      listen: false)
-                                                  .checkPendReqApiCall(
-                                                      context, reqData);
+                                              log("${ProfileProvider.getamount }============");
+                                              if(ProfileProvider.getamount < int.parse(amountController.text.toString())){
+                                                  customSnackbar(context, "Insufficient balance .");
+                                              }else{
+                                                Provider.of<WithDrawMethodProvider>(context,listen: false).setdropValue(null);
+                                                amountController.clear();
+                                                Provider.of<WithDrawMethodProvider>(
+                                                        context,
+                                                        listen: false)
+                                                    .checkPendReqApiCall(
+                                                        context, reqData);
+                                              }
+
                                             }
                                           }));
                                 },

@@ -9,6 +9,21 @@ import '../networking/data_encryption.dart';
 import '../utils/components.dart';
 
 class UpdatePassProvider with ChangeNotifier {
+  bool isOldPassVisible=false;
+  bool isPassVisible=false;
+  bool isConPassVisible=false;
+  setOldPassVisibility(val){
+    isOldPassVisible=val;
+    notifyListeners();
+  }
+  setPassVisibility(val){
+    isPassVisible=val;
+    notifyListeners();
+  }
+  setConPassVisibility(val){
+    isConPassVisible=val;
+    notifyListeners();
+  }
   bool isloading = false;
   updatePassApiCall(context, uId, oldPass, newPass) async {
     bool isInternet = await hasNetwork();

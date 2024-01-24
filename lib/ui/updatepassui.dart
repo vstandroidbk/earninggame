@@ -2,6 +2,7 @@ import 'package:earninggame/ui/components/circularprogressindicator.dart';
 import 'package:earninggame/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../providers/profileprovider.dart';
 import '../providers/updatepassprovider.dart';
 import '../utils/colors.dart';
 import '../utils/components.dart';
@@ -47,11 +48,16 @@ class _UpdatePassUiState extends State<UpdatePassUi> {
           const SizedBox(
             width: 5,
           ),
-          const Center(
-            child: Text(
-              "500.00",
-              style: TextStyle(fontWeight: FontWeight.w600),
-            ),
+          Consumer<ProfileProvider>(
+            builder: (context, profileProvider, child) {
+              return Center(
+                child: Text(
+                  "${profileProvider.profileModelData.profile?[0].walletBalance}",
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w600, fontSize: 18),
+                ),
+              );
+            },
           ),
           const SizedBox(
             width: 15,
@@ -94,14 +100,44 @@ class _UpdatePassUiState extends State<UpdatePassUi> {
                     height: 50,
                   ),
                   const Text("Enter Your Old Password"),
-                  customInputField(
-                      oldcontroller, TextInputType.visiblePassword),
+                  Consumer<UpdatePassProvider>(
+                      builder: (context, updatePassProvider, child) {
+                        return customInputField(oldcontroller, TextInputType.text,
+                            suffixicon: InkWell(
+                                onTap: () {
+                                  updatePassProvider.setOldPassVisibility(
+                                      !updatePassProvider.isOldPassVisible);
+                                },
+                                child: updatePassProvider.isOldPassVisible
+                                    ? Icon(Icons.visibility_off)
+                                    : Icon(Icons.visibility)),obscureText:!updatePassProvider.isOldPassVisible);
+                      }),
                   const Text("Enter New Password"),
-                  customInputField(
-                      newController, TextInputType.visiblePassword),
+                  Consumer<UpdatePassProvider>(
+                      builder: (context, updatePassProvider, child) {
+                        return customInputField(newController, TextInputType.text,
+                            suffixicon: InkWell(
+                                onTap: () {
+                                  updatePassProvider.setPassVisibility(
+                                      !updatePassProvider.isPassVisible);
+                                },
+                                child: updatePassProvider.isPassVisible
+                                    ? Icon(Icons.visibility_off)
+                                    : Icon(Icons.visibility)),obscureText:!updatePassProvider.isPassVisible);
+                      }),
                   const Text("Enter Confirm Password"),
-                  customInputField(
-                      conController, TextInputType.visiblePassword),
+                  Consumer<UpdatePassProvider>(
+                      builder: (context, updatePassProvider, child) {
+                        return customInputField(conController, TextInputType.text,
+                            suffixicon: InkWell(
+                                onTap: () {
+                                  updatePassProvider.setConPassVisibility(
+                                      !updatePassProvider.isConPassVisible);
+                                },
+                                child: updatePassProvider.isConPassVisible
+                                    ? Icon(Icons.visibility_off)
+                                    : Icon(Icons.visibility)),obscureText:!updatePassProvider.isConPassVisible);
+                      }),
                   const SizedBox(
                     height: 20,
                   ),

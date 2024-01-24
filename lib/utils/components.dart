@@ -1,9 +1,10 @@
-import 'dart:ffi';
+import 'dart:developer';
 
 import 'package:earninggame/providers/gameuiproviders/slgamesprovider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
 import '../providers/profileprovider.dart';
 import 'colors.dart';
@@ -46,8 +47,10 @@ AppBar appBarComman(titlewidget) {
 }
 
 TextFormField customInputField(controller, keybordType,
-    {maxlength, textalign, hintText, prefixIcon,onedtingConmplete,focus}) {
+    {maxlength, textalign, hintText, prefixIcon,onedtingConmplete,focus,onchanged,suffixicon,obscureText}) {
   return TextFormField(
+    obscureText:obscureText ?? false,
+    onChanged:onchanged ,
     onEditingComplete:onedtingConmplete ,
     focusNode: focus,
     textAlign: textalign == null ? TextAlign.start : TextAlign.center,
@@ -58,6 +61,7 @@ TextFormField customInputField(controller, keybordType,
     controller: controller,
     keyboardType: keybordType,
     decoration: InputDecoration(
+        suffixIcon:suffixicon ,
         prefixIcon: prefixIcon,
         hintText: hintText ?? '',
         counter: const Text(''),
@@ -115,16 +119,51 @@ customSnackbar(context, msg) {
     ));
 }
 
+customPinCodeTextfield(context,{required controller,required onComplete}){
+  return PinCodeTextField(
+      autoDisposeControllers:false,
+      textStyle: TextStyle(),
+    pinTheme: PinTheme(
+      inactiveFillColor: greyLightClr,
+      selectedFillColor: greyLightClr,
+      activeColor: greyLightClr,
+      activeFillColor: greyLightClr,
+      selectedColor: greyLightClr,
+      inactiveColor: greyLightClr,
+      fieldWidth: 60,
+      fieldHeight: 60,
+
+    ),
+
+    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+    enableActiveFill: true,
+    cursorColor: blackClr,
+    appContext: context,
+    length: 4,
+    controller:controller ,
+    keyboardType: TextInputType.number,
+    onCompleted:onComplete ,
+  );
+
+}
+
 TextFormField customInputFieldPin(controller, keybordType, context,
     {maxlength, textalign, maxLines, hintText, horizontalpad, verticalpad,onedtingConmplete,focus}) {
   return TextFormField(
+
+    inputFormatters: [ FilteringTextInputFormatter
+        .digitsOnly],
     focusNode: focus,
     onEditingComplete: onedtingConmplete,
     maxLines: maxLines,
     textAlign: textalign == null ? TextAlign.start : TextAlign.center,
     onChanged: (val) {
       if (val.length == maxlength) {
-        FocusScope.of(context).nextFocus();
+      FocusScope.of(context).nextFocus();
+      }
+      log("$val =====");
+      if(val.length == 0) {
+      FocusScope.of(context).previousFocus();
       }
     },
     maxLength: maxlength,
@@ -426,7 +465,7 @@ Future<dynamic> popupWorkingMoneyReduction(BuildContext context, onsubmit,
                   width: double.infinity,
                   child: const Center(
                     child: Text(
-                      "TIME BAZAR - 20/12/2023",
+                      "TIME BAZAR ", //20/12/2023
                       style: TextStyle(fontSize: 18),
                     ),
                   ),
@@ -440,23 +479,25 @@ Future<dynamic> popupWorkingMoneyReduction(BuildContext context, onsubmit,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: isType != null
-                            ? const [
-                                // if(data)
+                        children:
+                        // isType != null
+                        //     ? const [
+                        //         // if(data)
+                        //         Text("Digit"),
+                        //         Text("Points"),
+                        //         Text("Type"),
+                        //       ]
+                        //     :
+                        const [
                                 Text("Digit"),
-                                Text("Points"),
-                                Text("Type"),
-                              ]
-                            : const [
-                                Text("Digit"),
-                                Text("Points"),
+                                Text("Points "),
                               ],
                       ),
                       const SizedBox(
                         height: 10,
                       ),
                       ListView.builder(
-                        itemCount: data.length,
+                        itemCount: data.length ?? 0,
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
                           return Container(
@@ -523,7 +564,7 @@ Future<dynamic> popupWorkingMoneyReduction(BuildContext context, onsubmit,
                             TableRow(children: [
                               const Padding(
                                 padding: EdgeInsets.symmetric(vertical: 10),
-                                child: Text("Wallet Balance Before Deduction"),
+                                child: Text("Balance Before Deduction"),
                               ),
                               Consumer<ProfileProvider>(
                                 builder: (context, profileProvider, child) {
@@ -541,12 +582,12 @@ Future<dynamic> popupWorkingMoneyReduction(BuildContext context, onsubmit,
                               ),
                               const Padding(
                                 padding: EdgeInsets.symmetric(vertical: 10),
-                                child: Text("Wallet Balance After Deduction"),
+                                child: Text("Balance After Deduction"),
                               ),
                               Consumer<ProfileProvider>(
                                 builder: (context, profileProvider, child) {
                                   int currentBal = int.parse(
-                                      "${profileProvider.profileModelData.profile?[0].walletBalance}");
+                                      "${profileProvider.profileModelData.profile?[0].walletBalance ?? 0}");
                                   int bidsTotalPoint =
                                       int.parse(bidamount.toString());
                                   int afterBid = currentBal - bidsTotalPoint;

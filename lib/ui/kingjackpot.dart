@@ -1,4 +1,5 @@
 import 'package:earninggame/models/galigamesmodel.dart';
+import 'package:earninggame/providers/gameuiproviders/gdgamesprovider.dart';
 import 'package:earninggame/providers/kingjackpotprovider.dart';
 import 'package:earninggame/ui/gamestypekingjackpotui.dart';
 import 'package:earninggame/ui/kingjackpothistoryui.dart';
@@ -138,13 +139,13 @@ class _KingJackpotGamesUiState extends State<KingJackpotGamesUi> {
                                                     overflow:
                                                         TextOverflow.ellipsis,
                                                     style:
-                                                        TextStyle(fontSize: 17),
+                                                        TextStyle(fontSize: 15),
                                                   ),
                                                 ),
                                                 Text(
                                                   '${starGmRates?.singleDigitVal1} -${starGmRates?.singleDigitVal2}',
                                                   style: const TextStyle(
-                                                      fontSize: 17),
+                                                      fontSize: 15),
                                                 ),
                                               ],
                                             ),
@@ -184,13 +185,13 @@ class _KingJackpotGamesUiState extends State<KingJackpotGamesUi> {
                                                     overflow:
                                                         TextOverflow.ellipsis,
                                                     style:
-                                                        TextStyle(fontSize: 17),
+                                                        TextStyle(fontSize: 15),
                                                   ),
                                                 ),
                                                 Text(
                                                   '${starGmRates?.singlePanaVal1} -${starGmRates?.singlePanaVal2}',
                                                   style: const TextStyle(
-                                                      fontSize: 17),
+                                                      fontSize: 15),
                                                 ),
                                               ],
                                             ),
@@ -236,13 +237,13 @@ class _KingJackpotGamesUiState extends State<KingJackpotGamesUi> {
                                                     overflow:
                                                         TextOverflow.ellipsis,
                                                     style:
-                                                        TextStyle(fontSize: 17),
+                                                        TextStyle(fontSize: 15),
                                                   ),
                                                 ),
                                                 Text(
                                                   '${starGmRates?.doublePanaVal1} -${starGmRates?.doublePanaVal2}',
                                                   style: const TextStyle(
-                                                      fontSize: 17),
+                                                      fontSize: 15),
                                                 ),
                                               ],
                                             ),
@@ -408,12 +409,12 @@ class _KingJackpotGamesUiState extends State<KingJackpotGamesUi> {
                                                             );
                                                           });
                                                     } else {
-                                                      Navigator.push(context,
-                                                          CupertinoPageRoute(
-                                                              builder:
-                                                                  (context) {
-                                                        return const GamesTypeKingJackpotUi();
-                                                      }));
+                                                        Provider.of<GdGamesProvider>(
+                                                            context,
+                                                            listen: false)
+                                                            .gdGameStatusCheckApiCall(
+                                                            context, data?.gameId,
+                                                            gmName: data?.gameName);
                                                     }
                                                   },
                                                   child: Container(

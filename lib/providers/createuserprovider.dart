@@ -8,6 +8,16 @@ import '../networking/checkinternet.dart';
 import '../utils/sharepreferences.dart';
 
 class CreateUserProvider extends ChangeNotifier {
+  bool isPassVisible=false;
+  bool isConPassVisible=false;
+  setPassVisibility(val){
+    isPassVisible=val;
+    notifyListeners();
+  }
+  setConPassVisibility(val){
+    isConPassVisible=val;
+    notifyListeners();
+  }
   bool isloading = false;
   createUserApicall(context, Map<String, dynamic> apimap) async {
     bool isInternet = await hasNetwork();

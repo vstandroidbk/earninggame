@@ -11,6 +11,16 @@ import '../../utils/constants.dart';
 import '../profileprovider.dart';
 
 class SlGameProvider with ChangeNotifier {
+  // bool clearDigit = false;
+  // setClearDigit(bool val){
+  //   clearDigit=val;
+  //   notifyListeners();
+  // }
+  TextEditingController singleDigitController = TextEditingController();
+  setSingleDigiConVal(val){
+    singleDigitController.text=val;
+    notifyListeners();
+  }
   final List<Map<String, dynamic>> _totalBids = [];
 
   get totalBids => _totalBids;

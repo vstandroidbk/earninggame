@@ -3,10 +3,12 @@ import 'package:earninggame/providers/otprequestprovider.dart';
 import 'package:earninggame/providers/timerProvider.dart';
 import 'package:earninggame/ui/components/circularprogressindicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../providers/otpprovider.dart';
 import '../utils/colors.dart';
 import '../utils/components.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 
 class VerifyMobileNoUi extends StatefulWidget {
   final String mobileNo;
@@ -143,62 +145,20 @@ class _VerifyMobileNoUiState extends State<VerifyMobileNoUi> {
                   ),
                   Center(
                     child: SizedBox(
-                      // width: 300,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Flexible(
-                              // width: 80,
-                              // height: 100,
-                              child: customInputFieldPin(
-                                  otp1Controller, TextInputType.number, context,
-                                  maxlength: 1,
-                                  horizontalpad: 10.0,
-                                  textalign: true,
-                                  verticalpad: 25.0)),
-                          const SizedBox(
-                            width: 15,
-                          ),
-                          Flexible(
-                              // width: 50,
-                              child: customInputFieldPin(
-                                  otp2Controller, TextInputType.number, context,
-                                  maxlength: 1,
-                                  textalign: true,
-                                  horizontalpad: 10.0,
-                                  verticalpad: 25.0)),
-                          const SizedBox(
-                            width: 15,
-                          ),
-                          Flexible(
-                              // width: 50,
-                              child: customInputFieldPin(
-                                  otp3Controller,
-                                  textalign: true,
-                                  TextInputType.number,
-                                  context,
-                                  maxlength: 1,
-                                  horizontalpad: 10.0,
-                                  verticalpad: 25.0)),
-                          const SizedBox(
-                            width: 15,
-                          ),
-                          Flexible(
-                              // width: 50,
-                              child: customInputFieldPin(
-                                  otp4Controller,
-                                  textalign: true,
-                                  TextInputType.number,
-                                  context,
-                                  maxlength: 1,
-                                  horizontalpad: 10.0,
-                                  verticalpad: 25.0)),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                        ],
-                      ),
-                    ),
+                        // width: 300,
+
+                        child:customPinCodeTextfield(context, controller: otp1Controller, onComplete: (val) {
+                          if (otp1Controller.text.trim().isEmpty) {
+                            customSnackbar(
+                                context, "All OTP fields are required");
+                          } else {
+                            Provider.of<OtpProvider>(context, listen: false)
+                                .checkOTPApicall(
+                                context, widget.mobileNo, otp1Controller.text,
+                                isforget: widget.isforgetui);
+                          }
+                        })
+                    )
                   ),
                   const SizedBox(
                     height: 25,
@@ -211,23 +171,12 @@ class _VerifyMobileNoUiState extends State<VerifyMobileNoUi> {
                               width: double.infinity,
                               child:
                                   customElevatedButton(context, "VERIFY", () {
-                                if (otp1Controller.text.trim().isEmpty) {
-                                  customSnackbar(
-                                      context, "All OTP fields are required");
-                                } else if (otp2Controller.text.trim().isEmpty) {
-                                  customSnackbar(
-                                      context, "All OTP fields are required");
-                                } else if (otp3Controller.text.trim().isEmpty) {
-                                  customSnackbar(
-                                      context, "All OTP fields are required");
-                                } else if (otp4Controller.text.trim().isEmpty) {
+                                if (otp1Controller.text.length < 4) {
                                   customSnackbar(
                                       context, "All OTP fields are required");
                                 } else {
-                                  otpProvider.checkOTPApicall(
-                                      context,
-                                      widget.mobileNo,
-                                      "${otp1Controller.text.trim()}${otp2Controller.text.trim()}${otp3Controller.text.trim()}${otp4Controller.text.trim()}",
+                                  otpProvider.checkOTPApicall(context,
+                                      widget.mobileNo, otp1Controller.text,
                                       isforget: widget.isforgetui);
                                 }
                               }),
