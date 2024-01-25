@@ -2,6 +2,8 @@ class WithdraFundGetModel {
   String? walletAmt;
   String? holdAmt;
   String? transferPointStatus;
+  String? minBidAmount;
+  String? maxBidAmount;
   String? minWithdrawal;
   String? maxWithdrawal;
   String? minTransfer;
@@ -13,21 +15,25 @@ class WithdraFundGetModel {
 
   WithdraFundGetModel(
       {this.walletAmt,
-      this.holdAmt,
-      this.transferPointStatus,
-      this.minWithdrawal,
-      this.maxWithdrawal,
-      this.minTransfer,
-      this.maxTransfer,
-      this.withdrawOpenTime,
-      this.withdrawCloseTime,
-      this.msg,
-      this.status});
+        this.holdAmt,
+        this.transferPointStatus,
+        this.minBidAmount,
+        this.maxBidAmount,
+        this.minWithdrawal,
+        this.maxWithdrawal,
+        this.minTransfer,
+        this.maxTransfer,
+        this.withdrawOpenTime,
+        this.withdrawCloseTime,
+        this.msg,
+        this.status});
 
   WithdraFundGetModel.fromJson(Map<String, dynamic> json) {
     walletAmt = json['wallet_amt'];
     holdAmt = json['hold_amt'];
     transferPointStatus = json['transfer_point_status'];
+    minBidAmount = json['min_bid_amount'];
+    maxBidAmount = json['max_bid_amount'];
     minWithdrawal = json['min_withdrawal'];
     maxWithdrawal = json['max_withdrawal'];
     minTransfer = json['min_transfer'];
@@ -43,6 +49,8 @@ class WithdraFundGetModel {
     data['wallet_amt'] = walletAmt;
     data['hold_amt'] = holdAmt;
     data['transfer_point_status'] = transferPointStatus;
+    data['min_bid_amount'] = minBidAmount;
+    data['max_bid_amount'] = maxBidAmount;
     data['min_withdrawal'] = minWithdrawal;
     data['max_withdrawal'] = maxWithdrawal;
     data['min_transfer'] = minTransfer;

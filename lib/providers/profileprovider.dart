@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:earninggame/models/responseincriptmodel.dart';
 import 'package:earninggame/networking/checkinternet.dart';
 import 'package:earninggame/networking/data_encryption.dart';
@@ -14,6 +15,11 @@ class ProfileProvider with ChangeNotifier {
   bool isloading = false;
   static int amount = 0;
   static int getamount = amount;
+  int amountTemporary=0;
+  setGetAmount(int val){
+    amountTemporary=val;
+    notifyListeners();
+  }
   profileDataApiCall(context) async {
     bool isInternet = await hasNetwork();
     isloading = true;
@@ -34,6 +40,8 @@ class ProfileProvider with ChangeNotifier {
           profileModelData = ProfileModel.fromJson(realdata);
           amount =
               int.parse("${profileModelData.profile?[0].walletBalance ?? 0}");
+          amountTemporary=    int.parse("${profileModelData.profile?[0].walletBalance ?? 0}");
+          log("$amount  == amount available====");
           notifyListeners();
         } else {
           customSnackbar(context, serverErrortMsg);

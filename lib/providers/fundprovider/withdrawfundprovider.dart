@@ -32,7 +32,7 @@ class WithdrawFundProvider with ChangeNotifier {
               DataEncryption.getDecryptedData(response.data!.reskey.toString(),
                   response.data!.resdata.toString());
           _withdrawFundGetData = WithdraFundGetModel.fromJson(getDecriptedData);
-          print("==========body data =      ${getDecriptedData}   ==body data");
+          // print("==========body data =      ${getDecriptedData}   ==body data");
           notifyListeners();
         } else {
           customSnackbar(context, serverErrortMsg);

@@ -24,31 +24,46 @@ class SlGameProvider with ChangeNotifier {
   final List<Map<String, dynamic>> _totalBids = [];
 
   get totalBids => _totalBids;
-  addTotalBids({digit, points, type}) {
+  addTotalBids(context,{digit, points, type}) {
     int addnew = 0;
+          int curerntAmount= Provider.of<ProfileProvider>(context,listen: false).amountTemporary;
     if (_totalBids.isEmpty == false) {
       for (int i = 0; _totalBids.length > i; i++) {
         if (int.parse(_totalBids[i]['digit'].toString()) == int.parse(digit)) {
           addnew = 1;
+           int oldPoints= int.parse(_totalBids[i]['points'].toString());
           int newPt = int.parse(points.toString());
           _totalBids[i]['points'] = newPt;
+          int oldAmount=curerntAmount+oldPoints;
+          int newAmountWillBe=oldAmount-newPt;
+          log("oldAmount=$oldAmount oldPoints=$oldPoints newAmountWillBe=$newAmountWillBe curerntAmount$curerntAmount== fun");
+          Provider.of<ProfileProvider>(context,listen: false).setGetAmount(newAmountWillBe);
         }
       }
       if (addnew == 0) {
         _totalBids.add({"digit": digit, "points": points, "type": type});
+        int newAmountWillBe= curerntAmount - int.parse(points.toString());
+          Provider.of<ProfileProvider>(context,listen: false).setGetAmount(newAmountWillBe);
       }
     } else {
       _totalBids.add({"digit": digit, "points": points, "type": type});
+      int newAmountWillBe= curerntAmount - int.parse(points.toString());
+      Provider.of<ProfileProvider>(context,listen: false).setGetAmount(newAmountWillBe);
     }
 
     notifyListeners();
   }
 
-  removeBids(digit) {
+  removeBids(digit,context) {
+    int curerntAmount= Provider.of<ProfileProvider>(context,listen: false).amountTemporary;
     for (int i = 0; _totalBids.length > i; i++) {
       if (int.parse(_totalBids[i]['digit'].toString()) ==
           int.parse(digit.toString())) {
+        int oldPoint=int.parse(_totalBids[i]['points'].toString());
         _totalBids.removeAt(i);
+        print("$oldPoint oldPoint========");
+        int newAmountWillBe= curerntAmount + oldPoint;
+        Provider.of<ProfileProvider>(context,listen: false).setGetAmount(newAmountWillBe);
       }
     }
     notifyListeners();

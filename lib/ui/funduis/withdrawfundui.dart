@@ -411,53 +411,7 @@ class _WithdrawFundUiState extends State<WithdrawFundUi> {
                                           width: double.infinity,
                                           child: customElevatedButton(
                                               context, "SEND REQUEST", () {
-                                            // log("${withdrawFundProvider.withdrawGetWelletData.minTransfer} ======== ${withdrawFundProvider.withdrawGetWelletData.maxTransfer}");
-                                            // showDialog(
-                                            //     context: context,
-                                            //     builder: (context) {
-                                            //       return AlertDialog(
-                                            //         insetPadding:
-                                            //             const EdgeInsets.symmetric(horizontal: 10),
-                                            //         contentPadding: EdgeInsets.zero,
-                                            //         content: SizedBox(
-                                            //           width: MediaQuery.of(context).size.width,
-                                            //           child: Column(
-                                            //             mainAxisSize: MainAxisSize.min,
-                                            //             children: [
-                                            //               const SizedBox(
-                                            //                 height: 30,
-                                            //               ),
-                                            //               SizedBox(
-                                            //                   width: 100,
-                                            //                   child: Image.asset(
-                                            //                       "assets/demoimages/cancel.png")),
-                                            //               const SizedBox(
-                                            //                 height: 30,
-                                            //               ),
-                                            //               const Text(
-                                            //                   "Insufficient Wallet Balance."),
-                                            //               const SizedBox(
-                                            //                 height: 20,
-                                            //               ),
-                                            //               Padding(
-                                            //                 padding: const EdgeInsets.symmetric(
-                                            //                     horizontal: 50, vertical: 10),
-                                            //                 child: SizedBox(
-                                            //                   width: double.infinity,
-                                            //                   child: customElevatedButton(
-                                            //                       context, "Ok", () {
-                                            //                     Navigator.pop(context);
-                                            //                   }),
-                                            //                 ),
-                                            //               ),
-                                            //               const SizedBox(
-                                            //                 height: 20,
-                                            //               ),
-                                            //             ],
-                                            //           ),
-                                            //         ),
-                                            //       );
-                                            //     });
+
 
                                             Map<String, dynamic> reqData = {
                                               "env_type": Constants.envType,

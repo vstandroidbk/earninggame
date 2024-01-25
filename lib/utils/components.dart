@@ -30,7 +30,7 @@ AppBar appBarComman(titlewidget) {
             builder: (context, profileProvider, child) {
               return Center(
                 child: Text(
-                  "${profileProvider.profileModelData.profile?[0].walletBalance}",
+                  "${profileProvider.amountTemporary}",
                   style: const TextStyle(
                       fontWeight: FontWeight.w600, fontSize: 18),
                 ),
@@ -161,10 +161,7 @@ TextFormField customInputFieldPin(controller, keybordType, context,
       if (val.length == maxlength) {
       FocusScope.of(context).nextFocus();
       }
-      log("$val =====");
-      if(val.length == 0) {
-      FocusScope.of(context).previousFocus();
-      }
+
     },
     maxLength: maxlength,
     controller: controller,
@@ -453,197 +450,256 @@ Future<dynamic> popupWorkingMoneyReduction(BuildContext context, onsubmit,
         return AlertDialog(
           insetPadding: const EdgeInsets.symmetric(horizontal: 0),
           contentPadding: const EdgeInsets.symmetric(),
+          // scrollable: true,
           // title: const Text("TIME BAZAR -18/12/2023"),
-          content: SizedBox(
-            width: MediaQuery.of(context).size.width * 0.95,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  color: primaryColor,
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                  width: double.infinity,
-                  child: const Center(
-                    child: Text(
-                      "TIME BAZAR ", //20/12/2023
-                      style: TextStyle(fontSize: 18),
+          content: SingleChildScrollView(
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width * 0.95,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    color: primaryColor,
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                    width: double.infinity,
+                    child: const Center(
+                      child: Text(
+                        "TIME BAZAR ", //20/12/2023
+                        style: TextStyle(fontSize: 18),
+                      ),
                     ),
                   ),
-                ),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children:
-                        // isType != null
-                        //     ? const [
-                        //         // if(data)
-                        //         Text("Digit"),
-                        //         Text("Points"),
-                        //         Text("Type"),
-                        //       ]
-                        //     :
-                        const [
-                                Text("Digit"),
-                                Text("Points "),
-                              ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      ListView.builder(
-                        itemCount: data.length ?? 0,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          return Container(
-                              padding: const EdgeInsets.symmetric(vertical: 10),
-                              decoration: BoxDecoration(
-                                  color: clrWhite,
-                                  boxShadow: [
-                                    BoxShadow(color: greyClr, blurRadius: 8)
-                                  ]),
-                              child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: isType != null
-                                      ? [
-                                          Text("${data[index]['digit']}"),
-                                          Text("${data[index]['points']}"),
-                                          Text("${data[index]['type']}")
-                                        ]
-                                      : [
-                                          Text("${data[index]['digit']}"),
-                                          Text("${data[index]['points']}"),
-                                        ]));
-                        },
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Table(
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children:
+                          // isType != null
+                          //     ? const [
+                          //         // if(data)
+                          //         Text("Digit"),
+                          //         Text("Points"),
+                          //         Text("Type"),
+                          //       ]
+                          //     :
+                          const [
+                                  Text("Digit"),
+                                  Text("Points "),
+                                ],
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        SizedBox(
+                          height:data.length >7? 287 : 60.0 * data.length ?? 0.0,
+                          child: ListView.builder(
+                            itemCount: data.length ?? 0,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                  padding: const EdgeInsets.symmetric(vertical: 10),
+                                  decoration: BoxDecoration(
+                                      color: clrWhite,
+                                      boxShadow: [
+                                        BoxShadow(color: greyClr, blurRadius: 8)
+                                      ]),
+                                  child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: isType != null
+                                          ? [
+                                              Text("${data[index]['digit']}"),
+                                              Text("${data[index]['points']}"),
+                                              Text("${data[index]['type']}")
+                                            ]
+                                          : [
+                                              Text("${data[index]['digit']}"),
+                                              Text("${data[index]['points']}"),
+                                            ]));
+                            },
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.symmetric(horizontal: 10),
+                        //   child: Table(
+                        //     children: [
+                        //       TableRow(
+                        //           decoration: const BoxDecoration(),
+                        //           children: [
+                        //             const Padding(
+                        //               padding: EdgeInsets.symmetric(vertical: 10),
+                        //               child: Text("Total Bids"),
+                        //             ),
+                        //             Padding(
+                        //               padding: const EdgeInsets.symmetric(
+                        //                   vertical: 10),
+                        //               child: Center(
+                        //                   child: Text(
+                        //                 "$totalbid",
+                        //                 style: const TextStyle(
+                        //                     fontWeight: FontWeight.w600),
+                        //               )),
+                        //             ),
+                        //             const Padding(
+                        //               padding: EdgeInsets.symmetric(vertical: 10),
+                        //               child: Text("Total Bids Amount",style: TextStyle(fontSize: 15)),
+                        //             ),
+                        //             Padding(
+                        //               padding: const EdgeInsets.symmetric(
+                        //                   vertical: 10),
+                        //               child: Center(
+                        //                   child: Text(
+                        //                 "$bidamount",
+                        //                 style: const TextStyle(
+                        //                     fontWeight: FontWeight.w600),
+                        //               )),
+                        //             ),
+                        //           ]),
+                        //       TableRow(children: [
+                        //         const Padding(
+                        //           padding: EdgeInsets.symmetric(vertical: 10),
+                        //           child: Text("Before Deduction",style: TextStyle(fontSize: 15),),
+                        //         ),
+                        //         Consumer<ProfileProvider>(
+                        //           builder: (context, profileProvider, child) {
+                        //             return Padding(
+                        //               padding: const EdgeInsets.symmetric(
+                        //                   vertical: 10),
+                        //               child: Center(
+                        //                   child: Text(
+                        //                 "${profileProvider.profileModelData.profile?[0].walletBalance}",
+                        //                 style: const TextStyle(
+                        //                     fontWeight: FontWeight.w600),
+                        //               )),
+                        //             );
+                        //           },
+                        //         ),
+                        //         const Padding(
+                        //           padding: EdgeInsets.symmetric(vertical: 10),
+                        //           child: Text("After Deduction",style: TextStyle(fontSize: 15),),
+                        //         ),
+                        //         Consumer<ProfileProvider>(
+                        //           builder: (context, profileProvider, child) {
+                        //             int currentBal = int.parse(
+                        //                 "${profileProvider.profileModelData.profile?[0].walletBalance ?? 0}");
+                        //             int bidsTotalPoint =
+                        //                 int.parse(bidamount.toString());
+                        //             int afterBid = currentBal - bidsTotalPoint;
+                        //             return Padding(
+                        //               padding: const EdgeInsets.symmetric(
+                        //                   vertical: 10),
+                        //               child: Center(
+                        //                   child: Text(
+                        //                 "$afterBid",
+                        //                 style: const TextStyle(
+                        //                     fontWeight: FontWeight.w600),
+                        //               )),
+                        //             );
+                        //           },
+                        //         ),
+                        //       ])
+                        //     ],
+                        //   ),
+                        // ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            TableRow(
-                                decoration: const BoxDecoration(),
-                                children: [
-                                  const Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 10),
-                                    child: Text("Total Bids"),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 10),
-                                    child: Center(
-                                        child: Text(
-                                      "$totalbid",
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.w600),
-                                    )),
-                                  ),
-                                  const Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 10),
-                                    child: Text("Total Bids Amount"),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 10),
-                                    child: Center(
-                                        child: Text(
-                                      "$bidamount",
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.w600),
-                                    )),
-                                  ),
-                                ]),
-                            TableRow(children: [
-                              const Padding(
-                                padding: EdgeInsets.symmetric(vertical: 10),
-                                child: Text("Balance Before Deduction"),
-                              ),
-                              Consumer<ProfileProvider>(
-                                builder: (context, profileProvider, child) {
-                                  return Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 10),
-                                    child: Center(
-                                        child: Text(
-                                      "${profileProvider.profileModelData.profile?[0].walletBalance}",
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.w600),
-                                    )),
-                                  );
-                                },
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.symmetric(vertical: 10),
-                                child: Text("Balance After Deduction"),
-                              ),
-                              Consumer<ProfileProvider>(
-                                builder: (context, profileProvider, child) {
-                                  int currentBal = int.parse(
-                                      "${profileProvider.profileModelData.profile?[0].walletBalance ?? 0}");
-                                  int bidsTotalPoint =
-                                      int.parse(bidamount.toString());
-                                  int afterBid = currentBal - bidsTotalPoint;
-                                  return Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 10),
-                                    child: Center(
-                                        child: Text(
-                                      "$afterBid",
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.w600),
-                                    )),
-                                  );
-                                },
-                              ),
-                            ])
+                            Text("Total Bids :"),
+                            Text("$totalbid",
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w600))
                           ],
                         ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        "*Note: Bid Once Played Can Not Be Canclled*",
-                        style: TextStyle(color: clrRed),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          SizedBox(
-                            width: 120,
-                            child: customElevatedButton(
-                                context, "SUBMIT", onsubmit,
-                                verticalPadding: 8.0),
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          SizedBox(
-                            width: 120,
-                            child: customElevatedButton(context, "CANCEL", () {
-                              Navigator.pop(context);
-                            }, verticalPadding: 8.0),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                    ],
-                  ),
-                )
-              ],
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Total Bids Amount"),
+                            Text("$bidamount",
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w600))
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Before Deduction:"),
+                            Consumer<ProfileProvider>(
+                                        builder: (context, profileProvider, child) {
+                                          return Text(
+                                            "${profileProvider.profileModelData.profile?[0].walletBalance}",
+                                            style: const TextStyle(
+                                            fontWeight: FontWeight.w600),
+                                          );
+                                        },
+                                      ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("After Deduction :"),
+                            Consumer<ProfileProvider>(
+                                        builder: (context, profileProvider, child) {
+                                          int currentBal = int.parse(
+                                              "${profileProvider.profileModelData.profile?[0].walletBalance ?? 0}");
+                                          int bidsTotalPoint =
+                                              int.parse(bidamount.toString());
+                                          int afterBid = currentBal - bidsTotalPoint;
+                                          return Text(
+                                            "$afterBid",
+                                            style: const TextStyle(
+                                            fontWeight: FontWeight.w600),
+                                          );
+                                        },
+                            )],
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          "*Note: Bid Once Played Can Not Be Canclled*",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: clrRed),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            SizedBox(
+                              width: 120,
+                              child: customElevatedButton(
+                                  context, "SUBMIT", onsubmit,
+                                  verticalPadding: 8.0),
+                            ),
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            SizedBox(
+                              width: 120,
+                              child: customElevatedButton(context, "CANCEL", () {
+                                Navigator.pop(context);
+                              }, verticalPadding: 8.0),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         );
