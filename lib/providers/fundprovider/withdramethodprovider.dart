@@ -55,7 +55,7 @@ class WithDrawMethodProvider with ChangeNotifier {
 
           _withdrawMethodGetData =
               WithdrawMethodGetModel.fromJson(getDecriptedData);
-          customSnackbar(context, _withdrawMethodGetData.status.toString());
+          // customSnackbar(context, _withdrawMethodGetData.status.toString());
           log("==========body data =      ${getDecriptedData}   ==body data");
 
           // if (_withdrawMethodGetData.status == true) {

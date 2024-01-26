@@ -1,4 +1,5 @@
 import 'package:earninggame/providers/starlinegamesprovider.dart';
+import 'package:earninggame/ui/biduis/kingstarlineresulthistoryui.dart';
 import 'package:earninggame/ui/components/circularprogressindicator.dart';
 import 'package:earninggame/ui/gamestypekingstarlineui.dart';
 import 'package:earninggame/ui/kingstarlinehistoryui.dart';
@@ -54,7 +55,7 @@ class _KingStarlineGamesUiState extends State<KingStarlineGamesUi> {
                         onTap: () {
                           Navigator.push(context,
                               CupertinoPageRoute(builder: (context) {
-                            return const KingsStarlineHistoryUi();
+                            return const KingStarlineResultHistoryUi(); //KingsStarlineHistoryUi();
                           })).then((value) {
                             Provider.of<StarlineGamesProvider>(context,
                                     listen: false)
@@ -370,46 +371,48 @@ class _KingStarlineGamesUiState extends State<KingStarlineGamesUi> {
                                                               const SizedBox(
                                                                 height: 20,
                                                               ),
-                                                              Table(
-                                                                children: const [
-                                                                  TableRow(
-                                                                      children: [
-                                                                        Align(
-                                                                          alignment:
-                                                                              Alignment.centerRight,
-                                                                          child:
-                                                                              Text("Result Time :"),
-                                                                        ),
-                                                                        Center(
-                                                                          child:
-                                                                              Text("11:00 AM"),
-                                                                        ),
-                                                                      ]),
-                                                                  TableRow(
-                                                                      children: [
-                                                                        SizedBox(
-                                                                          height:
-                                                                              10,
-                                                                        ),
-                                                                        SizedBox(
-                                                                          height:
-                                                                              10,
-                                                                        ),
-                                                                      ]),
-                                                                  TableRow(
-                                                                      children: [
-                                                                        Align(
-                                                                          alignment:
-                                                                              Alignment.centerRight,
-                                                                          child:
-                                                                              Text("Bid Last Time :"),
-                                                                        ),
-                                                                        Center(
-                                                                            child:
-                                                                                Text(" 09:55 AM")),
-                                                                      ]),
-                                                                ],
-                                                              ),
+
+                                                              // Table(
+                                                              //   children: const [
+                                                              //     TableRow(
+                                                              //         children: [
+                                                              //           Align(
+                                                              //             alignment:
+                                                              //                 Alignment.centerRight,
+                                                              //             child:
+                                                              //                 Text("Result Time :"),
+                                                              //           ),
+                                                              //           Center(
+                                                              //             child:
+                                                              //                 Text("11:00 AM"),
+                                                              //           ),
+                                                              //         ]),
+                                                              //     TableRow(
+                                                              //         children: [
+                                                              //           SizedBox(
+                                                              //             height:
+                                                              //                 10,
+                                                              //           ),
+                                                              //           SizedBox(
+                                                              //             height:
+                                                              //                 10,
+                                                              //           ),
+                                                              //         ]),
+                                                              //     TableRow(
+                                                              //         children: [
+                                                              //           Align(
+                                                              //             alignment:
+                                                              //                 Alignment.centerRight,
+                                                              //             child:
+                                                              //                 Text("Bid Last Time :"),
+                                                              //           ),
+                                                              //           Center(
+                                                              //               child:
+                                                              //                   Text(" 09:55 AM")),
+                                                              //         ]),
+                                                              //   ],
+                                                              // ),
+                                                              //
                                                               const SizedBox(
                                                                 height: 20,
                                                               ),

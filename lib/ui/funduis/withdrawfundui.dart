@@ -30,105 +30,7 @@ class _WithdrawFundUiState extends State<WithdrawFundUi> {
         .withdrawMethodgetApiCall(context);
     Provider.of<WithdrawFundProvider>(context, listen: false)
         .withdrawGetWalletApiCall(context);
-    // Future.delayed(Duration.zero, () {
-    //   return showDialog(
-    //       barrierDismissible: false,
-    //       context: context,
-    //       builder: (context) {
-    //         return AlertDialog(
-    //           scrollable: true,
-    //           insetPadding: const EdgeInsets.symmetric(horizontal: 15),
-    //           title: const Center(child: Text("Terms and Conditions")),
-    //           content: SizedBox(
-    //             width: MediaQuery.of(context).size.width * 0.9,
-    //             child: Column(
-    //               crossAxisAlignment: CrossAxisAlignment.start,
-    //               mainAxisSize: MainAxisSize.min,
-    //               children: [
-    //                 Table(
-    //                   columnWidths: const {0: FixedColumnWidth(20)},
-    //                   children: const [
-    //                     TableRow(children: [
-    //                       Text("-"),
-    //                       Text(" Minimum Withdraw is 500/- Rs."),
-    //                     ]),
-    //                     TableRow(children: [
-    //                       SizedBox(
-    //                         height: 8,
-    //                       ),
-    //                       SizedBox(
-    //                         height: 8,
-    //                       ),
-    //                     ]),
-    //                     TableRow(children: [
-    //                       Text("-"),
-    //                       Text("Minimum Withdraw is 10 Lakh per Day.")
-    //                     ]),
-    //                     TableRow(children: [
-    //                       SizedBox(
-    //                         height: 8,
-    //                       ),
-    //                       SizedBox(
-    //                         height: 8,
-    //                       ),
-    //                     ]),
-    //                     TableRow(children: [
-    //                       Text("-"),
-    //                       Text("Above 5 Lakh you should Request Us Manually. ")
-    //                     ]),
-    //                     TableRow(children: [
-    //                       SizedBox(
-    //                         height: 8,
-    //                       ),
-    //                       SizedBox(
-    //                         height: 8,
-    //                       ),
-    //                     ]),
-    //                     TableRow(children: [
-    //                       Text("-"),
-    //                       Text("Withdraw request Time 10:00 AM To 10:00 PM.")
-    //                     ]),
-    //                     TableRow(children: [
-    //                       SizedBox(
-    //                         height: 8,
-    //                       ),
-    //                       SizedBox(
-    //                         height: 8,
-    //                       ),
-    //                     ]),
-    //                     TableRow(children: [
-    //                       Text("-"),
-    //                       Text("Process Time minimum 1 Hour maximum 72 Hours.")
-    //                     ]),
-    //                     TableRow(children: [
-    //                       SizedBox(
-    //                         height: 8,
-    //                       ),
-    //                       SizedBox(
-    //                         height: 8,
-    //                       ),
-    //                     ]),
-    //                     TableRow(children: [
-    //                       Text("-"),
-    //                       Text("Withdraw is Available On All 7 Days of WEEK.")
-    //                     ]),
-    //                   ],
-    //                 ),
-    //                 const SizedBox(
-    //                   height: 15,
-    //                 ),
-    //                 SizedBox(
-    //                   width: double.infinity,
-    //                   child: customElevatedButton(context, "ACCEPT", () {
-    //                     Navigator.pop(context);
-    //                   }),
-    //                 )
-    //               ],
-    //             ),
-    //           ),
-    //         );
-    //       });
-    // });
+
   }
 
   @override
@@ -307,7 +209,6 @@ class _WithdrawFundUiState extends State<WithdrawFundUi> {
                                                 builder: (context,
                                                     withdrawFundProvider,
                                                     child) {
-                                                  print("${DateTime.now()}");
                                                   DateTime startTime;
                                                   WithdraFundGetModel modelData;
                                                   if (withdrawFundProvider

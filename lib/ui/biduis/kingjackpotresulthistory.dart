@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../../models/kingjackpotresultmodel.dart';
 import '../../utils/colors.dart';
+import '../../utils/constants.dart';
 
 class KingJackpotResultHistoryUi extends StatefulWidget {
   const KingJackpotResultHistoryUi({super.key});
@@ -34,7 +35,7 @@ class _KingJackpotResultHistoryUiState
         elevation: 0,
         backgroundColor: clrTranaparent,
         foregroundColor: blackClr,
-        title: const Text("King Jackpot Result History"),
+        title:  Text("$galidisswar Result History"),
       ),
       body: SafeArea(
           child: Column(

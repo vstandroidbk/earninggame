@@ -21,19 +21,9 @@ class GamesTypeKingStarlineUi extends StatefulWidget {
 class _GamesTypeKingStarlineUiState extends State<GamesTypeKingStarlineUi> {
   List<Map> gameTypes = [
     {"image": "assets/images/dice.png", "name": "Single Digits"},
-    // {"image": "assets/images/dice.png", "name": "Single Digits Bulk"},
     {"image": "assets/images/dicee.png", "name": "Single Pana"},
-    // {"image": "assets/images/dicee.png", "name": "Single Pana Bulk"},
     {"image": "assets/images/dicepatti.png", "name": "Double Pana"},
-    // {"image": "assets/images/dicepatti.png", "name": "Double Pana Bulk"},
     {"image": "assets/images/triplepana.png", "name": "Triple Pana"},
-    // {"image": "assets/images/penalgroup.png", "name": "Penal Group"},
-    // {"image": "assets/images/spdp.png", "name": "SP DP TP"},
-    // {"image": "assets/images/choice.png", "name": "Choice Pana SPDP"},
-    // {"image": "assets/images/sp.png", "name": "SP Motor"},
-    // {"image": "assets/images/dp.png", "name": "DP Motor"},
-    // {"image": "assets/images/oddeven.png", "name": "oddEven"},
-    // {"image": "assets/images/twoo.png", "name": "Two Digits Panel"},
   ];
   int logNum = 0;
   @override

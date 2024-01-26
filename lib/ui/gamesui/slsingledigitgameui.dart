@@ -501,6 +501,7 @@ class _SlSingleDigitGameUiState extends State<SlSingleDigitGameUi> {
                                           bidData: newResult,
                                         );
                                       },
+                                          gameName:widget.gameName,
                                           totalbid: totalBids.length,
                                           bidamount: totalpoints,
                                           data: totalBids);
@@ -512,7 +513,9 @@ class _SlSingleDigitGameUiState extends State<SlSingleDigitGameUi> {
                                       },
                                           data: totalBids,
                                           totalbid: totalBids.length ?? 0,
-                                          bidamount: totalpoints);
+                                          bidamount: totalpoints,
+                                          gameName:widget.gameName
+                                      );
                                     }
                                   },
                                   verticalPadding: 3.0,

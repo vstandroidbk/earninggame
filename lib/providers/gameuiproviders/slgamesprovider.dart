@@ -11,11 +11,6 @@ import '../../utils/constants.dart';
 import '../profileprovider.dart';
 
 class SlGameProvider with ChangeNotifier {
-  // bool clearDigit = false;
-  // setClearDigit(bool val){
-  //   clearDigit=val;
-  //   notifyListeners();
-  // }
   TextEditingController singleDigitController = TextEditingController();
   setSingleDigiConVal(val){
     singleDigitController.text=val;
@@ -53,6 +48,7 @@ class SlGameProvider with ChangeNotifier {
 
     notifyListeners();
   }
+
 
   removeBids(digit,context) {
     int curerntAmount= Provider.of<ProfileProvider>(context,listen: false).amountTemporary;

@@ -4,6 +4,8 @@ import 'package:earninggame/ui/components/drawer.dart';
 import 'package:earninggame/ui/notification.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../providers/profileprovider.dart';
 import '../utils/colors.dart';
 import 'biduis/bidhistoryui.dart';
 import 'biduis/kingjackpotresulthistory.dart';
@@ -84,11 +86,16 @@ class _MybidsUiState extends State<MybidsUi> {
           const SizedBox(
             width: 5,
           ),
-          const Center(
-            child: Text(
-              "500.00",
-              style: TextStyle(fontWeight: FontWeight.w600),
-            ),
+          Consumer<ProfileProvider>(
+            builder: (context, profileProvider, child) {
+              return Center(
+                child: Text(
+                  "${profileProvider.amountTemporary}",
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w600, fontSize: 18),
+                ),
+              );
+            },
           ),
           const SizedBox(
             width: 15,

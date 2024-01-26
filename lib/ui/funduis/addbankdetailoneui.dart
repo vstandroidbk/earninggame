@@ -24,11 +24,6 @@ class _AddBankDetailOneUiState extends State<AddBankDetailOneUi> {
   TextEditingController bankController = TextEditingController();
   TextEditingController addController = TextEditingController();
 
-  // TextEditingController gpayController = TextEditingController();
-  // TextEditingController phonePayController = TextEditingController();
-  // TextEditingController paytmController = TextEditingController();
-  // TextEditingController upiController = TextEditingController();
-
   @override
   void initState() {
     super.initState();
@@ -37,48 +32,6 @@ class _AddBankDetailOneUiState extends State<AddBankDetailOneUi> {
 
     Future.delayed(Duration.zero, () {
       Provider.of<OtpCheckProvider>(context, listen: false).setChanceLeft(0);
-      // showDialog(
-      //     context: context,
-      //     builder: (context) {
-      //       return AlertDialog(
-      //         insetPadding: EdgeInsets.zero,
-      //         contentPadding: EdgeInsets.zero,
-      //         content: SizedBox(
-      //           width: MediaQuery.of(context).size.width * 0.95,
-      //           child: Column(
-      //             mainAxisSize: MainAxisSize.min,
-      //             children: [
-      //               const SizedBox(
-      //                 height: 20,
-      //               ),
-      //               SizedBox(
-      //                 height: 100,
-      //                 child: Image.asset("assets/demoimages/cancel.png"),
-      //               ),
-      //               const SizedBox(
-      //                 height: 20,
-      //               ),
-      //               Text(
-      //                 "Withdraw Method not added",
-      //                 style: TextStyle(color: clrRed),
-      //               ),
-      //               const SizedBox(
-      //                 height: 20,
-      //               ),
-      //               SizedBox(
-      //                 width: 250,
-      //                 child: customElevatedButton(context, "OK", () {
-      //                   Navigator.pop(context);
-      //                 }),
-      //               ),
-      //               const SizedBox(
-      //                 height: 20,
-      //               ),
-      //             ],
-      //           ),
-      //         ),
-      //       );
-      //     });
     });
   }
 
@@ -96,10 +49,7 @@ class _AddBankDetailOneUiState extends State<AddBankDetailOneUi> {
           builder: (context, withDrawMethodProvider, child) {
             return withDrawMethodProvider.isGetDataLoding
                 ? const CustomCircularProgress()
-                :
-                //  withDrawMethodProvider.withdrawGetMethodData.status == true
-                //     ?
-                Container(
+                : Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Column(
                       children: [
@@ -138,130 +88,140 @@ class _AddBankDetailOneUiState extends State<AddBankDetailOneUi> {
                                   const SizedBox(
                                     height: 10,
                                   ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        withDrawMethodProvider
-                                                .gpayController.text.isEmpty
-                                            ? "N/A"
-                                            : withDrawMethodProvider
-                                                .gpayController.text,
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.w600),
-                                      ),
-                                      const SizedBox(
-                                        width: 5,
-                                      ),
-                                      SizedBox(
-                                        height: 30,
-                                        child: OutlinedButton(
-                                            onPressed: () {
-                                              showDialog(
-                                                  barrierDismissible: false,
-                                                  context: context,
-                                                  builder: (context) {
-                                                    return AlertDialog(
-                                                      insetPadding:
-                                                          const EdgeInsets
-                                                                  .symmetric(
-                                                              horizontal: 10),
-                                                      contentPadding:
-                                                          const EdgeInsets
-                                                                  .symmetric(
-                                                              horizontal: 10),
-                                                      content: SizedBox(
-                                                        width: double.maxFinite,
-                                                        child: Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
-                                                          children: [
-                                                            const SizedBox(
-                                                              height: 40,
-                                                            ),
-                                                            const Text(
-                                                                "Enter Mobile No.(Registered)"),
-                                                            const SizedBox(
-                                                              height: 10,
-                                                            ),
-                                                            customInputField(
-                                                                withDrawMethodProvider
-                                                                    .gpayController,
-                                                                TextInputType
-                                                                    .number,
-                                                                maxlength: 10),
-                                                            Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceAround,
-                                                              children: [
-                                                                SizedBox(
-                                                                  width: 150,
-                                                                  child: customElevatedButton(
-                                                                      context,
-                                                                      "Cancel",
-                                                                      () {
-                                                                    Navigator.pop(
-                                                                        context);
-                                                                  }),
-                                                                ),
-                                                                SizedBox(
-                                                                  width: 140,
-                                                                  child: customElevatedButton(
-                                                                      context,
-                                                                      "Done",
-                                                                      () {
-                                                                    Navigator.push(
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          withDrawMethodProvider
+                                                  .gpayController.text.isEmpty
+                                              ? "N/A"
+                                              : withDrawMethodProvider
+                                                  .gpayController.text,
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                        const SizedBox(
+                                          width: 5,
+                                        ),
+                                        SizedBox(
+                                          height: 30,
+                                          child: OutlinedButton(
+                                              onPressed: () {
+                                                showDialog(
+                                                    barrierDismissible: false,
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return AlertDialog(
+                                                        insetPadding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                horizontal: 10),
+                                                        contentPadding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                horizontal: 10),
+                                                        content: SizedBox(
+                                                          width: double.maxFinite,
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            mainAxisSize:
+                                                                MainAxisSize.min,
+                                                            children: [
+                                                              const SizedBox(
+                                                                height: 40,
+                                                              ),
+                                                              const Text(
+                                                                  "Enter Google Pay Mobile Number "),
+                                                              const SizedBox(
+                                                                height: 10,
+                                                              ),
+                                                              customInputField(
+                                                                  withDrawMethodProvider
+                                                                      .gpayController,
+                                                                  TextInputType
+                                                                      .number,
+                                                                  maxlength: 10),
+                                                              Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceAround,
+                                                                children: [
+                                                                  SizedBox(
+                                                                    width: 150,
+                                                                    child: customElevatedButton(
                                                                         context,
-                                                                        CupertinoPageRoute(builder:
-                                                                            (context) {
-                                                                      return PinChekUi(
-                                                                        bankData: {
-                                                                          "env_type":
-                                                                              Constants.envType,
-                                                                          "user_id":
-                                                                              idUser,
-                                                                          "paytm_no": withDrawMethodProvider
-                                                                              .paytmController
-                                                                              .text,
-                                                                          "google_pay_no": withDrawMethodProvider
+                                                                        "Cancel",
+                                                                        () {
+                                                                          Provider.of<WithDrawMethodProvider>(context, listen: false)
+                                                                              .withdrawMethodGetApiCall(context);
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                    }),
+                                                                  ),
+                                                                  SizedBox(
+                                                                    width: 140,
+                                                                    child: customElevatedButton(
+                                                                        context,
+                                                                        "Done",
+                                                                        () {
+                                                                      if (withDrawMethodProvider
                                                                               .gpayController
-                                                                              .text,
-                                                                          "phon_pay_no": withDrawMethodProvider
-                                                                              .phonePayController
-                                                                              .text,
-                                                                          "vpa_id": withDrawMethodProvider
-                                                                              .upiController
                                                                               .text
-                                                                        },
-                                                                      );
-                                                                    }));
-                                                                  }),
-                                                                )
-                                                              ],
-                                                            ),
-                                                            const SizedBox(
-                                                              height: 30,
-                                                            ),
-                                                          ],
+                                                                              .length <
+                                                                          10) {
+                                                                        customSnackbar(
+                                                                            context,
+                                                                            "Minimum 10 number required.");
+                                                                      } else {
+                                                                        Navigator.push(
+                                                                            context,
+                                                                            CupertinoPageRoute(builder:
+                                                                                (context) {
+                                                                          return PinChekUi(
+                                                                            bankData: {
+                                                                              "env_type":
+                                                                                  Constants.envType,
+                                                                              "user_id":
+                                                                                  idUser,
+                                                                              "withdraw_method_no":
+                                                                                  withDrawMethodProvider.gpayController.text,
+                                                                              "withdraw_method_type":
+                                                                                  2
+                                                                            },
+                                                                          );
+                                                                        }));
+                                                                      }
+                                                                    }),
+                                                                  )
+                                                                ],
+                                                              ),
+                                                              const SizedBox(
+                                                                height: 30,
+                                                              ),
+                                                            ],
+                                                          ),
                                                         ),
-                                                      ),
-                                                    );
-                                                  });
-                                            },
-                                            style: OutlinedButton.styleFrom(
-                                                side: BorderSide(
-                                                    color: clrGreen)),
-                                            child: Text(
-                                              "Add",
-                                              style: TextStyle(
-                                                  color: clrBlackLight),
-                                            )),
-                                      )
-                                    ],
+                                                      );
+                                                    });
+                                              },
+                                              style: OutlinedButton.styleFrom(
+                                                  side: BorderSide(
+                                                      color: clrGreen)),
+                                              child: Text(
+                                                withDrawMethodProvider
+                                                    .gpayController
+                                                    .text
+                                                    .isEmpty?"Add":"Edit",
+                                                style: TextStyle(
+                                                    color: clrBlackLight),
+                                              )),
+                                        )
+                                      ],
+                                    ),
                                   )
                                 ]),
                               ),
@@ -289,133 +249,143 @@ class _AddBankDetailOneUiState extends State<AddBankDetailOneUi> {
                                       const Text("Phone Pay")
                                     ],
                                   ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        withDrawMethodProvider
-                                                .phonePayController.text.isEmpty
-                                            ? "N/A"
-                                            : withDrawMethodProvider
-                                                .phonePayController.text,
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.w600),
-                                      ),
-                                      const SizedBox(
-                                        width: 5,
-                                      ),
-                                      SizedBox(
-                                        height: 30,
-                                        child: OutlinedButton(
-                                            onPressed: () {
-                                              showDialog(
-                                                  barrierDismissible: false,
-                                                  context: context,
-                                                  builder: (context) {
-                                                    return AlertDialog(
-                                                      insetPadding:
-                                                          const EdgeInsets
-                                                                  .symmetric(
-                                                              horizontal: 10),
-                                                      contentPadding:
-                                                          const EdgeInsets
-                                                                  .symmetric(
-                                                              horizontal: 10),
-                                                      content: SizedBox(
-                                                        width: double.maxFinite,
-                                                        child: Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
-                                                          children: [
-                                                            const SizedBox(
-                                                              height: 40,
-                                                            ),
-                                                            const Text(
-                                                                "Enter Mobile No.(Registered)"),
-                                                            const SizedBox(
-                                                              height: 10,
-                                                            ),
-                                                            customInputField(
-                                                                withDrawMethodProvider
-                                                                    .phonePayController,
-                                                                TextInputType
-                                                                    .number,
-                                                                maxlength: 10),
-                                                            Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceAround,
-                                                              children: [
-                                                                SizedBox(
-                                                                  width: 150,
-                                                                  child: customElevatedButton(
-                                                                      context,
-                                                                      "Cancel",
-                                                                      () {
-                                                                    Navigator.pop(
-                                                                        context);
-                                                                  }),
-                                                                ),
-                                                                const SizedBox(
-                                                                  width: 40,
-                                                                ),
-                                                                SizedBox(
-                                                                  width: 150,
-                                                                  child: customElevatedButton(
-                                                                      context,
-                                                                      "Done",
-                                                                      () {
-                                                                    Navigator.push(
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          withDrawMethodProvider
+                                                  .phonePayController.text.isEmpty
+                                              ? "N/A"
+                                              : withDrawMethodProvider
+                                                  .phonePayController.text,
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                        const SizedBox(
+                                          width: 5,
+                                        ),
+                                        SizedBox(
+                                          height: 30,
+                                          child: OutlinedButton(
+                                              onPressed: () {
+                                                showDialog(
+                                                    barrierDismissible: false,
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return AlertDialog(
+                                                        insetPadding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                horizontal: 10),
+                                                        contentPadding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                horizontal: 10),
+                                                        content: SizedBox(
+                                                          width: double.maxFinite,
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            mainAxisSize:
+                                                                MainAxisSize.min,
+                                                            children: [
+                                                              const SizedBox(
+                                                                height: 40,
+                                                              ),
+                                                              const Text(
+                                                                  "Enter PhonePay Mobile Number"),
+                                                              const SizedBox(
+                                                                height: 10,
+                                                              ),
+                                                              customInputField(
+                                                                  withDrawMethodProvider
+                                                                      .phonePayController,
+                                                                  TextInputType
+                                                                      .number,
+                                                                  maxlength: 10),
+                                                              Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceAround,
+                                                                children: [
+                                                                  SizedBox(
+                                                                    width: 150,
+                                                                    child: customElevatedButton(
                                                                         context,
-                                                                        CupertinoPageRoute(builder:
-                                                                            (context) {
-                                                                      return PinChekUi(
-                                                                        bankData: {
-                                                                          "env_type":
-                                                                              Constants.envType,
-                                                                          "user_id":
-                                                                              idUser,
-                                                                          "paytm_no": withDrawMethodProvider
-                                                                              .paytmController
-                                                                              .text,
-                                                                          "google_pay_no": withDrawMethodProvider
-                                                                              .gpayController
-                                                                              .text,
-                                                                          "phon_pay_no": withDrawMethodProvider
+                                                                        "Cancel",
+                                                                        () {
+                                                                          Provider.of<WithDrawMethodProvider>(context, listen: false)
+                                                                              .withdrawMethodGetApiCall(context);
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                    }),
+                                                                  ),
+                                                                  const SizedBox(
+                                                                    width: 40,
+                                                                  ),
+                                                                  SizedBox(
+                                                                    width: 150,
+                                                                    child: customElevatedButton(
+                                                                        context,
+                                                                        "Done",
+                                                                        () {
+                                                                      if (withDrawMethodProvider
                                                                               .phonePayController
-                                                                              .text,
-                                                                          "vpa_id": withDrawMethodProvider
-                                                                              .upiController
                                                                               .text
-                                                                        },
-                                                                      );
-                                                                    }));
-                                                                  }),
-                                                                )
-                                                              ],
-                                                            ),
-                                                            const SizedBox(
-                                                              height: 30,
-                                                            ),
-                                                          ],
+                                                                              .length <
+                                                                          10) {
+                                                                        customSnackbar(
+                                                                            context,
+                                                                            "Minimum 10 number required.");
+                                                                      } else {
+                                                                        Navigator.push(
+                                                                            context,
+                                                                            CupertinoPageRoute(builder:
+                                                                                (context) {
+                                                                          return PinChekUi(
+                                                                            bankData: {
+                                                                              "env_type":
+                                                                                  Constants.envType,
+                                                                              "user_id":
+                                                                                  idUser,
+                                                                              "withdraw_method_no":
+                                                                                  withDrawMethodProvider.phonePayController.text,
+                                                                              "withdraw_method_type":
+                                                                                  3
+                                                                            },
+                                                                          );
+                                                                        }));
+                                                                      }
+                                                                    }),
+                                                                  )
+                                                                ],
+                                                              ),
+                                                              const SizedBox(
+                                                                height: 30,
+                                                              ),
+                                                            ],
+                                                          ),
                                                         ),
-                                                      ),
-                                                    );
-                                                  });
-                                            },
-                                            style: OutlinedButton.styleFrom(
-                                                side: BorderSide(
-                                                    color: clrGreen)),
-                                            child: Text(
-                                              "Add",
-                                              style: TextStyle(
-                                                  color: clrBlackLight),
-                                            )),
-                                      )
-                                    ],
+                                                      );
+                                                    });
+                                              },
+                                              style: OutlinedButton.styleFrom(
+                                                  side: BorderSide(
+                                                      color: clrGreen)),
+                                              child: Text(
+                                                withDrawMethodProvider
+                                                    .phonePayController
+                                                    .text
+                                                    .isEmpty?"Add":"Edit",
+                                                style: TextStyle(
+                                                    color: clrBlackLight),
+                                              )),
+                                        )
+                                      ],
+                                    ),
                                   )
                                 ]),
                               ),
@@ -440,6 +410,7 @@ class _AddBankDetailOneUiState extends State<AddBankDetailOneUi> {
                                     borderRadius: BorderRadius.circular(10)),
                                 child: Column(children: [
                                   Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       SizedBox(
                                           width: 50,
@@ -456,9 +427,9 @@ class _AddBankDetailOneUiState extends State<AddBankDetailOneUi> {
                                     height: 10,
                                   ),
                                   Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(
-                                        withDrawMethodProvider
+                                      Text(withDrawMethodProvider
                                                 .paytmController.text.isEmpty
                                             ? "N/A"
                                             : withDrawMethodProvider
@@ -499,7 +470,7 @@ class _AddBankDetailOneUiState extends State<AddBankDetailOneUi> {
                                                               height: 40,
                                                             ),
                                                             const Text(
-                                                                "Enter Mobile No.(Registered)"),
+                                                                "Enter Paytm Mobile Number"),
                                                             const SizedBox(
                                                               height: 10,
                                                             ),
@@ -520,6 +491,8 @@ class _AddBankDetailOneUiState extends State<AddBankDetailOneUi> {
                                                                       context,
                                                                       "Cancel",
                                                                       () {
+                                                                        Provider.of<WithDrawMethodProvider>(context, listen: false)
+                                                                            .withdrawMethodGetApiCall(context);
                                                                     Navigator.pop(
                                                                         context);
                                                                   }),
@@ -530,31 +503,33 @@ class _AddBankDetailOneUiState extends State<AddBankDetailOneUi> {
                                                                       context,
                                                                       "Done",
                                                                       () {
-                                                                    Navigator.push(
-                                                                        context,
-                                                                        CupertinoPageRoute(builder:
-                                                                            (context) {
-                                                                      return PinChekUi(
-                                                                        bankData: {
-                                                                          "env_type":
-                                                                              Constants.envType,
-                                                                          "user_id":
-                                                                              idUser,
-                                                                          "paytm_no": withDrawMethodProvider
-                                                                              .paytmController
-                                                                              .text,
-                                                                          "google_pay_no": withDrawMethodProvider
-                                                                              .gpayController
-                                                                              .text,
-                                                                          "phon_pay_no": withDrawMethodProvider
-                                                                              .phonePayController
-                                                                              .text,
-                                                                          "vpa_id": withDrawMethodProvider
-                                                                              .upiController
-                                                                              .text
-                                                                        },
-                                                                      );
-                                                                    }));
+                                                                    if (withDrawMethodProvider
+                                                                            .paytmController
+                                                                            .text
+                                                                            .length <
+                                                                        10) {
+                                                                      customSnackbar(
+                                                                          context,
+                                                                          "Minimum 10 number required.");
+                                                                    } else {
+                                                                      Navigator.push(
+                                                                          context,
+                                                                          CupertinoPageRoute(builder:
+                                                                              (context) {
+                                                                        return PinChekUi(
+                                                                          bankData: {
+                                                                            "env_type":
+                                                                                Constants.envType,
+                                                                            "user_id":
+                                                                                idUser,
+                                                                            "withdraw_method_no":
+                                                                                withDrawMethodProvider.paytmController.text,
+                                                                            "withdraw_method_type":
+                                                                                1
+                                                                          },
+                                                                        );
+                                                                      }));
+                                                                    }
                                                                   }),
                                                                 )
                                                               ],
@@ -572,7 +547,10 @@ class _AddBankDetailOneUiState extends State<AddBankDetailOneUi> {
                                                 side: BorderSide(
                                                     color: clrGreen)),
                                             child: Text(
-                                              "Add",
+                                              withDrawMethodProvider
+                                                  .paytmController
+                                                  .text
+                                                  .isEmpty? "Add":"Edit",
                                               style: TextStyle(
                                                   color: clrBlackLight),
                                             )),
@@ -605,951 +583,149 @@ class _AddBankDetailOneUiState extends State<AddBankDetailOneUi> {
                                       const Text("VPA")
                                     ],
                                   ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        withDrawMethodProvider
-                                                .upiController.text.isEmpty
-                                            ? "N/A"
-                                            : withDrawMethodProvider
-                                                .upiController.text,
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.w600),
-                                      ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      SizedBox(
-                                        height: 30,
-                                        child: OutlinedButton(
-                                            onPressed: () {
-                                              showDialog(
-                                                  barrierDismissible: false,
-                                                  context: context,
-                                                  builder: (context) {
-                                                    return AlertDialog(
-                                                      insetPadding:
-                                                          const EdgeInsets
-                                                                  .symmetric(
-                                                              horizontal: 10),
-                                                      contentPadding:
-                                                          const EdgeInsets
-                                                                  .symmetric(
-                                                              horizontal: 10),
-                                                      content: SizedBox(
-                                                        width: double.maxFinite,
-                                                        child: Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
-                                                          children: [
-                                                            const SizedBox(
-                                                              height: 40,
-                                                            ),
-                                                            const Text(
-                                                                "Enter Mobile No.(Registered)"),
-                                                            const SizedBox(
-                                                              height: 10,
-                                                            ),
-                                                            customInputField(
-                                                                withDrawMethodProvider
-                                                                    .upiController,
-                                                                TextInputType
-                                                                    .number,
-                                                                maxlength: 10),
-                                                            Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceAround,
-                                                              children: [
-                                                                SizedBox(
-                                                                  width: 150,
-                                                                  child: customElevatedButton(
-                                                                      context,
-                                                                      "Cancel",
-                                                                      () {
-                                                                    Navigator.pop(
-                                                                        context);
-                                                                  }),
-                                                                ),
-                                                                SizedBox(
-                                                                  width: 150,
-                                                                  child: customElevatedButton(
-                                                                      context,
-                                                                      "Done",
-                                                                      () {
-                                                                    Navigator.push(
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Flexible(
+                                          child: Text(
+                                            withDrawMethodProvider
+                                                    .upiController.text.isEmpty
+                                                ? "N/A"
+                                                : withDrawMethodProvider
+                                                    .upiController.text,
+                                            // maxLines: 1,
+                                            // overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.w600,),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        SizedBox(
+                                          height: 30,
+                                          child: OutlinedButton(
+                                              onPressed: () {
+                                                showDialog(
+                                                    barrierDismissible: false,
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return AlertDialog(
+                                                        insetPadding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                horizontal: 10),
+                                                        contentPadding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                horizontal: 10),
+                                                        content: SizedBox(
+                                                          width: double.maxFinite,
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            mainAxisSize:
+                                                                MainAxisSize.min,
+                                                            children: [
+                                                              const SizedBox(
+                                                                height: 40,
+                                                              ),
+                                                              const Text(
+                                                                  "Enter VPA Id"),
+                                                              const SizedBox(
+                                                                height: 10,
+                                                              ),
+                                                              customInputField(
+                                                                  withDrawMethodProvider
+                                                                      .upiController,
+                                                                  TextInputType
+                                                                      .text,
+                                                                 ),
+                                                              Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceAround,
+                                                                children: [
+                                                                  SizedBox(
+                                                                    width: 150,
+                                                                    child: customElevatedButton(
                                                                         context,
-                                                                        CupertinoPageRoute(builder:
-                                                                            (context) {
-                                                                      return PinChekUi(
-                                                                        bankData: {
-                                                                          "env_type":
-                                                                              Constants.envType,
-                                                                          "user_id":
-                                                                              idUser,
-                                                                          "paytm_no": withDrawMethodProvider
-                                                                              .paytmController
-                                                                              .text,
-                                                                          "google_pay_no": withDrawMethodProvider
-                                                                              .gpayController
-                                                                              .text,
-                                                                          "phon_pay_no": withDrawMethodProvider
-                                                                              .phonePayController
-                                                                              .text,
-                                                                          "vpa_id": withDrawMethodProvider
-                                                                              .upiController
-                                                                              .text
-                                                                        },
-                                                                      );
-                                                                    }));
-                                                                  }),
-                                                                )
-                                                              ],
-                                                            ),
-                                                            const SizedBox(
-                                                              height: 30,
-                                                            ),
-                                                          ],
+                                                                        "Cancel",
+                                                                        () {
+                                                                          Provider.of<WithDrawMethodProvider>(context, listen: false)
+                                                                              .withdrawMethodGetApiCall(context);
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                    }),
+                                                                  ),
+                                                                  SizedBox(
+                                                                    width: 150,
+                                                                    child: customElevatedButton(
+                                                                        context,
+                                                                        "Done",
+                                                                        () {
+
+                                                                        if (withDrawMethodProvider
+                                                                                .upiController
+                                                                                .text
+                                                                                .isEmpty) {
+                                                                          customSnackbar(
+                                                                              context,
+                                                                              "VPA id cant be empty.");
+                                                                        } else {
+                                                                          Navigator.push(
+                                                                              context,
+                                                                              CupertinoPageRoute(builder:
+                                                                                  (context) {
+                                                                            return PinChekUi(
+                                                                              bankData: {
+                                                                                "env_type": Constants.envType,
+                                                                                "user_id": idUser,
+                                                                                "withdraw_method_no": withDrawMethodProvider.upiController.text,
+                                                                                "withdraw_method_type": 4
+                                                                              },
+                                                                            );
+                                                                          }));
+                                                                      }
+                                                                    }),
+                                                                  )
+                                                                ],
+                                                              ),
+                                                              const SizedBox(
+                                                                height: 30,
+                                                              ),
+                                                            ],
+                                                          ),
                                                         ),
-                                                      ),
-                                                    );
-                                                  });
-                                            },
-                                            style: OutlinedButton.styleFrom(
-                                                side: BorderSide(
-                                                    color: clrGreen)),
-                                            child: Text(
-                                              "Add",
-                                              style: TextStyle(
-                                                  color: clrBlackLight),
-                                            )),
-                                      )
-                                    ],
+                                                      );
+                                                    });
+                                              },
+                                              style: OutlinedButton.styleFrom(
+                                                  side: BorderSide(
+                                                      color: clrGreen)),
+                                              child: Text(
+                                                withDrawMethodProvider
+                                                    .upiController
+                                                    .text
+                                                    .isEmpty?"Add":"Edit",
+                                                style: TextStyle(
+                                                    color: clrBlackLight),
+                                              )),
+                                        )
+                                      ],
+                                    ),
                                   )
                                 ]),
                               ),
                             ])
                           ],
                         ),
-                        const Expanded(child: SizedBox()),
-                        SizedBox(
-                            width: double.maxFinite,
-                            child: customElevatedButton(context, "Submit", () {
-                              // Provider.of<WithDrawMethodProvider>(context,
-                              //         listen: false)
-                              //     .withdrawMethodGetApiCall(context);
-                            })),
-                        const SizedBox(
-                          height: 20,
-                        )
                       ],
                     ),
                   );
-            // : Container(
-            //     padding: const EdgeInsets.symmetric(horizontal: 10),
-            //     child: Column(
-            //       children: [
-            //         const SizedBox(
-            //           height: 20,
-            //         ),
-            //         Table(
-            //           columnWidths: {
-            //             0: FixedColumnWidth(size.width * 0.45),
-            //             1: const FixedColumnWidth(10),
-            //             2: FixedColumnWidth(size.width * 0.45)
-            //           },
-            //           children: [
-            //             TableRow(children: [
-            //               Container(
-            //                 padding: const EdgeInsets.symmetric(
-            //                     horizontal: 0, vertical: 15),
-            //                 decoration: BoxDecoration(
-            //                     border: Border.all(color: greyClr),
-            //                     borderRadius:
-            //                         BorderRadius.circular(10)),
-            //                 child: Column(children: [
-            //                   Row(
-            //                     mainAxisAlignment:
-            //                         MainAxisAlignment.center,
-            //                     children: [
-            //                       SizedBox(
-            //                           width: 50,
-            //                           height: 40,
-            //                           child: Image.asset(
-            //                               "assets/images/gpay.png")),
-            //                       const SizedBox(
-            //                         width: 10,
-            //                       ),
-            //                       const Text("Google Pay")
-            //                     ],
-            //                   ),
-            //                   const SizedBox(
-            //                     height: 10,
-            //                   ),
-            //                   Row(
-            //                     mainAxisAlignment:
-            //                         MainAxisAlignment.center,
-            //                     children: [
-            //                       Text(
-            //                         withDrawMethodProvider
-            //                                 .gpayController.text.isEmpty
-            //                             ? "N/A"
-            //                             : withDrawMethodProvider
-            //                                 .gpayController.text,
-            //                         style: const TextStyle(
-            //                             fontWeight: FontWeight.w600),
-            //                       ),
-            //                       const SizedBox(
-            //                         width: 5,
-            //                       ),
-            //                       SizedBox(
-            //                         height: 30,
-            //                         child: OutlinedButton(
-            //                             onPressed: () {
-            //                               showDialog(
-            //                                   barrierDismissible: false,
-            //                                   context: context,
-            //                                   builder: (context) {
-            //                                     return AlertDialog(
-            //                                       insetPadding:
-            //                                           const EdgeInsets
-            //                                                   .symmetric(
-            //                                               horizontal:
-            //                                                   10),
-            //                                       contentPadding:
-            //                                           const EdgeInsets
-            //                                                   .symmetric(
-            //                                               horizontal:
-            //                                                   10),
-            //                                       content: SizedBox(
-            //                                         width: double
-            //                                             .maxFinite,
-            //                                         child: Column(
-            //                                           crossAxisAlignment:
-            //                                               CrossAxisAlignment
-            //                                                   .start,
-            //                                           mainAxisSize:
-            //                                               MainAxisSize
-            //                                                   .min,
-            //                                           children: [
-            //                                             const SizedBox(
-            //                                               height: 40,
-            //                                             ),
-            //                                             const Text(
-            //                                                 "Enter Mobile No.(Registered)"),
-            //                                             const SizedBox(
-            //                                               height: 10,
-            //                                             ),
-            //                                             customInputField(
-            //                                                 withDrawMethodProvider
-            //                                                     .gpayController,
-            //                                                 TextInputType
-            //                                                     .number,
-            //                                                 maxlength:
-            //                                                     10),
-            //                                             Row(
-            //                                               mainAxisAlignment:
-            //                                                   MainAxisAlignment
-            //                                                       .spaceAround,
-            //                                               children: [
-            //                                                 SizedBox(
-            //                                                   width:
-            //                                                       150,
-            //                                                   child: customElevatedButton(
-            //                                                       context,
-            //                                                       "Cancel",
-            //                                                       () {
-            //                                                     Navigator.pop(
-            //                                                         context);
-            //                                                   }),
-            //                                                 ),
-            //                                                 SizedBox(
-            //                                                   width:
-            //                                                       140,
-            //                                                   child: customElevatedButton(
-            //                                                       context,
-            //                                                       "Done",
-            //                                                       () {
-            //                                                     // gpayController.text = gpayController
-            //                                                     //     .text
-            //                                                     //     .toString();
-            //                                                     // setState(
-            //                                                     //     () {});
-            //                                                     // Navigator.pop(
-            //                                                     //     context);
-            //                                                     Navigator.push(
-            //                                                         context,
-            //                                                         CupertinoPageRoute(builder:
-            //                                                             (context) {
-            //                                                       return PinChekUi(
-            //                                                         bankData: <String,
-            //                                                             dynamic>{
-            //                                                           "env_type": Constants.envType,
-            //                                                           "user_id": idUser,
-            //                                                           "paytm_no": withDrawMethodProvider.paytmController.text,
-            //                                                           "google_pay_no": withDrawMethodProvider.gpayController.text,
-            //                                                           "phon_pay_no": withDrawMethodProvider.phonePayController.text,
-            //                                                           "vpa_id": withDrawMethodProvider.upiController.text
-            //                                                         },
-            //                                                       );
-            //                                                     }));
-            //                                                   }),
-            //                                                 )
-            //                                               ],
-            //                                             ),
-            //                                             const SizedBox(
-            //                                               height: 30,
-            //                                             ),
-            //                                           ],
-            //                                         ),
-            //                                       ),
-            //                                     );
-            //                                   });
-            //                             },
-            //                             style: OutlinedButton.styleFrom(
-            //                                 side: BorderSide(
-            //                                     color: clrGreen)),
-            //                             child: Text(
-            //                               "Add",
-            //                               style: TextStyle(
-            //                                   color: clrBlackLight),
-            //                             )),
-            //                       )
-            //                     ],
-            //                   )
-            //                 ]),
-            //               ),
-            //               const SizedBox(
-            //                 width: 10,
-            //               ),
-            //               Container(
-            //                 padding: const EdgeInsets.symmetric(
-            //                     horizontal: 0, vertical: 15),
-            //                 decoration: BoxDecoration(
-            //                     border: Border.all(color: greyClr),
-            //                     borderRadius:
-            //                         BorderRadius.circular(10)),
-            //                 child: Column(children: [
-            //                   Row(
-            //                     mainAxisAlignment:
-            //                         MainAxisAlignment.center,
-            //                     children: [
-            //                       SizedBox(
-            //                           width: 50,
-            //                           height: 50,
-            //                           child: Image.asset(
-            //                               "assets/images/phonepe-logo-icon.png")),
-            //                       const SizedBox(
-            //                         width: 10,
-            //                       ),
-            //                       const Text("Phone Pay")
-            //                     ],
-            //                   ),
-            //                   Row(
-            //                     mainAxisAlignment:
-            //                         MainAxisAlignment.center,
-            //                     children: [
-            //                       Text(
-            //                         withDrawMethodProvider
-            //                                 .phonePayController
-            //                                 .text
-            //                                 .isEmpty
-            //                             ? "N/A"
-            //                             : withDrawMethodProvider
-            //                                 .phonePayController.text,
-            //                         style: const TextStyle(
-            //                             fontWeight: FontWeight.w600),
-            //                       ),
-            //                       const SizedBox(
-            //                         width: 5,
-            //                       ),
-            //                       SizedBox(
-            //                         height: 30,
-            //                         child: OutlinedButton(
-            //                             onPressed: () {
-            //                               showDialog(
-            //                                   barrierDismissible: false,
-            //                                   context: context,
-            //                                   builder: (context) {
-            //                                     return AlertDialog(
-            //                                       insetPadding:
-            //                                           const EdgeInsets
-            //                                                   .symmetric(
-            //                                               horizontal:
-            //                                                   10),
-            //                                       contentPadding:
-            //                                           const EdgeInsets
-            //                                                   .symmetric(
-            //                                               horizontal:
-            //                                                   10),
-            //                                       content: SizedBox(
-            //                                         width: double
-            //                                             .maxFinite,
-            //                                         child: Column(
-            //                                           crossAxisAlignment:
-            //                                               CrossAxisAlignment
-            //                                                   .start,
-            //                                           mainAxisSize:
-            //                                               MainAxisSize
-            //                                                   .min,
-            //                                           children: [
-            //                                             const SizedBox(
-            //                                               height: 40,
-            //                                             ),
-            //                                             const Text(
-            //                                                 "Enter Mobile No.(Registered)"),
-            //                                             const SizedBox(
-            //                                               height: 10,
-            //                                             ),
-            //                                             customInputField(
-            //                                                 withDrawMethodProvider
-            //                                                     .phonePayController,
-            //                                                 TextInputType
-            //                                                     .number,
-            //                                                 maxlength:
-            //                                                     10),
-            //                                             Row(
-            //                                               mainAxisAlignment:
-            //                                                   MainAxisAlignment
-            //                                                       .spaceAround,
-            //                                               children: [
-            //                                                 SizedBox(
-            //                                                   width:
-            //                                                       150,
-            //                                                   child: customElevatedButton(
-            //                                                       context,
-            //                                                       "Cancel",
-            //                                                       () {
-            //                                                     Navigator.pop(
-            //                                                         context);
-            //                                                   }),
-            //                                                 ),
-            //                                                 const SizedBox(
-            //                                                   width: 40,
-            //                                                 ),
-            //                                                 SizedBox(
-            //                                                   width:
-            //                                                       150,
-            //                                                   child: customElevatedButton(
-            //                                                       context,
-            //                                                       "Done",
-            //                                                       () {
-            //                                                     // phonepayNo =withDrawMethodProvider.phonePayController
-            //                                                     //     .text
-            //                                                     //     .toString();
-            //                                                     // setState(
-            //                                                     //     () {});
-            //                                                     // Navigator.pop(
-            //                                                     //    withDrawMethodProvider. context);
-            //                                                     Navigator.push(
-            //                                                         context,
-            //                                                         CupertinoPageRoute(builder:
-            //                                                             (context) {
-            //                                                       return PinChekUi(
-            //                                                         bankData: <String,
-            //                                                             dynamic>{
-            //                                                           "env_type": Constants.envType,
-            //                                                           "user_id": idUser,
-            //                                                           "paytm_no": withDrawMethodProvider.paytmController.text,
-            //                                                           "google_pay_no": withDrawMethodProvider.gpayController.text,
-            //                                                           "phon_pay_no": withDrawMethodProvider.phonePayController.text,
-            //                                                           "vpa_id": withDrawMethodProvider.upiController.text
-            //                                                         },
-            //                                                       );
-            //                                                     }));
-            //                                                   }),
-            //                                                 )
-            //                                               ],
-            //                                             ),
-            //                                             const SizedBox(
-            //                                               height: 30,
-            //                                             ),
-            //                                           ],
-            //                                         ),
-            //                                       ),
-            //                                     );
-            //                                   });
-            //                             },
-            //                             style: OutlinedButton.styleFrom(
-            //                                 side: BorderSide(
-            //                                     color: clrGreen)),
-            //                             child: Text(
-            //                               "Add",
-            //                               style: TextStyle(
-            //                                   color: clrBlackLight),
-            //                             )),
-            //                       )
-            //                     ],
-            //                   )
-            //                 ]),
-            //               ),
-            //             ]),
-            //             const TableRow(children: [
-            //               SizedBox(
-            //                 height: 10,
-            //               ),
-            //               SizedBox(
-            //                 height: 10,
-            //               ),
-            //               SizedBox(
-            //                 height: 10,
-            //               )
-            //             ]),
-            //             TableRow(children: [
-            //               Container(
-            //                 padding: const EdgeInsets.symmetric(
-            //                     horizontal: 15, vertical: 15),
-            //                 decoration: BoxDecoration(
-            //                     border: Border.all(color: greyClr),
-            //                     borderRadius:
-            //                         BorderRadius.circular(10)),
-            //                 child: Column(children: [
-            //                   Row(
-            //                     children: [
-            //                       SizedBox(
-            //                           width: 50,
-            //                           height: 40,
-            //                           child: Image.asset(
-            //                               "assets/images/paytm.png")),
-            //                       const SizedBox(
-            //                         width: 10,
-            //                       ),
-            //                       const Text("Paytm")
-            //                     ],
-            //                   ),
-            //                   const SizedBox(
-            //                     height: 10,
-            //                   ),
-            //                   Row(
-            //                     children: [
-            //                       Text(
-            //                         withDrawMethodProvider
-            //                                 .paytmController
-            //                                 .text
-            //                                 .isEmpty
-            //                             ? "N/A"
-            //                             : withDrawMethodProvider
-            //                                 .paytmController.text,
-            //                         style: const TextStyle(
-            //                             fontWeight: FontWeight.w600),
-            //                       ),
-            //                       const SizedBox(
-            //                         width: 5,
-            //                       ),
-            //                       SizedBox(
-            //                         height: 30,
-            //                         child: OutlinedButton(
-            //                             onPressed: () {
-            //                               showDialog(
-            //                                   barrierDismissible: false,
-            //                                   context: context,
-            //                                   builder: (context) {
-            //                                     return AlertDialog(
-            //                                       insetPadding:
-            //                                           const EdgeInsets
-            //                                                   .symmetric(
-            //                                               horizontal:
-            //                                                   10),
-            //                                       contentPadding:
-            //                                           const EdgeInsets
-            //                                                   .symmetric(
-            //                                               horizontal:
-            //                                                   10),
-            //                                       content: SizedBox(
-            //                                         width: double
-            //                                             .maxFinite,
-            //                                         child: Column(
-            //                                           crossAxisAlignment:
-            //                                               CrossAxisAlignment
-            //                                                   .start,
-            //                                           mainAxisSize:
-            //                                               MainAxisSize
-            //                                                   .min,
-            //                                           children: [
-            //                                             const SizedBox(
-            //                                               height: 40,
-            //                                             ),
-            //                                             const Text(
-            //                                                 "Enter Mobile No.(Registered)"),
-            //                                             const SizedBox(
-            //                                               height: 10,
-            //                                             ),
-            //                                             customInputField(
-            //                                                 withDrawMethodProvider
-            //                                                     .paytmController,
-            //                                                 TextInputType
-            //                                                     .number,
-            //                                                 maxlength:
-            //                                                     10),
-            //                                             Row(
-            //                                               mainAxisAlignment:
-            //                                                   MainAxisAlignment
-            //                                                       .spaceAround,
-            //                                               children: [
-            //                                                 SizedBox(
-            //                                                   width:
-            //                                                       150,
-            //                                                   child: customElevatedButton(
-            //                                                       context,
-            //                                                       "Cancel",
-            //                                                       () {
-            //                                                     Navigator.pop(
-            //                                                         context);
-            //                                                   }),
-            //                                                 ),
-            //                                                 SizedBox(
-            //                                                   width:
-            //                                                       150,
-            //                                                   child: customElevatedButton(
-            //                                                       context,
-            //                                                       "Done",
-            //                                                       () {
-            //                                                     // PaytmNo = paytmController
-            //                                                     //     .text
-            //                                                     //     .toString();
-            //                                                     // setState(
-            //                                                     //     () {});
-            //                                                     Navigator.pop(
-            //                                                         context);
-            //                                                   }),
-            //                                                 )
-            //                                               ],
-            //                                             ),
-            //                                             const SizedBox(
-            //                                               height: 30,
-            //                                             ),
-            //                                           ],
-            //                                         ),
-            //                                       ),
-            //                                     );
-            //                                   });
-            //                             },
-            //                             style: OutlinedButton.styleFrom(
-            //                                 side: BorderSide(
-            //                                     color: clrGreen)),
-            //                             child: Text(
-            //                               "Add",
-            //                               style: TextStyle(
-            //                                   color: clrBlackLight),
-            //                             )),
-            //                       )
-            //                     ],
-            //                   )
-            //                 ]),
-            //               ),
-            //               const SizedBox(
-            //                 width: 10,
-            //               ),
-            //               Container(
-            //                 padding: const EdgeInsets.symmetric(
-            //                     horizontal: 0, vertical: 15),
-            //                 decoration: BoxDecoration(
-            //                     border: Border.all(color: greyClr),
-            //                     borderRadius:
-            //                         BorderRadius.circular(10)),
-            //                 child: Column(children: [
-            //                   Row(
-            //                     mainAxisAlignment:
-            //                         MainAxisAlignment.center,
-            //                     children: [
-            //                       SizedBox(
-            //                           width: 50,
-            //                           height: 50,
-            //                           child: Image.asset(
-            //                               "assets/images/upi.png")),
-            //                       const SizedBox(
-            //                         width: 30,
-            //                       ),
-            //                       const Text("VPA")
-            //                     ],
-            //                   ),
-            //                   Row(
-            //                     mainAxisAlignment:
-            //                         MainAxisAlignment.center,
-            //                     children: [
-            //                       Text(
-            //                         withDrawMethodProvider
-            //                                 .upiController.text.isEmpty
-            //                             ? "N/A"
-            //                             : withDrawMethodProvider
-            //                                 .upiController.text,
-            //                         style: const TextStyle(
-            //                             fontWeight: FontWeight.w600),
-            //                       ),
-            //                       const SizedBox(
-            //                         width: 10,
-            //                       ),
-            //                       SizedBox(
-            //                         height: 30,
-            //                         child: OutlinedButton(
-            //                             onPressed: () {
-            //                               showDialog(
-            //                                   barrierDismissible: false,
-            //                                   context: context,
-            //                                   builder: (context) {
-            //                                     return AlertDialog(
-            //                                       insetPadding:
-            //                                           const EdgeInsets
-            //                                                   .symmetric(
-            //                                               horizontal:
-            //                                                   10),
-            //                                       contentPadding:
-            //                                           const EdgeInsets
-            //                                                   .symmetric(
-            //                                               horizontal:
-            //                                                   10),
-            //                                       content: SizedBox(
-            //                                         width: double
-            //                                             .maxFinite,
-            //                                         child: Column(
-            //                                           crossAxisAlignment:
-            //                                               CrossAxisAlignment
-            //                                                   .start,
-            //                                           mainAxisSize:
-            //                                               MainAxisSize
-            //                                                   .min,
-            //                                           children: [
-            //                                             const SizedBox(
-            //                                               height: 40,
-            //                                             ),
-            //                                             const Text(
-            //                                                 "Enter Mobile No.(Registered)"),
-            //                                             const SizedBox(
-            //                                               height: 10,
-            //                                             ),
-            //                                             customInputField(
-            //                                                 withDrawMethodProvider
-            //                                                     .upiController,
-            //                                                 TextInputType
-            //                                                     .number,
-            //                                                 maxlength:
-            //                                                     10),
-            //                                             Row(
-            //                                               mainAxisAlignment:
-            //                                                   MainAxisAlignment
-            //                                                       .spaceAround,
-            //                                               children: [
-            //                                                 SizedBox(
-            //                                                   width:
-            //                                                       150,
-            //                                                   child: customElevatedButton(
-            //                                                       context,
-            //                                                       "Cancel",
-            //                                                       () {
-            //                                                     Navigator.pop(
-            //                                                         context);
-            //                                                   }),
-            //                                                 ),
-            //                                                 SizedBox(
-            //                                                   width:
-            //                                                       150,
-            //                                                   child: customElevatedButton(
-            //                                                       context,
-            //                                                       "Done",
-            //                                                       () {
-            //                                                     // VpaUpi = upiController
-            //                                                     //     .text
-            //                                                     //     .toString();
-            //                                                     // setState(
-            //                                                     //     () {});
-            //                                                     Navigator.pop(
-            //                                                         context);
-            //                                                   }),
-            //                                                 )
-            //                                               ],
-            //                                             ),
-            //                                             const SizedBox(
-            //                                               height: 30,
-            //                                             ),
-            //                                           ],
-            //                                         ),
-            //                                       ),
-            //                                     );
-            //                                   });
-            //                             },
-            //                             style: OutlinedButton.styleFrom(
-            //                                 side: BorderSide(
-            //                                     color: clrGreen)),
-            //                             child: Text(
-            //                               "Add",
-            //                               style: TextStyle(
-            //                                   color: clrBlackLight),
-            //                             )),
-            //                       )
-            //                     ],
-            //                   )
-            //                 ]),
-            //               ),
-            //             ])
-            //           ],
-            //         ),
-            //         const Expanded(child: SizedBox()),
-            //         SizedBox(
-            //             width: double.maxFinite,
-            //             child:
-            //                 customElevatedButton(context, "Submit", () {
-            //               // Provider.of<WithDrawMethodProvider>(context,
-            //               //         listen: false)
-            //               //     .withdrawMethodGetApiCall(context);
-            //             })),
-            //         const SizedBox(
-            //           height: 20,
-            //         )
-            //       ],
-            //     ),
-            //   );
-
-            //  SingleChildScrollView(
-            //     child: Column(
-            //       children: [
-            //         Container(
-            //           margin:
-            //               const EdgeInsets.symmetric(horizontal: 10),
-            //           child: Column(
-            //             crossAxisAlignment: CrossAxisAlignment.start,
-            //             children: [
-            //               const SizedBox(
-            //                 height: 20,
-            //               ),
-            //               SizedBox(
-            //                 height: 80,
-            //                 child: Center(
-            //                     child: Image.asset(
-            //                         "assets/demoimages/demoicon.png")),
-            //               ),
-            //               const SizedBox(
-            //                 height: 50,
-            //               ),
-            //               const Text("Account Holder Name"),
-            //               const SizedBox(
-            //                 height: 10,
-            //               ),
-            //               customInputField(
-            //                   nameController, TextInputType.text),
-            //               const SizedBox(
-            //                 height: 10,
-            //               ),
-            //               const Text("Account Number"),
-            //               const SizedBox(
-            //                 height: 10,
-            //               ),
-            //               customInputField(
-            //                   noController, TextInputType.text),
-            //               const SizedBox(
-            //                 height: 10,
-            //               ),
-            //               const Text("IFSC Code"),
-            //               const SizedBox(
-            //                 height: 10,
-            //               ),
-            //               customInputField(
-            //                   codeController, TextInputType.text),
-            //               const SizedBox(
-            //                 height: 10,
-            //               ),
-            //               const Text("Bank Name"),
-            //               const SizedBox(
-            //                 height: 10,
-            //               ),
-            //               customInputField(
-            //                   bankController, TextInputType.text),
-            //               const SizedBox(
-            //                 height: 10,
-            //               ),
-            //               const Text("Address"),
-            //               const SizedBox(
-            //                 height: 10,
-            //               ),
-            //               customInputField(
-            //                   addController, TextInputType.text),
-            //               const SizedBox(
-            //                 height: 20,
-            //               ),
-            //               SizedBox(
-            //                 width: double.infinity,
-            //                 child: customElevatedButton(context, "SAVE",
-            //                     () {
-            //                   // Navigator.push(context,
-            //                   //     CupertinoPageRoute(builder: (context) {
-            //                   //   return AddBankDetailTwoUi();
-            //                   // }));
-            //                   showDialog(
-            //                       context: context,
-            //                       builder: (context) {
-            //                         return AlertDialog(
-            //                           insetPadding:
-            //                               const EdgeInsets.symmetric(
-            //                                   horizontal: 10),
-            //                           contentPadding: EdgeInsets.zero,
-            //                           content: SizedBox(
-            //                             width: MediaQuery.of(context)
-            //                                 .size
-            //                                 .width,
-            //                             child: Column(
-            //                               mainAxisSize:
-            //                                   MainAxisSize.min,
-            //                               children: [
-            //                                 const SizedBox(
-            //                                   height: 30,
-            //                                 ),
-            //                                 SizedBox(
-            //                                     width: 100,
-            //                                     child: Image.asset(
-            //                                         "assets/demoimages/Pass.png")),
-            //                                 const SizedBox(
-            //                                   height: 30,
-            //                                 ),
-            //                                 const Text(
-            //                                     "Your Bank Details Updated Successfully."),
-            //                                 const SizedBox(
-            //                                   height: 20,
-            //                                 ),
-            //                                 Padding(
-            //                                   padding: const EdgeInsets
-            //                                           .symmetric(
-            //                                       horizontal: 50,
-            //                                       vertical: 10),
-            //                                   child: SizedBox(
-            //                                     width: double.infinity,
-            //                                     child:
-            //                                         customElevatedButton(
-            //                                             context, "Ok",
-            //                                             () {
-            //                                       // Navigator.pop(context);
-            //                                       // Navigator.pop(context);
-            //                                       Navigator.push(
-            //                                           context,
-            //                                           CupertinoPageRoute(
-            //                                               builder:
-            //                                                   (context) {
-            //                                         return const BankDetailsUi();
-            //                                       }));
-            //                                     }),
-            //                                   ),
-            //                                 ),
-            //                                 const SizedBox(
-            //                                   height: 20,
-            //                                 ),
-            //                               ],
-            //                             ),
-            //                           ),
-            //                         );
-            //                       });
-            //                 }),
-            //               ),
-            //               const SizedBox(
-            //                 height: 20,
-            //               ),
-            //             ],
-            //           ),
-            //         )
-            //       ],
-            //     ),
-            //   );
           },
         ));
   }

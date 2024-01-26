@@ -443,7 +443,7 @@ Future<dynamic> customFilter(BuildContext context) {
 }
 
 Future<dynamic> popupWorkingMoneyReduction(BuildContext context, onsubmit,
-    {data, totalbid, bidamount, currentBalance, afterBalance, isType}) {
+    {data, totalbid, bidamount, currentBalance, afterBalance, isType,gameName}) {
   return showDialog(
       context: context,
       builder: (context) {
@@ -462,10 +462,10 @@ Future<dynamic> popupWorkingMoneyReduction(BuildContext context, onsubmit,
                     color: primaryColor,
                     padding: const EdgeInsets.symmetric(vertical: 15),
                     width: double.infinity,
-                    child: const Center(
+                    child:  Center(
                       child: Text(
-                        "TIME BAZAR ", //20/12/2023
-                        style: TextStyle(fontSize: 18),
+                        gameName?? "TIME BAZAR ", //20/12/2023
+                        style:const TextStyle(fontSize: 18),
                       ),
                     ),
                   ),
@@ -621,7 +621,7 @@ Future<dynamic> popupWorkingMoneyReduction(BuildContext context, onsubmit,
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("Total Bids Amount"),
+                            Text("Total Bids Amount :"),
                             Text("$bidamount",
                                 style: const TextStyle(
                                     fontWeight: FontWeight.w600))
@@ -630,7 +630,7 @@ Future<dynamic> popupWorkingMoneyReduction(BuildContext context, onsubmit,
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("Before Deduction:"),
+                            Text("Before Deduction :"),
                             Consumer<ProfileProvider>(
                                         builder: (context, profileProvider, child) {
                                           return Text(
@@ -662,34 +662,36 @@ Future<dynamic> popupWorkingMoneyReduction(BuildContext context, onsubmit,
                             )],
                         ),
                         const SizedBox(
-                          height: 5,
+                          height: 20,
                         ),
                         Text(
-                          "*Note: Bid Once Played Can Not Be Canclled*",
+                          "*Note: Bid Once Played Can Not Be Cancelled*",
                           textAlign: TextAlign.center,
-                          style: TextStyle(color: clrRed),
+                          style: TextStyle(color: clrRed,fontSize: 13),
                         ),
                         const SizedBox(
-                          height: 10,
+                          height: 20,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             SizedBox(
                               width: 120,
-                              child: customElevatedButton(
-                                  context, "SUBMIT", onsubmit,
-                                  verticalPadding: 8.0),
+                              child: customElevatedButton(context, "CANCEL", () {
+                                Navigator.pop(context);
+                              }, verticalPadding: 8.0),
                             ),
                             const SizedBox(
                               width: 20,
                             ),
                             SizedBox(
                               width: 120,
-                              child: customElevatedButton(context, "CANCEL", () {
-                                Navigator.pop(context);
-                              }, verticalPadding: 8.0),
+                              child: customElevatedButton(
+                                  context, "SUBMIT", onsubmit,
+                                  verticalPadding: 8.0),
                             ),
+
+
                           ],
                         ),
                         const SizedBox(

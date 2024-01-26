@@ -1,6 +1,8 @@
 import 'package:earninggame/models/galigamesmodel.dart';
 import 'package:earninggame/providers/gameuiproviders/gdgamesprovider.dart';
 import 'package:earninggame/providers/kingjackpotprovider.dart';
+import 'package:earninggame/ui/biduis/kingjackpotresulthistory.dart';
+import 'package:earninggame/ui/biduis/kingstarlineresulthistoryui.dart';
 import 'package:earninggame/ui/gamestypekingjackpotui.dart';
 import 'package:earninggame/ui/kingjackpothistoryui.dart';
 import 'package:earninggame/utils/colors.dart';
@@ -56,7 +58,7 @@ class _KingJackpotGamesUiState extends State<KingJackpotGamesUi> {
                         onTap: () {
                           Navigator.push(context,
                               CupertinoPageRoute(builder: (context) {
-                            return const KingJackpotHistory();
+                            return const KingJackpotResultHistoryUi(); //KingJackpotHistory();
                           })).then((value) {
                             Provider.of<GaliProvider>(context, listen: false)
                                 .getGaliRatesApiCall(context);
@@ -356,37 +358,6 @@ class _KingJackpotGamesUiState extends State<KingJackpotGamesUi> {
                                                                     const SizedBox(
                                                                       height:
                                                                           20,
-                                                                    ),
-                                                                    Table(
-                                                                      children: const [
-                                                                        TableRow(
-                                                                            children: [
-                                                                              Align(
-                                                                                alignment: Alignment.centerRight,
-                                                                                child: Text("Result Time :"),
-                                                                              ),
-                                                                              Center(
-                                                                                child: Text("11:00 AM"),
-                                                                              ),
-                                                                            ]),
-                                                                        TableRow(
-                                                                            children: [
-                                                                              SizedBox(
-                                                                                height: 10,
-                                                                              ),
-                                                                              SizedBox(
-                                                                                height: 10,
-                                                                              ),
-                                                                            ]),
-                                                                        TableRow(
-                                                                            children: [
-                                                                              Align(
-                                                                                alignment: Alignment.centerRight,
-                                                                                child: Text("Bid Last Time :"),
-                                                                              ),
-                                                                              Center(child: Text(" 09:55 AM")),
-                                                                            ]),
-                                                                      ],
                                                                     ),
                                                                     const SizedBox(
                                                                       height:

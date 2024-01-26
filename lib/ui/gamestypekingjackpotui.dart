@@ -23,8 +23,8 @@ class GamesTypeKingJackpotUi extends StatefulWidget {
 class _GamesTypeKingJackpotUiState extends State<GamesTypeKingJackpotUi> {
   List<Map> gameTypes = [
     {"image": "assets/demoimages/dicetwo.png", "name": "Left Digit"},
-    {"image": "assets/images/twoo.png", "name": "Jodi Digit"},
-    {"image": "assets/images/groupj.png", "name": "Right Digit"},
+    {"image": "assets/images/twoo.png", "name": "Right Digit"},
+    {"image": "assets/images/groupj.png", "name": "Jodi Digit"},
     {"image": "assets/images/groupj.png", "name": "Right Digit"},
   ];
   int logNum = 0;
