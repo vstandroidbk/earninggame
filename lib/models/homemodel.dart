@@ -14,7 +14,7 @@ class HomeModel {
     if (json['result'] != null) {
       result = <Result>[];
       json['result'].forEach((v) {
-        result!.add(Result.fromJson(v));
+        result!.add(new Result.fromJson(v));
       });
     }
     mobileNo = json['mobile_no'];
@@ -42,6 +42,7 @@ class Result {
   String? openTimeSort;
   String? closeTime;
   String? msg;
+  int? msgStatus;
   String? openResult;
   String? closeResult;
   int? closeDuration;
@@ -50,17 +51,18 @@ class Result {
 
   Result(
       {this.gameId,
-      this.gameName,
-      this.gameNameHindi,
-      this.openTime,
-      this.openTimeSort,
-      this.closeTime,
-      this.msg,
-      this.openResult,
-      this.closeResult,
-      this.closeDuration,
-      this.timeSrt,
-      this.webChartUrl});
+        this.gameName,
+        this.gameNameHindi,
+        this.openTime,
+        this.openTimeSort,
+        this.closeTime,
+        this.msg,
+        this.msgStatus,
+        this.openResult,
+        this.closeResult,
+        this.closeDuration,
+        this.timeSrt,
+        this.webChartUrl});
 
   Result.fromJson(Map<String, dynamic> json) {
     gameId = json['game_id'];
@@ -70,6 +72,7 @@ class Result {
     openTimeSort = json['open_time_sort'];
     closeTime = json['close_time'];
     msg = json['msg'];
+    msgStatus = json['msg_status'];
     openResult = json['open_result'];
     closeResult = json['close_result'];
     closeDuration = json['close_duration'];
@@ -86,6 +89,7 @@ class Result {
     data['open_time_sort'] = openTimeSort;
     data['close_time'] = closeTime;
     data['msg'] = msg;
+    data['msg_status'] = msgStatus;
     data['open_result'] = openResult;
     data['close_result'] = closeResult;
     data['close_duration'] = closeDuration;

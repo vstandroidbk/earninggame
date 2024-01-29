@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:marquee/marquee.dart';
 import 'package:provider/provider.dart';
 
+import '../providers/gameuiproviders/maingamesprovider.dart';
 import '../utils/constants.dart';
 
 class HomeUi extends StatefulWidget {
@@ -242,7 +243,7 @@ class _HomeUiState extends State<HomeUi> {
                                   padding: const EdgeInsets.only(top: 8),
                                   child: InkWell(
                                     onTap: () {
-                                      if (gamedata?.msg == "Market Closed") {
+                                      if (gamedata?.msgStatus == 2) {
                                         showDialog(
                                             context: context,
                                             builder: (context) {
@@ -288,40 +289,6 @@ class _HomeUiState extends State<HomeUi> {
                                                       const SizedBox(
                                                         height: 10,
                                                       ),
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceAround,
-                                                        children: [
-                                                          Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .end,
-                                                            children: const [
-                                                              Text(
-                                                                  "Open Result Time :"),
-                                                              Text(
-                                                                  "Open Bid Last Time :"),
-                                                              Text(
-                                                                  "Close Result Time :"),
-                                                              Text(
-                                                                  "Close Bid Last Time :")
-                                                            ],
-                                                          ),
-                                                          Column(
-                                                            children: [
-                                                              Text(
-                                                                  "${gamedata?.openResult}"),
-                                                              Text(
-                                                                  "${gamedata?.closeTime}"),
-                                                              Text(
-                                                                  "${gamedata?.closeResult}"),
-                                                              Text(
-                                                                  "${gamedata?.closeTime}"),
-                                                            ],
-                                                          )
-                                                        ],
-                                                      ),
                                                       const SizedBox(
                                                         height: 10,
                                                       ),
@@ -344,18 +311,11 @@ class _HomeUiState extends State<HomeUi> {
                                               );
                                             });
                                       } else {
-                                        Navigator.push(context,
-                                            CupertinoPageRoute(
-                                                builder: (context) {
-                                          return const GamesTypeUi();
-                                        })).then((value) {
-                                          Provider.of<ProfileProvider>(context,
-                                                  listen: false)
-                                              .profileDataApiCall(context);
-                                          Provider.of<HomeProvider>(context,
-                                                  listen: false)
-                                              .homeDataApiCall(context);
-                                        });
+                                        Provider.of<MainGamesProvider>(context,
+                                                listen: false)
+                                            .mainGameStatusCheckApiCall(
+                                                context, gamedata?.gameId,
+                                                gmName: gamedata?.gameName);
                                       }
                                     },
                                     child: Container(
@@ -386,8 +346,7 @@ class _HomeUiState extends State<HomeUi> {
                                               ),
                                               Text(
                                                 "${gamedata?.msg}",
-                                                style: gamedata?.msg ==
-                                                        "Market Closed"
+                                                style: gamedata?.msgStatus == 2
                                                     ? TextStyle(color: clrRed)
                                                     : TextStyle(
                                                         color: clrGreen),

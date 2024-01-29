@@ -24,13 +24,10 @@ class WithDrawMethodProvider with ChangeNotifier {
   bool isGetDataLoding = false;
   Map<String, dynamic>? controllersval;
   setcontrollerval(gpay, phonepay, paytm, vpa) {
-    // controllersval = <String, dynamic>{
     gpayController.text = gpay ?? '';
     phonePayController.text = phonepay ?? '';
     paytmController.text = paytm ?? '';
     upiController.text = vpa ?? '';
-    // };
-
     notifyListeners();
   }
 

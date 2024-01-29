@@ -1,4 +1,4 @@
-import 'package:earninggame/providers/gameuiproviders/jodidigitprovider.dart';
+import 'package:earninggame/providers/gameuiproviders/jodidigitproviderrr.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../utils/colors.dart';

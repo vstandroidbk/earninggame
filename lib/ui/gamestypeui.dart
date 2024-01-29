@@ -1,31 +1,18 @@
-import 'package:earninggame/ui/gamesui/choicespdptpgameui.dart';
-import 'package:earninggame/ui/gamesui/digitbasedjodigameui.dart';
-import 'package:earninggame/ui/gamesui/doublepanabulkgameui.dart';
-import 'package:earninggame/ui/gamesui/doublepanagameui.dart';
-import 'package:earninggame/ui/gamesui/dpmotorgameui.dart';
-import 'package:earninggame/ui/gamesui/fullsangamgameui.dart';
-import 'package:earninggame/ui/gamesui/groupjodigameui.dart';
-import 'package:earninggame/ui/gamesui/halfsangramagameui.dart';
-import 'package:earninggame/ui/gamesui/halfsangrambgameui.dart';
-import 'package:earninggame/ui/gamesui/jodidigitbulkgameui.dart';
-import 'package:earninggame/ui/gamesui/jodidigitgameui.dart';
-import 'package:earninggame/ui/gamesui/oddevengameui.dart';
-import 'package:earninggame/ui/gamesui/redbracketgameui.dart';
-import 'package:earninggame/ui/gamesui/singledigitbulkui.dart';
-import 'package:earninggame/ui/gamesui/singledigitgameui.dart';
-import 'package:earninggame/ui/gamesui/singlepanagameui.dart';
-import 'package:earninggame/ui/gamesui/spdptpgameui.dart';
-import 'package:earninggame/ui/gamesui/spmotorgameui.dart';
-import 'package:earninggame/ui/gamesui/triplepanagameui.dart';
-import 'package:earninggame/ui/gamesui/twodigitspanelgameui.dart';
 import 'package:earninggame/utils/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'gamesui/penalgroupgameui.dart';
-import 'gamesui/singlepanabulkgameui.dart';
+import 'gamesui/dpmotorgameui.dart';
+import 'gamesui/fullsangamgameui.dart';
+import 'gamesui/halfsangrambgameui.dart';
+import 'gamesui/maingamecommonui.dart';
+import 'gamesui/singledigitgameui.dart';
+import 'gamesui/spdptpgameui.dart';
+import 'gamesui/spmotorgameui.dart';
 
 class GamesTypeUi extends StatefulWidget {
-  const GamesTypeUi({super.key});
+  final String? gameName;
+  final String? gameId;
+  const GamesTypeUi({super.key, required this.gameName, required this.gameId});
 
   @override
   State<GamesTypeUi> createState() => _GamesTypeUiState();
@@ -34,26 +21,26 @@ class GamesTypeUi extends StatefulWidget {
 class _GamesTypeUiState extends State<GamesTypeUi> {
   List<Map> gameTypes = [
     {"image": "assets/images/dice.png", "name": "Single Digits"},
-    {"image": "assets/images/dice.png", "name": "Single Digits Bulk"},
+    // {"image": "assets/images/dice.png", "name": "Single Digits Bulk"},
     {"image": "assets/images/twoo.png", "name": "Jodi Digits"},
-    {"image": "assets/demoimages/dicetwo.png", "name": "jodi Digits Bulk"},
+    // {"image": "assets/demoimages/dicetwo.png", "name": "jodi Digits Bulk"},
     {"image": "assets/images/dicee.png", "name": "Single Pana"},
-    {"image": "assets/images/dicee.png", "name": "Single Pana Bulk"},
+    // {"image": "assets/images/dicee.png", "name": "Single Pana Bulk"},
     {"image": "assets/images/dicepatti.png", "name": "Double Pana"},
-    {"image": "assets/images/dicepatti.png", "name": "Double Pana Bulk"},
+    // {"image": "assets/images/dicepatti.png", "name": "Double Pana Bulk"},
     {"image": "assets/images/triplepana.png", "name": "Triple Pana"},
-    {"image": "assets/images/penalgroup.png", "name": "Penal Group"},
-    {"image": "assets/images/dice.png", "name": "Red Brackets"},
+    // {"image": "assets/images/penalgroup.png", "name": "Penal Group"},
+    // {"image": "assets/images/dice.png", "name": "Red Brackets"},
     {"image": "assets/images/spdp.png", "name": "SP DP TP"},
-    {"image": "assets/images/choice.png", "name": "Choice Pana SPDP"},
+    // {"image": "assets/images/choice.png", "name": "Choice Pana SPDP"},
     {"image": "assets/images/sp.png", "name": "SP Motor"},
     {"image": "assets/images/dp.png", "name": "DP Motor"},
-    {"image": "assets/demoimages/ludo.png", "name": "Group Jodi"},
-    {"image": "assets/images/groupj.png", "name": "Digits Based Jodi"},
-    {"image": "assets/images/oddeven.png", "name": "oddEven"},
-    {"image": "assets/images/twoo.png", "name": "Two Digits Panel"},
-    {"image": "assets/images/halfa.png", "name": "Half Sangam A"},
-    {"image": "assets/images/halfb.png", "name": "Half Sangam B"},
+    // {"image": "assets/demoimages/ludo.png", "name": "Group Jodi"},
+    // {"image": "assets/images/groupj.png", "name": "Digits Based Jodi"},
+    // {"image": "assets/images/oddeven.png", "name": "oddEven"},
+    // {"image": "assets/images/twoo.png", "name": "Two Digits Panel"},
+    // {"image": "assets/images/halfa.png", "name": "Half Sangam A"},
+    {"image": "assets/images/halfb.png", "name": "Half Sangam"},
     {"image": "assets/images/full.png", "name": "Full Sangam"},
   ];
   int logNum = 0;
@@ -99,109 +86,74 @@ class _GamesTypeUiState extends State<GamesTypeUi> {
                               if (index == 0) {
                                 Navigator.push(context,
                                     CupertinoPageRoute(builder: (context) {
-                                  return const SingleDigitGameUi();
+                                  return MainGameCommonUi(
+                                    gameTitle: 'Single Digit Game',
+                                    gameNo: 1,
+                                    gameName: widget.gameName,
+                                    gameId: widget.gameId,
+                                  );
                                 }));
                               } else if (index == 1) {
                                 Navigator.push(context,
                                     CupertinoPageRoute(builder: (context) {
-                                  return const SingleDigitBulkUi();
+                                  return MainGameCommonUi(
+                                    gameTitle: 'Jodi Digit Game',
+                                    gameNo: 2,
+                                    gameName: widget.gameName,
+                                    gameId: widget.gameId,
+                                  );
                                 }));
                               } else if (index == 2) {
                                 Navigator.push(context,
                                     CupertinoPageRoute(builder: (context) {
-                                  return const JodiDigitGameUi();
+                                  return MainGameCommonUi(
+                                    gameTitle: 'Single Pana Game',
+                                    gameNo: 3,
+                                    gameName: widget.gameName,
+                                    gameId: widget.gameId,
+                                  );
                                 }));
                               } else if (index == 3) {
                                 Navigator.push(context,
                                     CupertinoPageRoute(builder: (context) {
-                                  return const JodiDigitBulkGameUi();
+                                  return MainGameCommonUi(
+                                    gameTitle: 'Double Pana Game',
+                                    gameNo: 4,
+                                    gameName: widget.gameName,
+                                    gameId: widget.gameId,
+                                  );
                                 }));
                               } else if (index == 4) {
                                 Navigator.push(context,
                                     CupertinoPageRoute(builder: (context) {
-                                  return const SinglePanaGameUi();
+                                  return MainGameCommonUi(
+                                    gameTitle: 'Triple Pana Game',
+                                    gameNo: 5,
+                                    gameName: widget.gameName,
+                                    gameId: widget.gameId,
+                                  );
                                 }));
                               } else if (index == 5) {
                                 Navigator.push(context,
                                     CupertinoPageRoute(builder: (context) {
-                                  return const SinglePanaBulkGameUi();
+                                  return const SpDpTpGameUi();
                                 }));
                               } else if (index == 6) {
                                 Navigator.push(context,
                                     CupertinoPageRoute(builder: (context) {
-                                  return const DoublePanaGameUi();
+                                  return const SpMotorGameUi();
                                 }));
                               } else if (index == 7) {
                                 Navigator.push(context,
                                     CupertinoPageRoute(builder: (context) {
-                                  return const DoublePanaBulkGameUi();
+                                  return const DpMotorGameUi();
                                 }));
                               } else if (index == 8) {
                                 Navigator.push(context,
                                     CupertinoPageRoute(builder: (context) {
-                                  return const TriplePanaGameUi();
-                                }));
-                              } else if (index == 9) {
-                                Navigator.push(context,
-                                    CupertinoPageRoute(builder: (context) {
-                                  return const PenalGroupGameUi();
-                                }));
-                              } else if (index == 10) {
-                                Navigator.push(context,
-                                    CupertinoPageRoute(builder: (context) {
-                                  return const RedBracketsGameUi();
-                                }));
-                              } else if (index == 11) {
-                                Navigator.push(context,
-                                    CupertinoPageRoute(builder: (context) {
-                                  return const SpDpTpGameUi();
-                                }));
-                              } else if (index == 12) {
-                                Navigator.push(context,
-                                    CupertinoPageRoute(builder: (context) {
-                                  return const ChoiceSpDpTpGameUi();
-                                }));
-                              } else if (index == 13) {
-                                Navigator.push(context,
-                                    CupertinoPageRoute(builder: (context) {
-                                  return const SpMotorGameUi();
-                                }));
-                              } else if (index == 14) {
-                                Navigator.push(context,
-                                    CupertinoPageRoute(builder: (context) {
-                                  return const DpMotorGameUi();
-                                }));
-                              } else if (index == 15) {
-                                Navigator.push(context,
-                                    CupertinoPageRoute(builder: (context) {
-                                  return const GroupJodiGameUi();
-                                }));
-                              } else if (index == 16) {
-                                Navigator.push(context,
-                                    CupertinoPageRoute(builder: (context) {
-                                  return const DigitBasedJodiGameUi();
-                                }));
-                              } else if (index == 17) {
-                                Navigator.push(context,
-                                    CupertinoPageRoute(builder: (context) {
-                                  return const OddEvenGameUi();
-                                }));
-                              } else if (index == 18) {
-                                Navigator.push(context,
-                                    CupertinoPageRoute(builder: (context) {
-                                  return const TwoDigitsPanelGameUi();
-                                }));
-                              } else if (index == 19) {
-                                Navigator.push(context,
-                                    CupertinoPageRoute(builder: (context) {
-                                  return const HalfSangramAGameUi();
-                                }));
-                              } else if (index == 20) {
-                                Navigator.push(context,
-                                    CupertinoPageRoute(builder: (context) {
                                   return const HalfSangramBGameUi();
                                 }));
-                              } else if (index == 21) {
+                              } else if (index == 9) {
                                 Navigator.push(context,
                                     CupertinoPageRoute(builder: (context) {
                                   return const FullSangamGameUi();

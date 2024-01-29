@@ -6,7 +6,8 @@ import 'package:earninggame/providers/fundprovider/withdrawfundprovider.dart';
 import 'package:earninggame/providers/gamesratesprovider.dart';
 import 'package:earninggame/providers/gameuiproviders/gdgamesprovider.dart';
 import 'package:earninggame/providers/gameuiproviders/jodidigitbulkprovider.dart';
-import 'package:earninggame/providers/gameuiproviders/jodidigitprovider.dart';
+import 'package:earninggame/providers/gameuiproviders/jodidigitproviderrr.dart';
+import 'package:earninggame/providers/gameuiproviders/maingamesprovider.dart';
 import 'package:earninggame/providers/gameuiproviders/singledigitbulkprovider.dart';
 import 'package:earninggame/providers/gameuiproviders/singledigitprovider.dart';
 import 'package:earninggame/providers/gameuiproviders/singlepanaprovider.dart';
@@ -33,6 +34,7 @@ void main() {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => NumberProvider()),
+      ChangeNotifierProvider(create: (_) => MainGamesProvider()),
       ChangeNotifierProvider(create: (_) => GdGamesProvider()),
       ChangeNotifierProvider(create: (_) => SlGameProvider()),
       ChangeNotifierProvider(create: (_) => WithDrawMethodProvider()),

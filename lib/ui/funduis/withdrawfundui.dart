@@ -28,6 +28,8 @@ class _WithdrawFundUiState extends State<WithdrawFundUi> {
     super.initState();
     Provider.of<WithDrawMethodProvider>(context, listen: false)
         .withdrawMethodgetApiCall(context);
+    Provider.of<WithDrawMethodProvider>(context, listen: false)
+        .setdropValue(null);
     Provider.of<WithdrawFundProvider>(context, listen: false)
         .withdrawGetWalletApiCall(context);
 
@@ -77,7 +79,7 @@ class _WithdrawFundUiState extends State<WithdrawFundUi> {
                           child: Column(
                             children: [
                               const SizedBox(
-                                height: 80,
+                                height: 10,
                               ),
                               Container(
                                 decoration: BoxDecoration(boxShadow: [
@@ -105,7 +107,7 @@ class _WithdrawFundUiState extends State<WithdrawFundUi> {
                                             height: 3,
                                           ),
                                           Text(
-                                            "8828700284",
+                                            modeldata.mobileNo??"----------",
                                             style: TextStyle(
                                                 color: clrWhite,
                                                 fontWeight: FontWeight.w600),
@@ -199,7 +201,7 @@ class _WithdrawFundUiState extends State<WithdrawFundUi> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                modeldata.mobileNo ??
+                                                modeldata.whatsappNo ??
                                                     '----------',
                                                 style: const TextStyle(
                                                     fontWeight: FontWeight.w600,
@@ -210,23 +212,28 @@ class _WithdrawFundUiState extends State<WithdrawFundUi> {
                                                     withdrawFundProvider,
                                                     child) {
                                                   DateTime startTime;
+                                                  String? opentime;
+                                                  String? openClose;
                                                   WithdraFundGetModel modelData;
                                                   if (withdrawFundProvider
                                                           .isLoding ==
                                                       false) {
                                                     try {
-                                                      print(
-                                                          "${withdrawFundProvider.isLoding} ====================");
+
                                                       modelData =
                                                           withdrawFundProvider
                                                               .withdrawGetWelletData;
+
+                                                     DateTime now=DateTime.now();
+                                                     String todayDate=DateFormat("yyyy-MM-dd").format(now);
+
                                                       String timeOpen =
-                                                          "2024-01-18 ${modelData.withdrawOpenTime}:00";
-                                                      print(
-                                                          "$timeOpen ==============================");
-                                                      startTime =
-                                                          DateFormat("jm")
-                                                              .parse(timeOpen);
+                                                          "$todayDate ${modelData.withdrawOpenTime}:00";
+                                                      String timeClose =
+                                                          "$todayDate ${modelData.withdrawCloseTime}:00";
+                                                      startTime =DateTime.parse("$timeOpen");
+                                                       opentime=DateFormat("hh:mm a").format(startTime);
+                                                       openClose=DateFormat("hh:mm a").format(DateTime.parse("$timeClose"));
                                                     } catch (e) {
                                                       log(e.toString());
                                                       // customSnackbar(context,
@@ -239,9 +246,9 @@ class _WithdrawFundUiState extends State<WithdrawFundUi> {
                                                       : withdrawFundProvider
                                                               .isLoding
                                                           ? const CustomCircularProgress()
-                                                          : const Text(
-                                                              "10:00 AM ~ 10:00 PM",
-                                                              style: TextStyle(
+                                                          :  Text(
+                                                              "${opentime ?? '---'} ~ ${openClose ?? '---'}",
+                                                              style:const TextStyle(
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w600,
@@ -324,23 +331,63 @@ class _WithdrawFundUiState extends State<WithdrawFundUi> {
                                                       .dropValue
                                             };
 
+
+                                            bool startTimeOpen=true;
+                                            bool closeTimeOpen=true;
                                             WithdraFundGetModel modelData =
                                                 withdrawFundProvider
                                                     .withdrawGetWelletData;
+
+                                              try {
+                                                DateTime now=DateTime.now();
+                                                String todayDate=DateFormat("yyyy-MM-dd").format(now);
+                                                String timeOpen =
+                                                    "$todayDate ${modelData.withdrawOpenTime}:00";
+                                                String timeClose =
+                                                    "$todayDate ${modelData.withdrawCloseTime}:00";
+
+                                               DateTime startTime =DateTime.parse("$timeOpen");
+                                               DateTime closeTime =DateTime.parse("$timeClose");
+
+                                                if(startTime.isAfter(DateTime.now())){
+                                                  startTimeOpen=false;
+                                                }else{
+                                                  startTimeOpen=true;
+                                                }
+
+                                                if(closeTime.isAfter(DateTime.now())){
+                                                  closeTimeOpen=true;
+                                                }else{
+                                                  closeTimeOpen=false;
+                                                }
+                                                print("startTimeOpen=$startTimeOpen closeTimeOpen=$closeTimeOpen");
+                                              } catch (e) {
+                                                log(e.toString());
+                                              }
+
                                             if (amountController.text.isEmpty) {
                                               customSnackbar(context,
                                                   "Amount is required.");
-                                            } else if (withDrawMethodProvider
-                                                    .dropValue ==
-                                                null) {
-                                              customSnackbar(context,
-                                                  "Please select Payment method");
-                                            } else if (int.parse(
+                                            }  else if (int.parse(
                                                     modelData.minWithdrawal!) >
                                                 int.parse(
                                                     amountController.text)) {
                                               customSnackbar(context,
                                                   "Min ${modelData.minWithdrawal} amount is required.");
+                                            }else if(startTimeOpen==false){
+                                              customSnackbar(context,
+                                                  "You can't request before request time period.");
+                                            }else if(closeTimeOpen==false){
+                                              customSnackbar(context,
+                                                  "You can't request after request time period.");
+                                            }else if(startTimeOpen==false){
+                                              customSnackbar(context,
+                                                  "You can't request before request time.");
+                                            } else if (withDrawMethodProvider
+                                                .dropValue ==
+                                                null) {
+                                              customSnackbar(context,
+                                                  "Please select Payment method");
                                             } else if (int.parse(
                                                     modelData.maxWithdrawal!) <
                                                 int.parse(

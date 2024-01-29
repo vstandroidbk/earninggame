@@ -1,4 +1,5 @@
 class WithdrawMethodListGetModel {
+  String? whatsappNo;
   String? mobileNo;
   List<Result>? result;
   String? minAmt;
@@ -6,9 +7,15 @@ class WithdrawMethodListGetModel {
   bool? status;
 
   WithdrawMethodListGetModel(
-      {this.mobileNo, this.result, this.minAmt, this.msg, this.status});
+      {this.whatsappNo,
+        this.mobileNo,
+        this.result,
+        this.minAmt,
+        this.msg,
+        this.status});
 
   WithdrawMethodListGetModel.fromJson(Map<String, dynamic> json) {
+    whatsappNo = json['whatsapp_no'];
     mobileNo = json['mobile_no'];
     if (json['result'] != null) {
       result = <Result>[];
@@ -23,6 +30,7 @@ class WithdrawMethodListGetModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['whatsapp_no'] = whatsappNo;
     data['mobile_no'] = mobileNo;
     if (result != null) {
       data['result'] = result!.map((v) => v.toJson()).toList();

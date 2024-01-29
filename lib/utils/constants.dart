@@ -48,6 +48,12 @@ class Constants {
       "${baseUrl}api-check-galidisswar-game-status";
   static String gdCommonGameSumitApiUrl =
       "${baseUrl}api-galidisswar-submit-bid";
+
+  // apis for main games start from here
+  static String mainGameStatusCheckApiUrl =
+      "${baseUrl}api-check-game-status";
+  static String mainGameCommonSumitApiUrl =
+      "${baseUrl}api-submit-bid";
 }
 
 class GameArray {
