@@ -36,7 +36,7 @@ class _FundsUiState extends State<FundsUi> {
     {
       "leadingimage": "assets/images/Bank Building.png",
       "title": "Withdraw Methods",
-      "Subtitle": "You can add your band details for withdrawls"
+      "Subtitle": "You can add your bank details for withdrawls"
     },
     {
       "leadingimage": "assets/images/Depositt.png",
@@ -48,11 +48,11 @@ class _FundsUiState extends State<FundsUi> {
       "title": "Fund Withdraw History",
       "Subtitle": "You can see history of you fund withdrawals"
     },
-    {
-      "leadingimage": "assets/images/Change.png",
-      "title": "Bank Changes History",
-      "Subtitle": "You can see history og your bank accounts"
-    },
+    // {
+    //   "leadingimage": "assets/images/Change.png",
+    //   "title": "Bank Changes History",
+    //   "Subtitle": "You can see history og your bank accounts"
+    // },
   ];
   @override
   Widget build(BuildContext context) {

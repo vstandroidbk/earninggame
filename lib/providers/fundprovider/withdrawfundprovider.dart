@@ -8,6 +8,7 @@ import 'package:earninggame/utils/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
+import '../../models/fundwithdrawmodel.dart';
 import '../../models/withdrafundgetmodel.dart';
 
 class WithdrawFundProvider with ChangeNotifier {
@@ -44,6 +45,42 @@ class WithdrawFundProvider with ChangeNotifier {
       customSnackbar(context, noInternetMsg);
     }
     isLoding = false;
+    notifyListeners();
+  }
+
+  FundWithdrawModel _withdrawFundHistory = FundWithdrawModel();
+  get getWithdrawHistory => _withdrawFundHistory;
+  bool isHistoryLoding = false;
+  withdrawGetHistoryApiCall(context) async {
+    bool isNetwrok = await hasNetwork();
+    isHistoryLoding = true;
+    notifyListeners();
+    if (isNetwrok) {
+      try {
+        http.Response request = await http.post(
+            Uri.parse(Constants.fundWithdrawHistroyApiUrl),
+            body: jsonEncode(DataEncryption.getEncryptedData(
+                {"env_type": Constants.envType, "user_id": idUser})));
+        if (request.statusCode == 200) {
+          Map<String, dynamic> decodedBodyData = jsonDecode(request.body);
+          ResponseIncriptModel response =
+          ResponseIncriptModel.fromJson(decodedBodyData);
+          Map<String, dynamic> getDecriptedData =
+          DataEncryption.getDecryptedData(response.data!.reskey.toString(),
+              response.data!.resdata.toString());
+          _withdrawFundHistory = FundWithdrawModel.fromJson(getDecriptedData);
+          // print("==========body data =      ${getDecriptedData}   ==body data");
+          notifyListeners();
+        } else {
+          customSnackbar(context, serverErrortMsg);
+        }
+      } catch (e) {
+        customSnackbar(context, "Something went wrong. $e");
+      }
+    } else {
+      customSnackbar(context, noInternetMsg);
+    }
+    isHistoryLoding = false;
     notifyListeners();
   }
 }

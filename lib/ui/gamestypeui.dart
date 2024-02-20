@@ -136,27 +136,29 @@ class _GamesTypeUiState extends State<GamesTypeUi> {
                               } else if (index == 5) {
                                 Navigator.push(context,
                                     CupertinoPageRoute(builder: (context) {
-                                  return const SpDpTpGameUi();
+                                  return SpDpTpGameUi(gameId:  widget.gameId,gameName:  widget.gameName,type:"spdptp");
                                 }));
                               } else if (index == 6) {
                                 Navigator.push(context,
                                     CupertinoPageRoute(builder: (context) {
-                                  return const SpMotorGameUi();
+                                  // return const SpMotorGameUi();
+                                  return SpDpTpGameUi(gameId:  widget.gameId,gameName:  widget.gameName,type:"sp");
                                 }));
                               } else if (index == 7) {
                                 Navigator.push(context,
                                     CupertinoPageRoute(builder: (context) {
-                                  return const DpMotorGameUi();
+                                  // return const DpMotorGameUi();
+                                  return SpDpTpGameUi(gameId:  widget.gameId,gameName:  widget.gameName,type:"dp");
                                 }));
                               } else if (index == 8) {
                                 Navigator.push(context,
                                     CupertinoPageRoute(builder: (context) {
-                                  return const HalfSangramBGameUi();
+                                  return HalfSangramBGameUi(gameId:  widget.gameId,gameName:  widget.gameName,sangram:"half");
                                 }));
                               } else if (index == 9) {
                                 Navigator.push(context,
                                     CupertinoPageRoute(builder: (context) {
-                                  return const FullSangamGameUi();
+                                  return HalfSangramBGameUi(gameId:  widget.gameId,gameName:  widget.gameName,sangram:"full");
                                 }));
                               } else {
                                 Navigator.push(context,

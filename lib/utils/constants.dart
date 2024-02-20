@@ -54,6 +54,18 @@ class Constants {
       "${baseUrl}api-check-game-status";
   static String mainGameCommonSumitApiUrl =
       "${baseUrl}api-submit-bid";
+  static String mainGameSpDpTpSumitApiUrl =
+      "${baseUrl}api-get-sp-dp-tp-combination";
+  static String mainGameSpDpTpGetCombiApiUrl =
+      "${baseUrl}api-get-sp-dp-tp-combination";
+  static String mainGameSpSumitApiUrl =
+      "${baseUrl}api-get-sp-motor-combination";
+  static String SpDpGetCombinationApiUrl =
+      "${baseUrl}api-get-sp-motor-combination";
+
+  //fund withdraw history
+  static String fundWithdrawHistroyApiUrl =
+      "${baseUrl}api-user-withdraw-transaction-history";
 }
 
 class GameArray {

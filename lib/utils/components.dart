@@ -285,11 +285,13 @@ alertCustomerSupport(context) {
       });
 }
 
-DropdownButtonFormField<String> customDropDownMenueButton(dropValue, onchange) {
+DropdownButtonFormField<String> customDropDownMenueButton(dropValue, onchange,{isdisabled}) {
   return DropdownButtonFormField(
+
     isExpanded: true,
     hint: const Text("Select Game Type"),
     decoration: InputDecoration(
+
       contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
       filled: true,
       fillColor: greyLightClr,
@@ -301,7 +303,7 @@ DropdownButtonFormField<String> customDropDownMenueButton(dropValue, onchange) {
               BorderSide.none), //, borderRadius: BorderRadius.circular(20)
     ),
     value: dropValue,
-    items: const [
+    items:isdisabled !=null?[]: const [
       DropdownMenuItem(
         value: "open",
         child: Text("Open"),
@@ -443,7 +445,7 @@ Future<dynamic> customFilter(BuildContext context) {
 }
 
 Future<dynamic> popupWorkingMoneyReduction(BuildContext context, onsubmit,
-    {data, totalbid, bidamount, currentBalance, afterBalance, isType,gameName}) {
+    {data, totalbid, bidamount, currentBalance, afterBalance, isType,isHalfSang,gameName,isdiffer}) {
   return showDialog(
       context: context,
       builder: (context) {
@@ -479,14 +481,14 @@ Future<dynamic> popupWorkingMoneyReduction(BuildContext context, onsubmit,
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children:
-                          // isType != null
-                          //     ? const [
-                          //         // if(data)
-                          //         Text("Digit"),
-                          //         Text("Points"),
-                          //         Text("Type"),
-                          //       ]
-                          //     :
+                          isHalfSang != null
+                              ? const [
+                                  // if(data)
+                                  Text("Open"),
+                                  Text("Close"),
+                                  Text("Points"),
+                                ]
+                              :
                           const [
                                   Text("Digit"),
                                   Text("Points "),
@@ -517,10 +519,14 @@ Future<dynamic> popupWorkingMoneyReduction(BuildContext context, onsubmit,
                                               Text("${data[index]['points']}"),
                                               Text("${data[index]['type']}")
                                             ]
-                                          : [
-                                              Text("${data[index]['digit']}"),
+                                          :isHalfSang !=null?[
+                                              Text("${data[index]['open']}"),
+                                              Text("${data[index]['close']}"),
                                               Text("${data[index]['points']}"),
-                                            ]));
+                                            ]:[
+                                        Text("${isdiffer !=null ? data[index]['digits']:data[index]['digit']}"),
+                                        Text("${data[index]['points']}"),
+                                      ]));
                             },
                           ),
                         ),

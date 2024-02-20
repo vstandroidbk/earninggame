@@ -1,15 +1,14 @@
 import 'dart:developer';
+import 'package:earninggame/providers/gameuiproviders/spdptpprovider.dart';
 import 'package:earninggame/utils/components.dart';
 import 'package:earninggame/utils/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../../models/withdrafundgetmodel.dart';
 import '../../providers/fundprovider/withdrawfundprovider.dart';
 import '../../providers/gameuiproviders/maingamesprovider.dart';
 import '../../providers/profileprovider.dart';
-import '../../providers/starlinegamesprovider.dart';
 import '../../utils/colors.dart';
 
 class MainGameCommonUi extends StatefulWidget {
@@ -40,8 +39,8 @@ class _MainGameCommonUiState extends State<MainGameCommonUi> {
       Provider.of<MainGamesProvider>(context, listen: false).removeAllBids();
       Provider.of<MainGamesProvider>(context, listen: false)
           .setgameTypeChange(null);
-      dropValue =
-          Provider.of<MainGamesProvider>(context, listen: false).gameType;
+      // dropValue =
+      //     Provider.of<MainGamesProvider>(context, listen: false).gameType;
       Provider.of<WithdrawFundProvider>(context, listen: false)
           .withdrawGetWalletApiCall(context);
       Provider.of<ProfileProvider>(context, listen: false)
@@ -60,6 +59,7 @@ class _MainGameCommonUiState extends State<MainGameCommonUi> {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Column(
               children: [
+
                 const SizedBox(
                   height: 20,
                 ),
@@ -68,8 +68,38 @@ class _MainGameCommonUiState extends State<MainGameCommonUi> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text(
-                      "Enter Single Digit",
+                      "Select Game Type",
                       style: TextStyle(fontSize: 16),
+                    ),
+                    SizedBox(
+                      width: 190,
+                      child: Container(
+                        child: customDropDownMenueButton(dropValue, (value) {
+                          Provider.of<MainGamesProvider>(context,
+                              listen: false)
+                              .setgameTypeChange(value);
+                          dropValue = Provider.of<MainGamesProvider>(
+                              context,
+                              listen: false)
+                              .gameType;
+
+                        }),
+                      ),
+                    )
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ), const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                     Text(
+                      widget.gameNo==3?"Enter Pana" :widget.gameNo==2?"Enter Digit":"Enter Single Digit",
+                      style:const TextStyle(fontSize: 16),
                     ),
                     SizedBox(
                       width: 190,
@@ -501,7 +531,7 @@ class _MainGameCommonUiState extends State<MainGameCommonUi> {
                                         "digits": totalBids[i]['digit'],
                                         "closedigits": "",
                                         "points": totalBids[i]['points'],
-                                        "session": 'Open'
+                                        "session": slGameProvider.gameType=="open"?"Open":"Close"
                                       });
                                     }
 
@@ -514,7 +544,7 @@ class _MainGameCommonUiState extends State<MainGameCommonUi> {
                                       "pana": widget.gameNo == 1
                                           ? "Single digit"
                                           : widget.gameNo == 2
-                                              ? "Jodi digit"
+                                              ? "Jodi Digit"
                                               : widget.gameNo == 3
                                                   ? 'Single Pana'
                                                   : widget.gameNo == 4
@@ -526,7 +556,7 @@ class _MainGameCommonUiState extends State<MainGameCommonUi> {
                                       //     : "Full Sangam",
                                       "bid_date": DateFormat("yyyy-MM-dd")
                                           .format(DateTime.now()),
-                                      "session": "Open",
+                                      "session":slGameProvider.gameType=="open"?"Open":"Close",
                                       "result": newBidList
                                     };
                                     if (int.parse(

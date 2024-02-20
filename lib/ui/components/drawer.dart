@@ -11,6 +11,7 @@ import 'package:earninggame/utils/components.dart';
 import 'package:earninggame/utils/constants.dart';
 import 'package:earninggame/utils/sharepreferences.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:flutter/material.dart';
 import '../../utils/colors.dart';
 import '../navigation.dart';
@@ -172,9 +173,10 @@ class _DrawerManueUiState extends State<DrawerManueUi> {
         "image": "assets/images/Rightt.png",
         "title": "Share Application",
         "ontap": () {
-          Navigator.push(context, CupertinoPageRoute(builder: (context) {
-            return NavigationUi(widgetIndex: 2);
-          }));
+          // Navigator.push(context, CupertinoPageRoute(builder: (context) {
+          //   return NavigationUi(widgetIndex: 2);
+          // }));
+          Share.share('check out  https://play.google.com/store/apps/details?id=com.rovio.baba&pcampaignid=merch_published_cluster_promotion_battlestar_collection_new_games&hl=en_IN&gl=US');
         }
       },
       {

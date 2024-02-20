@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:earninggame/providers/gameuiproviders/halfsangramprovider.dart';
 import 'package:earninggame/providers/gameuiproviders/slgamesprovider.dart';
+import 'package:earninggame/providers/gameuiproviders/spdptpprovider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import '../../models/responseincriptmodel.dart';
@@ -14,6 +16,15 @@ import '../homeprovider.dart';
 import '../profileprovider.dart';
 
 class MainGamesProvider with ChangeNotifier{
+
+  String? _gametype;
+  get gameType => _gametype;
+
+  setgameTypeChange(val) {
+    _gametype = val;
+    notifyListeners();
+  }
+
   TextEditingController singleDigitController = TextEditingController();
   setSingleDigiConVal(val){
     singleDigitController.text=val;
@@ -73,13 +84,13 @@ class MainGamesProvider with ChangeNotifier{
     notifyListeners();
   }
 
-  String? _gametype;
-  get gameType => _gametype;
-
-  setgameTypeChange(val) {
-    _gametype = val;
-    notifyListeners();
-  }
+  // String? _gametype;
+  // get gameType => _gametype;
+  //
+  // setgameTypeChange(val) {
+  //   _gametype = val;
+  //   notifyListeners();
+  // }
   String? digitValCommon;
   setDigitval(val){
     digitValCommon=val;
@@ -100,28 +111,48 @@ class MainGamesProvider with ChangeNotifier{
                 {"env_type": Constants.envType, "new_result": newResult})));
         if (request.statusCode == 200) {
           Map<String, dynamic> bodyData = jsonDecode(request.body);
+            print("${bodyData} =============bodyData11111===");
+          if(bodyData['status'] != null){
+          if(bodyData['status']==false){
+              customSnackbar(context, bodyData['msg']);
+            }
+          }else{
+          print("${bodyData} =============bodyData===");
           ResponseIncriptModel responseData =
           ResponseIncriptModel.fromJson(bodyData);
+          print("${responseData} =============responseData===");
           Map<String, dynamic> getEncryptedData =
           DataEncryption.getDecryptedData(
               responseData.data!.reskey.toString(),
               responseData.data!.resdata.toString());
+
+          print("${getEncryptedData} =============b===");
           debugPrint("$getEncryptedData ===============debug print");
           // if (getEncryptedData['status'] == true) {
           // return Navigator.pop(context);
           // }
 
           Provider.of<MainGamesProvider>(context, listen: false).removeAllBids();
+          Provider.of<HalfSangram>(context, listen: false).clearAllBids();
           Provider.of<MainGamesProvider>(context, listen: false)
               .setgameTypeChange(null);
 
           Provider.of<ProfileProvider>(context, listen: false)
               .profileDataApiCall(context);
+
+          Provider.of<SpDpTpProvider>(context,listen: false).clearCmbination();
           customSnackbar(context, getEncryptedData['msg']);
+        }
+
+          // }else{
+          //   customSnackbar(context, bodyData['msg']);
+          // }
+
         } else {
           customSnackbar(context, serverErrortMsg);
         }
       } catch (e) {
+        print("= $e ===========");
         customSnackbar(context, "Something went wrong . $e");
       }
     } else {
@@ -145,6 +176,7 @@ class MainGamesProvider with ChangeNotifier{
                 {"env_type": Constants.envType, "game_id": idGame})));
         if (request.statusCode == 200) {
           Map<String, dynamic> bodyData = jsonDecode(request.body);
+          // print("$bodyData ============== bodyData mm");
           ResponseIncriptModel responseData =
           ResponseIncriptModel.fromJson(bodyData);
           Map getEncryptedData = DataEncryption.getDecryptedData(
