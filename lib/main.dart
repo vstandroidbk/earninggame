@@ -22,6 +22,7 @@ import 'package:earninggame/providers/numberprovider.dart';
 import 'package:earninggame/providers/otpcheckprovider.dart';
 import 'package:earninggame/providers/otpprovider.dart';
 import 'package:earninggame/providers/otprequestprovider.dart';
+import 'package:earninggame/providers/passbookprovider.dart';
 import 'package:earninggame/providers/permissionprovider.dart';
 import 'package:earninggame/providers/profileprovider.dart';
 import 'package:earninggame/providers/starlinegameresultprovider.dart';
@@ -35,6 +36,7 @@ import 'package:provider/provider.dart';
 void main() {
   runApp(MultiProvider(
     providers: [
+      ChangeNotifierProvider(create: (_) => PassbookProvider()),
       ChangeNotifierProvider(create: (_) => NumberProvider()),
       ChangeNotifierProvider(create: (_) => HalfSangram()),
       ChangeNotifierProvider(create: (_) => SpDpTpProvider()),

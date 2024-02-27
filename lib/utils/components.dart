@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:earninggame/providers/gameuiproviders/slgamesprovider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,7 +6,6 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
 import '../providers/profileprovider.dart';
 import 'colors.dart';
-import 'constants.dart';
 
 AppBar appBarComman(titlewidget) {
   return AppBar(
@@ -442,6 +439,25 @@ Future<dynamic> customFilter(BuildContext context) {
           ),
         );
       });
+}
+String time12to24Format(String time) {
+// var time = "12:01 AM";
+  int h = int.parse(time.split(":").first);
+  int m = int.parse(time.split(":").last.split(" ").first);
+  String meridium = time.split(":").last.split(" ").last.toLowerCase();
+  if (meridium == "pm") {
+    if (h != 12) {
+      h = h + 12;
+    }
+  }
+  if (meridium == "am") {
+    if (h == 12) {
+      h = 00;
+    }
+  }
+  String newTime = "${h == 0 ? "00" : h}:${m == 0 ? "00" : m}";
+  print(newTime);
+  return newTime;
 }
 
 Future<dynamic> popupWorkingMoneyReduction(BuildContext context, onsubmit,

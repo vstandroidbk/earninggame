@@ -1,4 +1,8 @@
+import 'package:earninggame/providers/maingameresultprovider.dart';
+import 'package:earninggame/ui/components/circularprogressindicator.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../models/maingmbidhistorymodel.dart';
 import '../../utils/colors.dart';
 import '../../utils/components.dart';
 
@@ -11,13 +15,20 @@ class BidHistoryUi extends StatefulWidget {
 
 class _BidHistoryUiState extends State<BidHistoryUi> {
   @override
+  void initState() {
+    super.initState();
+    Provider.of<MainGameResultProvider>(context, listen: false)
+        .mainGameBidHistoryApiCall(context);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
         backgroundColor: clrTranaparent,
         foregroundColor: blackClr,
-        title: const Text("King Jackpot Bid History"),
+        title: const Text("Main Game Bid History"),
         actions: [
           InkWell(
             onTap: () {
@@ -168,155 +179,194 @@ class _BidHistoryUiState extends State<BidHistoryUi> {
                   const SizedBox(
                     height: 10,
                   ),
-                  ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: 10,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 3),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: clrWhite,
-                                boxShadow: [
-                                  BoxShadow(color: greyClr, blurRadius: 8)
-                                ]),
-                            child: Column(
-                              children: [
-                                Container(
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    color: primaryColor,
-                                  ),
-                                  child: const Center(
-                                      child: Padding(
-                                    padding: EdgeInsets.all(4.0),
-                                    child: Text(
-                                      "MADHUR DAY(close)",
-                                      style: TextStyle(fontSize: 16),
-                                    ),
-                                  )),
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Column(
-                                      children: const [
-                                        Text(
-                                          "Game Type",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 12),
-                                        ),
-                                        Text(
-                                          "Single Digit",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 14),
-                                        )
-                                      ],
-                                    ),
-                                    Column(
-                                      children: const [
-                                        Text(
-                                          "Digits",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 12),
-                                        ),
-                                        SizedBox(
-                                          height: 2,
-                                        ),
-                                        Text(
-                                          "8",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 14),
-                                        )
-                                      ],
-                                    ),
-                                    Column(
-                                      children: const [
-                                        Text(
-                                          "Points",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 12),
-                                        ),
-                                        SizedBox(
-                                          height: 2,
-                                        ),
-                                        Text(
-                                          "3",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 14),
-                                        )
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                Divider(
-                                  color: greyClr,
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Column(
-                                      children: const [
-                                        Text(
-                                          "Bid Id",
-                                          style: TextStyle(fontSize: 12),
-                                        ),
-                                        Text(
-                                          "Tbsj9087d",
-                                          style: TextStyle(fontSize: 12),
-                                        ),
-                                      ],
-                                    ),
-                                    Column(
-                                      children: const [
-                                        Text(
-                                          "Bid Date",
-                                          style: TextStyle(fontSize: 12),
-                                        ),
-                                        Text(
-                                          "12/12/2023",
-                                          style: TextStyle(fontSize: 12),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                                Divider(
-                                  color: greyClr,
-                                ),
-                                const Center(
+                  Consumer<MainGameResultProvider>(
+                      builder: (context, mainGameResultProvider, child) {
+                    if (mainGameResultProvider.isBidHistoryLoding) {
+                      return const CustomCircularProgress();
+                    } else {
+                      int len=mainGameResultProvider
+                          .getMainGameBidHistoryData.bidData?.length??0;
+                      if (len <=
+                                0) {
+                        return const SizedBox(
+                      height: 500,
+                              child:  Center(
                                   child: Text(
-                                    "Transaction Time : 13/12/2023 02:18:14 PM",
-                                    style: TextStyle(fontSize: 12),
-                                  ),
-                                ),
-                                Divider(
-                                  color: greyClr,
-                                ),
-                                Center(
-                                  child: Text(
-                                    "Congratulation , You won(28) ",
+                                    "NO Data Found.",
                                     style: TextStyle(
-                                        color: clrGreen, fontSize: 12),
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 18),
                                   ),
                                 ),
-                                const SizedBox(
-                                  height: 4,
-                                )
-                              ],
-                            ),
-                          ),
-                        );
-                      })
+                            );
+                      } else {
+                        return ListView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: mainGameResultProvider
+                                    .getMainGameBidHistoryData.bidData.length ??0,
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) {
+                                  BidData data=mainGameResultProvider.getMainGameBidHistoryData.bidData[index];
+                                  return Padding(
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 3),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          color: clrWhite,
+                                          boxShadow: [
+                                            BoxShadow(
+                                                color: greyClr, blurRadius: 8)
+                                          ]),
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            width: double.infinity,
+                                            decoration: BoxDecoration(
+                                              color: primaryColor,
+                                            ),
+                                            child:  Center(
+                                                child: Padding(
+                                              padding:const EdgeInsets.all(4.0),
+                                              child: Text(
+                                                data.gameName??'---',
+                                                style:const TextStyle(fontSize: 16),
+                                              ),
+                                            )),
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              Column(
+                                                children:  [
+                                                 const Text(
+                                                    "Game Type",
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        fontSize: 12),
+                                                  ),
+                                                  Text(
+                                                    data.pana??'---',
+                                                    style:const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        fontSize: 14),
+                                                  )
+                                                ],
+                                              ),
+                                              Column(
+                                                children:  [
+                                                 const Text(
+                                                    "Digits",
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        fontSize: 12),
+                                                  ),
+                                                 const SizedBox(
+                                                    height: 2,
+                                                  ),
+                                                  Text(
+                                                    data.digits??'---',
+                                                    style:const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        fontSize: 14),
+                                                  )
+                                                ],
+                                              ),
+                                              Column(
+                                                children:  [
+                                                 const Text(
+                                                    "Points",
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        fontSize: 12),
+                                                  ),
+                                                 const SizedBox(
+                                                    height: 2,
+                                                  ),
+                                                  Text(
+                                                    data.points??'---',
+                                                    style:const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        fontSize: 14),
+                                                  )
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                          Divider(
+                                            color: greyClr,
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              Column(
+                                                children:  [
+                                                 const Text(
+                                                    "Bid Transaction Id",
+                                                    style:
+                                                        TextStyle(fontSize: 12),
+                                                  ),
+                                                  Text(
+                                                    data.bidTxId??'---',
+                                                    style:
+                                                       const TextStyle(fontSize: 12),
+                                                  ),
+                                                ],
+                                              ),
+                                              Column(
+                                                children:  [
+                                                 const Text(
+                                                    "Bid Date",
+                                                    style:
+                                                        TextStyle(fontSize: 12),
+                                                  ),
+                                                  Text(
+                                                    data.bidDate??'---',
+                                                    style:
+                                                       const TextStyle(fontSize: 12),
+                                                  ),
+                                                ],
+                                              )
+                                            ],
+                                          ),
+                                          Divider(
+                                            color: greyClr,
+                                          ),
+                                          const Center(
+                                            child: Text(
+                                              "Transaction Time : ---",//13/12/2023 02:18:14 PM
+                                              style: TextStyle(fontSize: 12),
+                                            ),
+                                          ),
+                                          Divider(
+                                            color: greyClr,
+                                          ),
+                                          Center(
+                                            child: Text(
+                                              "---",//"Congratulation , You won(28) ",
+                                              style: TextStyle(
+                                                  color: clrGreen,
+                                                  fontSize: 12),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 4,
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                });
+                      }
+                    }
+                  })
                 ],
               ),
             ),

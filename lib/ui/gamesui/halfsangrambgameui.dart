@@ -14,7 +14,13 @@ class HalfSangramBGameUi extends StatefulWidget {
   final String? gameName;
   final String? gameId;
   final String? sangram;
-  const HalfSangramBGameUi({super.key,required this.gameName,required this.gameId,required this.sangram});
+  final bool? isClosedonly;
+  const HalfSangramBGameUi(
+      {super.key,
+      required this.gameName,
+      required this.gameId,
+      required this.sangram,
+      required this.isClosedonly});
 
   @override
   State<HalfSangramBGameUi> createState() => _HalfSangramBGameUiState();
@@ -40,7 +46,9 @@ class _HalfSangramBGameUiState extends State<HalfSangramBGameUi> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarComman( Text(widget.sangram=='full'?"Full Sangram Game" : "Half Sangram Game")),
+      appBar: appBarComman(Text(widget.sangram == 'full'
+          ? "Full Sangram Game"
+          : "Half Sangram Game")),
       body: Column(
         children: [
           Container(
@@ -51,7 +59,7 @@ class _HalfSangramBGameUiState extends State<HalfSangramBGameUi> {
                   height: 20,
                 ),
                 Visibility(
-                  visible: widget.sangram=='full'?false:true,
+                  visible: widget.sangram == 'full' ? false : true,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -64,26 +72,45 @@ class _HalfSangramBGameUiState extends State<HalfSangramBGameUi> {
                           builder: (context, halfSangram, child) {
                         return SizedBox(
                           width: 190,
-                          child: Visibility(
-                            visible: halfSangram.totalBids.length >0?false:true,
-                            replacement: Container(color: greyLightClr,height: 50,
-                                                   child: Align(child: Text("  ${halfSangram.gameType}"
-                                                                        ,style: TextStyle(fontSize: 18),),alignment: Alignment.centerLeft,),),
-                            child: Container(
-                              child: customDropDownMenueButton(halfSangram.gameType,
-                                  (value) {
-                                int  totalbids=  Provider.of<HalfSangram>(context, listen: false)
-                                    .totalBids.length;
-                                 Provider.of<HalfSangram>(context, listen: false)
-                                     .setgameTypeChange(value);
-                                 openDigitController.clear();
-                                 closePanaController.clear();
-                                 pointController.clear();
-                                 clearDigit = true;
-                                 print("${halfSangram.gameType} ================");
-
-                              }//,isdisabled:
+                          child:widget.isClosedonly==true? Container(
+                            width: 180,
+                            alignment:Alignment.center,
+                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(5),
+                              color: greyLightClr,),
+                            padding:const EdgeInsets.symmetric(vertical: 13),
+                            child:const Text("Closed",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16),),
+                          ): Visibility(
+                            visible:
+                                halfSangram.totalBids.length > 0 ? false : true,
+                            replacement: Container(
+                              color: greyLightClr,
+                              height: 50,
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  "  ${halfSangram.gameType}",
+                                  style:const TextStyle(fontSize: 18),
+                                ),
                               ),
+                            ),
+                            child: Container(
+                              child: customDropDownMenueButton(
+                                  halfSangram.gameType, (value) {
+                                int totalbids = Provider.of<HalfSangram>(
+                                        context,
+                                        listen: false)
+                                    .totalBids
+                                    .length;
+                                Provider.of<HalfSangram>(context, listen: false)
+                                    .setgameTypeChange(value);
+                                openDigitController.clear();
+                                closePanaController.clear();
+                                pointController.clear();
+                                clearDigit = true;
+                                print(
+                                    "${halfSangram.gameType} ================");
+                              } //,isdisabled:
+                                  ),
                             ),
                           ),
                         );
@@ -100,13 +127,19 @@ class _HalfSangramBGameUiState extends State<HalfSangramBGameUi> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        widget.sangram=='full'?"Enter Open Pana" : halfSangram.gameType == "open"
-                            ? "Enter Open Digit"
-                            : "Enter Open Pana",
-                        style:const TextStyle(fontSize: 16),
+                        widget.sangram == 'full'
+                            ? "Enter Open Pana"
+                            : halfSangram.gameType == "open"
+                                ? "Enter Open Digit"
+                                : "Enter Open Pana",
+                        style: const TextStyle(fontSize: 16),
                       ),
                       Visibility(
-                        visible: widget.sangram=='full'? true: halfSangram.gameType == "open" ? false : true,
+                        visible: widget.sangram == 'full'
+                            ? true
+                            : halfSangram.gameType == "open"
+                                ? false
+                                : true,
                         replacement: SizedBox(
                           width: 190,
                           child: Container(
@@ -171,7 +204,6 @@ class _HalfSangramBGameUiState extends State<HalfSangramBGameUi> {
                                   setState(() {
                                     openDigitController.text = Game.toString();
                                     clearDigit = false;
-
                                   });
                                 },
                               ),
@@ -182,11 +214,11 @@ class _HalfSangramBGameUiState extends State<HalfSangramBGameUi> {
                     ],
                   );
                 }),
-                 SizedBox(
-                  height:widget.sangram=='full'? 30:0,
+                SizedBox(
+                  height: widget.sangram == 'full' ? 30 : 0,
                 ),
-                 SizedBox(
-                  height:widget.sangram=='full'?0: 20,
+                SizedBox(
+                  height: widget.sangram == 'full' ? 0 : 20,
                 ),
                 Consumer<HalfSangram>(builder: (context, halfSangram, child) {
                   return Row(
@@ -194,9 +226,11 @@ class _HalfSangramBGameUiState extends State<HalfSangramBGameUi> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        widget.sangram=='full'?"Enter Close Pana" :halfSangram.gameType == "open"
+                        widget.sangram == 'full'
                             ? "Enter Close Pana"
-                            : "Enter Close Digit",
+                            : halfSangram.gameType == "open"
+                                ? "Enter Close Pana"
+                                : "Enter Close Digit",
                         style: const TextStyle(fontSize: 16),
                       ),
                       Visibility(
@@ -302,77 +336,82 @@ class _HalfSangramBGameUiState extends State<HalfSangramBGameUi> {
                     )
                   ],
                 ),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: SizedBox(
-                    width: 190,
-                    child: customElevatedButton(
-                      context,
-                      "Add",
-                      () {
-                        if (openDigitController.text.isEmpty) {
-                          customSnackbar(context, "Please enter Open Digit");
-                        } else if (closePanaController.text.isEmpty) {
-                          customSnackbar(context, "Please enter Close Pana");
-                        } else if (pointController.text.isEmpty) {
-                          customSnackbar(context, "Please enter points");
-                        } else if (int.parse(
-                                pointController.text.trim().toString()) <
-                            1) {
-                          customSnackbar(
-                              context, "Please enter point greater than 0.");
-                        } else {
-                          WithdraFundGetModel walleddata =
-                              Provider.of<WithdrawFundProvider>(context,
-                                      listen: false)
-                                  .withdrawGetWelletData;
-                          int tempAmount = Provider.of<ProfileProvider>(context,
-                                  listen: false)
-                              .amountTemporary;
-                          String? maxPointCanbe = walleddata.maxBidAmount;
-                          String? minReqPoint = walleddata.minBidAmount;
-                          print("$tempAmount ===========am");
-                          if (tempAmount <
-                              int.parse(pointController.text.toString())) {
-                            customSnackbar(context, "Insufficient amount .");
-                          } else if (int.parse(maxPointCanbe ?? "0") <
-                              int.parse(pointController.text.toString())) {
-                            customSnackbar(context,
-                                "Maximum bid points can be $maxPointCanbe");
-                          } else if (int.parse(minReqPoint ?? "0") >
-                              int.parse(pointController.text.toString())) {
-                            customSnackbar(context,
-                                "Minimum bid points must be $minReqPoint.");
+                Consumer<HalfSangram>(builder: (context,halfSangram,child){
+                  return Align(
+                    alignment: Alignment.centerRight,
+                    child: SizedBox(
+                      width: 190,
+                      child: customElevatedButton(
+                        context,
+                        "Add",
+                            () {
+                          if (openDigitController.text.isEmpty) {
+                            customSnackbar(context, "Please enter ${widget.sangram=="full"?"Open Pana": halfSangram.gameType == "open"
+                                ?'Open Digit':'Open Pana'}");
+                          } else if (closePanaController.text.isEmpty) {
+                            customSnackbar(context, "Please enter ${halfSangram.gameType == "open"
+                                ?'Close Pana':'Close Digit'}");
+                          } else if (pointController.text.isEmpty) {
+                            customSnackbar(context, "Please enter points");
+                          } else if (int.parse(
+                              pointController.text.trim().toString()) <
+                              1) {
+                            customSnackbar(
+                                context, "Please enter point greater than 0.");
                           } else {
-                            setState(() {
-                              clearDigit = true;
-                            });
-                            Provider.of<HalfSangram>(context, listen: false)
-                                .addTotalBids(
-                              context,
-                              open: openDigitController.text,
-                              close: closePanaController.text,
-                              points: pointController.text,
-                            );
-                            openDigitController.clear();
-                            closePanaController.clear();
-                            pointController.clear();
-                            setState(() {});
+                            WithdraFundGetModel walleddata =
+                                Provider.of<WithdrawFundProvider>(context,
+                                    listen: false)
+                                    .withdrawGetWelletData;
+                            int tempAmount = Provider.of<ProfileProvider>(context,
+                                listen: false)
+                                .amountTemporary;
+                            String? maxPointCanbe = walleddata.maxBidAmount;
+                            String? minReqPoint = walleddata.minBidAmount;
+                            print("$tempAmount ===========am");
+                            if (tempAmount <
+                                int.parse(pointController.text.toString())) {
+                              customSnackbar(context, "Insufficient amount .");
+                            } else if (int.parse(maxPointCanbe ?? "0") <
+                                int.parse(pointController.text.toString())) {
+                              customSnackbar(context,
+                                  "Maximum bid points can be $maxPointCanbe");
+                            } else if (int.parse(minReqPoint ?? "0") >
+                                int.parse(pointController.text.toString())) {
+                              customSnackbar(context,
+                                  "Minimum bid points must be $minReqPoint.");
+                            } else {
+                              setState(() {
+                                clearDigit = true;
+                              });
+                              Provider.of<HalfSangram>(context, listen: false)
+                                  .addTotalBids(
+                                context,
+                                open: openDigitController.text,
+                                close: closePanaController.text,
+                                points: pointController.text,
+                              );
+                              openDigitController.clear();
+                              closePanaController.clear();
+                              pointController.clear();
+                              setState(() {});
+                            }
+                            // Provider.of<SinglePanaGameProvider>(context,
+                            //         listen: false)
+                            //     .addTotalBids(
+                            //         "${openDigitController.text}-${closePanaController.text}",
+                            //         pointController.text,
+                            //         dropValue);
                           }
-                          // Provider.of<SinglePanaGameProvider>(context,
-                          //         listen: false)
-                          //     .addTotalBids(
-                          //         "${openDigitController.text}-${closePanaController.text}",
-                          //         pointController.text,
-                          //         dropValue);
-                        }
-                      },
-                      horizontalPadding: 10.0,
-                      verticalPadding: 10.0,
+                        },
+                        horizontalPadding: 10.0,
+                        verticalPadding: 10.0,
+                      ),
                     ),
-                  ),
-                )
-              ],
+                  );
+
+                })
+                 ],
             ),
           ),
           const SizedBox(
@@ -386,21 +425,29 @@ class _HalfSangramBGameUiState extends State<HalfSangramBGameUi> {
                 // 2: FixedColumnWidth(110),
                 // 3: FixedColumnWidth(110)
               },
-              children:  [
+              children: [
                 TableRow(children: [
                   TableCell(
                       child: Center(
                           child: Text(
-                            widget.sangram=='full'?"Open Pana" :halfSangram.gameType=="open"?"Open Digit":"Open Pana",
-                    style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+                    widget.sangram == 'full'
+                        ? "Open Pana"
+                        : halfSangram.gameType == "open"
+                            ? "Open Digit"
+                            : "Open Pana",
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w600, fontSize: 15),
                   ))),
                   TableCell(
                       child: Center(
                           child: Text(
-                            halfSangram.gameType=="open"?"Close Pana":"Close Digit",
-                    style:const TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+                    halfSangram.gameType == "open"
+                        ? "Close Pana"
+                        : "Close Digit",
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w600, fontSize: 15),
                   ))),
-                 const TableCell(
+                  const TableCell(
                       child: Center(
                           child: Text(
                     "Points",
@@ -448,13 +495,11 @@ class _HalfSangramBGameUiState extends State<HalfSangramBGameUi> {
                               padding: const EdgeInsets.all(8.0),
                               child: Text("${totalBids[index]['points']}"),
                             ))),
-
                             TableCell(
                                 child: InkWell(
                               onTap: () {
-                                Provider.of<HalfSangram>(context,
-                                        listen: false)
-                                    .removeBids(index,context);
+                                Provider.of<HalfSangram>(context, listen: false)
+                                    .removeBids(index, context);
                               },
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
@@ -515,7 +560,7 @@ class _HalfSangramBGameUiState extends State<HalfSangramBGameUi> {
                                 child: customElevatedButton(
                                   context,
                                   "Submit",
-                                      () {
+                                  () {
                                     List newBidList = [];
 
                                     for (int i = 0; totalBids.length > i; i++) {
@@ -523,48 +568,53 @@ class _HalfSangramBGameUiState extends State<HalfSangramBGameUi> {
                                         "digits": totalBids[i]['open'],
                                         "closedigits": totalBids[i]['close'],
                                         "points": totalBids[i]['points'],
-                                        "session": halfSangram.gameType=="open"?"Open":"Close"
+                                        "session":widget.isClosedonly==true?"Close":
+                                            halfSangram.gameType == "open"
+                                                ? "Open"
+                                                : "Close"
                                       });
                                     }
 
                                     Map newResult = {
                                       "user_id": idUser,
                                       "Gamename": widget.gameName,
-                                      "totalbit":
-                                      halfSangram.totalBids.length,
+                                      "totalbit": halfSangram.totalBids.length,
                                       "gameid": widget.gameId,
-                                      "pana": widget.sangram=='full'?"Full Sangam" :"Half Sangam",
+                                      "pana": widget.sangram == 'full'
+                                          ? "Full Sangam"
+                                          : "Half Sangam",
                                       "bid_date": DateFormat("yyyy-MM-dd")
                                           .format(DateTime.now()),
-                                      "session":halfSangram.gameType=="open"?"Open":"Close",
+                                      "session": widget.isClosedonly==true?"Close": halfSangram.gameType == "open"
+                                          ? "Open"
+                                          : "Close",
                                       "result": newBidList
                                     };
                                     if (int.parse(
-                                        "${profileProvider.profileModelData.profile?[0].walletBalance}") >=
+                                            "${profileProvider.profileModelData.profile?[0].walletBalance}") >=
                                         totalpoints) {
                                       return popupWorkingMoneyReduction(context,
-                                              () {
-                                            Navigator.pop(context);
-                                            Provider.of<MainGamesProvider>(context,
+                                          () {
+                                        Navigator.pop(context);
+                                        Provider.of<MainGamesProvider>(context,
                                                 listen: false)
-                                                .mainGameStatusCheckApiCall(
-                                              context,
-                                              widget.gameId,
-                                              bidData: newResult,
-
-                                            );
-                                          },
+                                            .mainGameStatusCheckApiCall(
+                                          context,
+                                          widget.gameId,
+                                          bidData: newResult,
+                                        );
+                                      },
                                           gameName: widget.gameName,
                                           totalbid: totalBids.length,
                                           bidamount: totalpoints,
-                                          isHalfSang:true,
+                                          isHalfSang: true,
                                           data: totalBids);
                                     } else {
                                       return popupWorkingMoneyReduction(context,
-                                              () {
-                                            Navigator.pop(context);
-                                            popUpInsufficientBalance(context);
-                                          },
+                                          () {
+                                        Navigator.pop(context);
+                                        popUpInsufficientBalance(context);
+                                      },
                                           data: totalBids,
                                           totalbid: totalBids.length ?? 0,
                                           bidamount: totalpoints,

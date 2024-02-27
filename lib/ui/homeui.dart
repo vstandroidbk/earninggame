@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:earninggame/models/homemodel.dart';
 import 'package:earninggame/providers/homeprovider.dart';
 import 'package:earninggame/providers/profileprovider.dart';
@@ -239,6 +241,7 @@ class _HomeUiState extends State<HomeUi> {
                               // },
                               itemBuilder: (context, index) {
                                 Result? gamedata = data.result?[index];
+                                // log("${} ============");
                                 return Container(
                                   padding: const EdgeInsets.only(top: 8),
                                   child: InkWell(
@@ -315,7 +318,7 @@ class _HomeUiState extends State<HomeUi> {
                                                 listen: false)
                                             .mainGameStatusCheckApiCall(
                                                 context, gamedata?.gameId,
-                                                gmName: gamedata?.gameName);
+                                                gmName: gamedata?.gameName,closeTime: gamedata!.openTime);
                                       }
                                     },
                                     child: Container(

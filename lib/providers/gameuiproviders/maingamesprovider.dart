@@ -109,6 +109,7 @@ class MainGamesProvider with ChangeNotifier{
             Uri.parse(Constants.mainGameCommonSumitApiUrl),
             body: jsonEncode(DataEncryption.getEncryptedData(
                 {"env_type": Constants.envType, "new_result": newResult})));
+        print("============== ${request.body} =============== request.statusCode gk");
         if (request.statusCode == 200) {
           Map<String, dynamic> bodyData = jsonDecode(request.body);
             print("${bodyData} =============bodyData11111===");
@@ -163,7 +164,7 @@ class MainGamesProvider with ChangeNotifier{
   }
   //api for check game time status active or close
   bool isGameTimeStatusloading = false;
-  mainGameStatusCheckApiCall(context, idGame, {gmName, bidData}) async {
+  mainGameStatusCheckApiCall(context, idGame, {gmName, bidData,closeTime}) async {
     print("idGame= $idGame ==========");
     bool ishaveNetwork = await hasNetwork();
     isGameTimeStatusloading = true;
@@ -192,6 +193,7 @@ class MainGamesProvider with ChangeNotifier{
                         return  GamesTypeUi(
                           gameName: gmName,
                           gameId: idGame,
+                            closeTime:closeTime
                         );
                       })).then((value) {
                 Provider.of<ProfileProvider>(context,

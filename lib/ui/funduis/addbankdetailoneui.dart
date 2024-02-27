@@ -89,7 +89,7 @@ class _AddBankDetailOneUiState extends State<AddBankDetailOneUi> {
                                     height: 10,
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                                    padding: const EdgeInsets.symmetric(horizontal: 5),
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
@@ -250,7 +250,7 @@ class _AddBankDetailOneUiState extends State<AddBankDetailOneUi> {
                                     ],
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                                    padding: const EdgeInsets.symmetric(horizontal: 5),
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
@@ -404,7 +404,7 @@ class _AddBankDetailOneUiState extends State<AddBankDetailOneUi> {
                             TableRow(children: [
                               Container(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 15, vertical: 15),
+                                    horizontal: 5, vertical: 15),
                                 decoration: BoxDecoration(
                                     border: Border.all(color: greyClr),
                                     borderRadius: BorderRadius.circular(10)),

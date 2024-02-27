@@ -18,7 +18,8 @@ class SpDpTpGameUi extends StatefulWidget {
   final String? gameId;
   final String? gameName;
   final String? type;
-  const SpDpTpGameUi({super.key,required this.gameId,required this.gameName,required this.type});
+  final bool? isClosedOnly;
+  const SpDpTpGameUi({super.key,required this.gameId,required this.gameName,required this.type,required this.isClosedOnly});
 
   @override
   State<SpDpTpGameUi> createState() => _SpDpTpGameUiState();
@@ -64,7 +65,14 @@ class _SpDpTpGameUiState extends State<SpDpTpGameUi> {
                     SizedBox(
                       width: 190,
                       child: Container(
-                        child: customDropDownMenueButton(dropValue, (value) {
+                        child:widget.isClosedOnly==true? Container(
+                          width: 180,
+                          alignment:Alignment.center,
+                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(5),
+                            color: greyLightClr,),
+                          padding:const EdgeInsets.symmetric(vertical: 13),
+                          child:const Text("Closed",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16),),
+                        ):  customDropDownMenueButton(dropValue, (value) {
                           Provider.of<SpDpTpProvider>(context,
                                   listen: false)
                               .setgameTypeChange(value);
@@ -170,7 +178,7 @@ class _SpDpTpGameUiState extends State<SpDpTpGameUi> {
                          if(spDpTpProvider.tpVal==true){
                            selectedChecks=1;
                          }
-                          if (dropValue == null) {
+                          if (dropValue == null && widget.isClosedOnly==false) {
                             customSnackbar(context, "Please Select Game Type");
                           }else if(selectedChecks !=1 && widget.type=="spdptp") {
                             customSnackbar(context, "Please Select at least 1 motor");
@@ -338,9 +346,9 @@ class _SpDpTpGameUiState extends State<SpDpTpGameUi> {
                                 child: InkWell(
                               onTap: () {
                                 if(widget.type=="spdptp"){
-                                  spDpTpProvider.removeCombination(index,"spdptp");
+                                  spDpTpProvider.removeCombination(context,index,"spdptp");
                                 }else{
-                                  spDpTpProvider.removeCombination(index,"sp");
+                                  spDpTpProvider.removeCombination(context,index,"sp");
                                 }
 
                               },
@@ -387,10 +395,10 @@ class _SpDpTpGameUiState extends State<SpDpTpGameUi> {
                 int points = int.parse(totalBids![index].points.toString());
                 totalpoints += points;
               });
-            int currentAmt= ProfileProvider.getamount;
+            // int currentAmt= Provider.of<ProfileProvider>(context,listen: false).amountTemporary;
+            int currentAmt=ProfileProvider.amount;
              int amtWillBe= currentAmt-totalpoints;
               spDpTpProvider.changeTempAmt(context, amtWillBe);
-
               int? arraylen;
               if(widget.type=="spdptp"){
                arraylen=spDpTpProvider.spDpTpCominations.posssibleArray?.length;
@@ -426,7 +434,8 @@ class _SpDpTpGameUiState extends State<SpDpTpGameUi> {
                               "digits": totalBids![i].number,
                               "closedigits":widget.type=="spdptp"? "":"",
                               "points": totalBids![i].points,
-                              "session": spDpTpProvider.gameType
+                              "session":widget.isClosedOnly==true?"Close":spDpTpProvider.gameType=="open"?"Open":"Close",
+                              "pana": widget.type=="spdptp"?totalBids![i].pana:"",
                             });
                           }
 
@@ -435,10 +444,10 @@ class _SpDpTpGameUiState extends State<SpDpTpGameUi> {
                             "Gamename":widget.gameName, //widget.gameName,
                             "totalbit":arraylen,
                             "gameid": widget.gameId,
-                            "pana": widget.type=="spdptp"?"SpDpTpMotors":widget.type=="sp"?"SP Motor":"DP Motor",
+                            "pana": widget.type=="spdptp"?"SpDpTpMotors":widget.type=="sp"?"Single Pana":"Double Pana",
                             "bid_date": DateFormat("yyyy-MM-dd")
                                 .format(DateTime.now()),
-                            "session": spDpTpProvider.gameType,
+                            "session":widget.isClosedOnly==true?"Close":spDpTpProvider.gameType=="open"?"Open":"Close",
                             "result": newBidList
                           };
                         log("$newResult ===============api data will sended");

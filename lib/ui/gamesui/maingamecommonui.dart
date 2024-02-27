@@ -16,12 +16,14 @@ class MainGameCommonUi extends StatefulWidget {
   final String? gameTitle;
   final String? gameName;
   final String? gameId;
+  final bool?  isClosedOnly;
   const MainGameCommonUi(
       {super.key,
       required this.gameTitle,
       required this.gameNo,
       this.gameName,
-      this.gameId});
+      this.gameId,
+      required this.isClosedOnly});
 
   @override
   State<MainGameCommonUi> createState() => _MainGameCommonUiState();
@@ -60,33 +62,45 @@ class _MainGameCommonUiState extends State<MainGameCommonUi> {
             child: Column(
               children: [
 
-                const SizedBox(
-                  height: 20,
+                 SizedBox(
+                  height: widget.gameNo==2?0:20,
                 ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      "Select Game Type",
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    SizedBox(
-                      width: 190,
-                      child: Container(
-                        child: customDropDownMenueButton(dropValue, (value) {
-                          Provider.of<MainGamesProvider>(context,
-                              listen: false)
-                              .setgameTypeChange(value);
-                          dropValue = Provider.of<MainGamesProvider>(
-                              context,
-                              listen: false)
-                              .gameType;
-
-                        }),
+                Visibility(
+                  visible: widget.gameNo==2?false:true,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "Select Game Type",
+                        style: TextStyle(fontSize: 16),
                       ),
-                    )
-                  ],
+                      SizedBox(
+                        width: 190,
+                        child:widget.isClosedOnly==true? Container(
+                          width: 180,
+                          alignment:Alignment.center,
+                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(5),
+                            color: greyLightClr,),
+                          padding: EdgeInsets.symmetric(vertical: 13),
+                          child: Text("Closed",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16),),
+                        ):  Consumer<MainGamesProvider>(builder: (context,mainGamesProvider,child){
+                          return Container(
+                            child: customDropDownMenueButton(mainGamesProvider.gameType, (value) {
+                              Provider.of<MainGamesProvider>(context,
+                                  listen: false)
+                                  .setgameTypeChange(value);
+                              dropValue = Provider.of<MainGamesProvider>(
+                                  context,
+                                  listen: false)
+                                  .gameType;
+
+                            }),
+                          );
+                        },),
+                      )
+                    ],
+                  ),
                 ),
                 const SizedBox(
                   height: 20,
@@ -299,7 +313,14 @@ class _MainGameCommonUiState extends State<MainGameCommonUi> {
                       context,
                       "Add",
                       () {
+                       String? gametye = Provider.of<MainGamesProvider>(
+                            context,
+                            listen: false)
+                            .gameType;
                         if (widget.gameNo == 1) {
+                          if(gametye==null && widget.isClosedOnly==false){
+                            customSnackbar(context, "Please select game type.");
+                          }else
                           if (singleDigitController.text.isEmpty) {
                             customSnackbar(context, "Please enter Digit");
                           } else if (pointController.text.isEmpty) {
@@ -348,6 +369,9 @@ class _MainGameCommonUiState extends State<MainGameCommonUi> {
                         } else {
                           print(
                               "${singleDigitController.text} =======else==========");
+                          if(gametye==null && widget.isClosedOnly==false  && widget.gameNo !=2){
+                            customSnackbar(context, "Please select game type.");
+                          }else
                           if (singleDigitController.text.isEmpty) {
                             customSnackbar(context, "Please enter valid Digit");
                           } else if (pointController.text.isEmpty) {
@@ -531,7 +555,7 @@ class _MainGameCommonUiState extends State<MainGameCommonUi> {
                                         "digits": totalBids[i]['digit'],
                                         "closedigits": "",
                                         "points": totalBids[i]['points'],
-                                        "session": slGameProvider.gameType=="open"?"Open":"Close"
+                                        "session":widget.gameNo ==2? "Open":widget.isClosedOnly==true? "Close" : slGameProvider.gameType=="open"?"Open":"Close"
                                       });
                                     }
 
@@ -556,7 +580,7 @@ class _MainGameCommonUiState extends State<MainGameCommonUi> {
                                       //     : "Full Sangam",
                                       "bid_date": DateFormat("yyyy-MM-dd")
                                           .format(DateTime.now()),
-                                      "session":slGameProvider.gameType=="open"?"Open":"Close",
+                                      "session":widget.gameNo ==2? "Open":widget.isClosedOnly==true? "Close" : slGameProvider.gameType=="open"?"Open":"Close",
                                       "result": newBidList
                                     };
                                     if (int.parse(

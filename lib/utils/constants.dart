@@ -63,9 +63,25 @@ class Constants {
   static String SpDpGetCombinationApiUrl =
       "${baseUrl}api-get-sp-motor-combination";
 
+
   //fund withdraw history
   static String fundWithdrawHistroyApiUrl =
       "${baseUrl}api-user-withdraw-transaction-history";
+  //passbook
+  static String passbookApiUrl =
+      "${baseUrl}api-wallet-transaction-history";
+  //fund deposite
+  static String fundDepositeApiCall =
+      "${baseUrl}api-get-auto-deposit-list";
+  //gdBidHistory
+  static String gdBidHistoryApiUrl =
+      "${baseUrl}api-galidisswar-bid-history-data";
+  //starline bid history api
+  static String ksBidHistoryApiUrl =
+      "${baseUrl}api-starline-bid-history-data";
+  //main game bid history api
+  static String mainGameBidHistoryApiUrl =
+      "${baseUrl}api-bid-history-data";
 }
 
 class GameArray {

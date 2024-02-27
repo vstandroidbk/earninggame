@@ -45,12 +45,18 @@ class SpDpTpProvider with ChangeNotifier{
     notifyListeners();
   }
 
-  removeCombination(index,String type){
+  removeCombination(context,index,String type){
+    int curerntAmount= Provider.of<ProfileProvider>(context,listen: false).amountTemporary;
+    int oldPoint;
     if(type=="spdptp"){
+       oldPoint=int.parse(spDpTpCominations.posssibleArray![index].points.toString());
       spDpTpCominations.posssibleArray!.removeAt(index);
     }else{
+     oldPoint=int.parse(spDpCominations.posssibleArray![index].points.toString());
       spDpCominations.posssibleArray!.removeAt(index);
     }
+    int newAmountWillBe= int.parse(curerntAmount.toString()) + int.parse(oldPoint.toString());
+    Provider.of<ProfileProvider>(context,listen: false).setGetAmount(newAmountWillBe);
     notifyListeners();
   }
 

@@ -1,4 +1,7 @@
 import 'dart:convert';
+import 'package:earninggame/models/gdbidhistorymodel.dart';
+import 'package:earninggame/models/gdbidhistorymodel.dart';
+import 'package:earninggame/models/gdbidhistorymodel.dart';
 import 'package:earninggame/models/kingjackpotresultmodel.dart';
 import 'package:earninggame/models/responseincriptmodel.dart';
 import 'package:earninggame/networking/checkinternet.dart';
@@ -122,6 +125,48 @@ class GaliProvider with ChangeNotifier {
       customSnackbar(context, noInternetMsg);
     }
     isJsckpotResultLonding = false;
+    notifyListeners();
+  }
+
+  //gali bid history api call
+  GdBidHistoryModel _galiBidHisData = GdBidHistoryModel();
+  get getGaliBidHisData => _galiBidHisData;
+  bool isBidHisLoding = false;
+  galiBidHisApiCall(context) async {
+    bool isInternet = await hasNetwork();
+
+    isBidHisLoding = true;
+    notifyListeners();
+    if (isInternet) {
+      try {
+        http.Response request = await http.post(
+            Uri.parse(Constants.gdBidHistoryApiUrl),
+            body: jsonEncode(DataEncryption.getEncryptedData(
+                {"env_type": Constants.envType,
+                  "user_id":idUser,//"517935902854",
+                  "bid_from": "",
+                  "bid_to": ""
+                })));
+        if (request.statusCode == 200) {
+          Map<String, dynamic> decodedBody = jsonDecode(request.body);
+          ResponseIncriptModel resIncData =
+          ResponseIncriptModel.fromJson(decodedBody);
+          Map<String, dynamic> decreptedData = DataEncryption.getDecryptedData(
+              "${resIncData.data?.reskey}", "${resIncData.data?.resdata}");
+          _galiBidHisData = GdBidHistoryModel.fromJson(decreptedData);
+          // print(
+          //     "${decreptedData} ========================== decreptedData data");
+          notifyListeners();
+        } else {
+          customSnackbar(context, serverErrortMsg);
+        }
+      } catch (e) {
+        customSnackbar(context, "Something went wrong . $e");
+      }
+    } else {
+      customSnackbar(context, noInternetMsg);
+    }
+    isBidHisLoding = false;
     notifyListeners();
   }
 }

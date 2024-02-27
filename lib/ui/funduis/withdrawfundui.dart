@@ -98,7 +98,7 @@ class _WithdrawFundUiState extends State<WithdrawFundUi> {
                                       child: Column(
                                         children: [
                                           Text(
-                                            "Krishan ram",
+                                            "Admin",//"Krishan ram",
                                             style: TextStyle(
                                                 color: clrWhite,
                                                 fontWeight: FontWeight.w600),

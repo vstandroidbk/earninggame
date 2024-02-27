@@ -2,11 +2,13 @@ import 'package:earninggame/ui/biduis/gameresultui.dart';
 import 'package:earninggame/ui/biduis/kingjackpotbidhistoryui.dart';
 import 'package:earninggame/ui/components/drawer.dart';
 import 'package:earninggame/ui/notification.dart';
+import 'package:earninggame/utils/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/profileprovider.dart';
 import '../utils/colors.dart';
+import '../utils/constants.dart';
 import 'biduis/bidhistoryui.dart';
 import 'biduis/kingjackpotresulthistory.dart';
 import 'biduis/kingstarlinebidhistoryui.dart';
@@ -44,12 +46,12 @@ class _MybidsUiState extends State<MybidsUi> {
     },
     {
       "leadingimage": "assets/images/Calendar.png",
-      "title": "King Jackpot Bid History",
+      "title": "$galidisswar Bid History",
       "Subtitle": "You can view your jackpot bid history"
     },
     {
       "leadingimage": "assets/images/Check Document.png",
-      "title": "King Jackpot result History ",
+      "title": "$galidisswar result History ",
       "Subtitle": "You can view jackpot result"
     },
   ];

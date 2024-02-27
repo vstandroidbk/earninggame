@@ -1,6 +1,8 @@
 import 'package:earninggame/utils/colors.dart';
+import 'package:earninggame/utils/components.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'gamesui/dpmotorgameui.dart';
 import 'gamesui/fullsangamgameui.dart';
 import 'gamesui/halfsangrambgameui.dart';
@@ -12,7 +14,8 @@ import 'gamesui/spmotorgameui.dart';
 class GamesTypeUi extends StatefulWidget {
   final String? gameName;
   final String? gameId;
-  const GamesTypeUi({super.key, required this.gameName, required this.gameId});
+  final String? closeTime;
+  const GamesTypeUi({super.key, required this.gameName, required this.gameId,required this.closeTime});
 
   @override
   State<GamesTypeUi> createState() => _GamesTypeUiState();
@@ -43,6 +46,21 @@ class _GamesTypeUiState extends State<GamesTypeUi> {
     {"image": "assets/images/halfb.png", "name": "Half Sangam"},
     {"image": "assets/images/full.png", "name": "Full Sangam"},
   ];
+  bool isClosedOnly=false;
+  @override
+  void initState() {
+    super.initState();
+    String onlyTime= time12to24Format(widget.closeTime.toString());
+    String todayDate=DateFormat("yyyy-MM-dd").format(DateTime.parse(DateTime.now().toString()));
+    String closeFulTime =DateFormat("yyyy-MM-dd HH:mm:ss").format(DateTime.parse("${todayDate.trim()} ${onlyTime.trim()}"));
+    DateTime closeDatetime=DateTime.parse(closeFulTime);
+    if(closeDatetime.isAfter(DateTime.now()) ){
+      isClosedOnly=false;
+    }else{
+      isClosedOnly=true;
+
+    }
+  }
   int logNum = 0;
   @override
   Widget build(BuildContext context) {
@@ -91,18 +109,25 @@ class _GamesTypeUiState extends State<GamesTypeUi> {
                                     gameNo: 1,
                                     gameName: widget.gameName,
                                     gameId: widget.gameId,
+                                    isClosedOnly: isClosedOnly,
                                   );
                                 }));
                               } else if (index == 1) {
-                                Navigator.push(context,
-                                    CupertinoPageRoute(builder: (context) {
-                                  return MainGameCommonUi(
-                                    gameTitle: 'Jodi Digit Game',
-                                    gameNo: 2,
-                                    gameName: widget.gameName,
-                                    gameId: widget.gameId,
-                                  );
-                                }));
+                               if( isClosedOnly==true){
+                                 customSnackbar(context, "Session is closed for this game.");
+                               }else{
+                                 Navigator.push(context,
+                                     CupertinoPageRoute(builder: (context) {
+                                       return MainGameCommonUi(
+                                         gameTitle: 'Jodi Digit Game',
+                                         gameNo: 2,
+                                         gameName: widget.gameName,
+                                         gameId: widget.gameId,
+                                         isClosedOnly: isClosedOnly,
+                                       );
+                                     }));
+                              }
+
                               } else if (index == 2) {
                                 Navigator.push(context,
                                     CupertinoPageRoute(builder: (context) {
@@ -111,6 +136,7 @@ class _GamesTypeUiState extends State<GamesTypeUi> {
                                     gameNo: 3,
                                     gameName: widget.gameName,
                                     gameId: widget.gameId,
+                                    isClosedOnly: isClosedOnly,
                                   );
                                 }));
                               } else if (index == 3) {
@@ -121,6 +147,7 @@ class _GamesTypeUiState extends State<GamesTypeUi> {
                                     gameNo: 4,
                                     gameName: widget.gameName,
                                     gameId: widget.gameId,
+                                    isClosedOnly: isClosedOnly,
                                   );
                                 }));
                               } else if (index == 4) {
@@ -131,35 +158,46 @@ class _GamesTypeUiState extends State<GamesTypeUi> {
                                     gameNo: 5,
                                     gameName: widget.gameName,
                                     gameId: widget.gameId,
+                                    isClosedOnly: isClosedOnly,
                                   );
                                 }));
                               } else if (index == 5) {
                                 Navigator.push(context,
                                     CupertinoPageRoute(builder: (context) {
-                                  return SpDpTpGameUi(gameId:  widget.gameId,gameName:  widget.gameName,type:"spdptp");
+                                  return SpDpTpGameUi(gameId:  widget.gameId,gameName:  widget.gameName,type:"spdptp",
+                                    isClosedOnly: isClosedOnly,);
                                 }));
                               } else if (index == 6) {
                                 Navigator.push(context,
                                     CupertinoPageRoute(builder: (context) {
                                   // return const SpMotorGameUi();
-                                  return SpDpTpGameUi(gameId:  widget.gameId,gameName:  widget.gameName,type:"sp");
+                                  return SpDpTpGameUi(gameId:  widget.gameId,gameName:  widget.gameName,type:"sp",
+                                    isClosedOnly: isClosedOnly,);
                                 }));
                               } else if (index == 7) {
                                 Navigator.push(context,
                                     CupertinoPageRoute(builder: (context) {
                                   // return const DpMotorGameUi();
-                                  return SpDpTpGameUi(gameId:  widget.gameId,gameName:  widget.gameName,type:"dp");
+                                  return SpDpTpGameUi(gameId:  widget.gameId,gameName:  widget.gameName,type:"dp",
+                                    isClosedOnly: isClosedOnly,);
                                 }));
                               } else if (index == 8) {
                                 Navigator.push(context,
                                     CupertinoPageRoute(builder: (context) {
-                                  return HalfSangramBGameUi(gameId:  widget.gameId,gameName:  widget.gameName,sangram:"half");
+                                  return HalfSangramBGameUi(gameId:  widget.gameId,gameName:  widget.gameName,sangram:"half",
+                                    isClosedonly: isClosedOnly,);
                                 }));
                               } else if (index == 9) {
-                                Navigator.push(context,
-                                    CupertinoPageRoute(builder: (context) {
-                                  return HalfSangramBGameUi(gameId:  widget.gameId,gameName:  widget.gameName,sangram:"full");
-                                }));
+                                if(isClosedOnly==true){
+                                  customSnackbar(context, "Session is closed for this game.");
+                                }else{
+                                  Navigator.push(context,
+                                      CupertinoPageRoute(builder: (context) {
+                                        return   HalfSangramBGameUi(gameId:  widget.gameId,gameName:  widget.gameName,sangram:"full",
+                                          isClosedonly: isClosedOnly,);
+                                      }));
+                                }
+
                               } else {
                                 Navigator.push(context,
                                     CupertinoPageRoute(builder: (context) {
