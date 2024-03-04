@@ -3,13 +3,10 @@ import 'package:earninggame/utils/components.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'gamesui/dpmotorgameui.dart';
-import 'gamesui/fullsangamgameui.dart';
 import 'gamesui/halfsangrambgameui.dart';
 import 'gamesui/maingamecommonui.dart';
 import 'gamesui/singledigitgameui.dart';
 import 'gamesui/spdptpgameui.dart';
-import 'gamesui/spmotorgameui.dart';
 
 class GamesTypeUi extends StatefulWidget {
   final String? gameName;
@@ -70,7 +67,7 @@ class _GamesTypeUiState extends State<GamesTypeUi> {
         backgroundColor: clrTranaparent,
         elevation: 0,
         foregroundColor: blackClr,
-        title: const Text("TIME BAZAR OPEN GAME"),
+        title:  Text("${widget.gameName}"),
       ),
       body: SafeArea(
         child: SingleChildScrollView(

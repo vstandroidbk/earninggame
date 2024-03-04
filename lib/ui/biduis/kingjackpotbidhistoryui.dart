@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/gdbidhistorymodel.dart';
 import '../../utils/colors.dart';
-import '../../utils/components.dart';
 
 class KingJackpotBidHistoryUi extends StatefulWidget {
   const KingJackpotBidHistoryUi({super.key});

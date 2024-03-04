@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/profileprovider.dart';
 import '../utils/colors.dart';
-import '../utils/constants.dart';
 import 'biduis/bidhistoryui.dart';
 import 'biduis/kingjackpotresulthistory.dart';
 import 'biduis/kingstarlinebidhistoryui.dart';

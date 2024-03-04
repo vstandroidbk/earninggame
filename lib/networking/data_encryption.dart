@@ -270,7 +270,6 @@ class DataEncryption {
 
   static Map<String, dynamic> getDecryptedData(String resKey, String resData) {
     // var decodeKey = DataEncryption.decodeKey(resKey, -3);
-
     //decrypt data
     var decryptData = DataEncryption.decryptWithAES(resKey, resData);
 

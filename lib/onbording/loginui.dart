@@ -1,14 +1,18 @@
+import 'dart:developer';
+
 import 'package:earninggame/onbording/forgotmpinui.dart';
 import 'package:earninggame/ui/components/circularprogressindicator.dart';
 import 'package:earninggame/ui/navigation.dart';
 import 'package:earninggame/utils/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:provider/provider.dart';
 import '../providers/loginprovider.dart';
 import '../providers/otprequestprovider.dart';
-import '../utils/components.dart';
+import '../utils/components.dart' ;
+
 
 class LoginUi extends StatefulWidget {
   final String? mobNo;
@@ -104,25 +108,50 @@ class _LoginUiState extends State<LoginUi> {
               ),
               Center(
                 child: InkWell(
-                  onTap: () async {
-                    FocusScope.of(context).unfocus();
-                    final LocalAuthentication auth = LocalAuthentication();
-                    bool checkStatus = await auth.canCheckBiometrics;
-                    if (checkStatus == false) {
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return const AlertDialog(
-                              title: Text("Something went wrong"),
-                              content: Text(
-                                  "Finger print lock not supported in your device"),
-                            );
-                          });
-                    } else {
-                      // final bool canAuthenticateWithBiometrics =
-                      //     await auth.canCheckBiometrics;
-                    }
-                  },
+                  // onTap: () async {
+                  //   FocusScope.of(context).unfocus();
+                  //   try {
+                  //     final LocalAuthentication auth = LocalAuthentication();
+                  //     bool checkStatus = await auth.canCheckBiometrics;
+                  //     if (checkStatus == false) {
+                  //       customSnackbar(context, "Finger print lock not supported in your device");
+                  //     } else {
+                  //       final List<BiometricType> availableBiometrics =
+                  //       await auth.getAvailableBiometrics();
+                  // log("${availableBiometrics}");
+                  //
+                  //       if (availableBiometrics.isNotEmpty) {
+                  //         customSnackbar(context, "No biometric available ");
+                  //       }
+                  //
+                  //       if (availableBiometrics.contains(BiometricType.strong)) {
+                  //         // Specific types of biometrics are available.
+                  //         // Use checks like this with caution!
+                  //         print("done here=============");
+                  //       var  suthenticate= await auth.authenticate(
+                  //             localizedReason: 'Please authenticate for login to your account',
+                  //             options: const AuthenticationOptions(biometricOnly: true));
+                  //       print("$suthenticate =============");
+                  //       }
+                  //       // final bool canAuthenticateWithBiometrics =
+                  //       //     await auth.canCheckBiometrics;
+                  //       // customSnackbar(context, "$canAuthenticateWithBiometrics Something went wrong... ");
+                  //     }
+                  //   }catch(e){
+                  //     print(e);
+                  //     customSnackbar(context, "Something went wrong... $e");
+                  //   }
+                  //
+                  //   // try {
+                  //   //   final bool didAuthenticate = await auth.authenticate(
+                  //   //       localizedReason: 'Please authenticate to show account balance',
+                  //   //       options: const AuthenticationOptions(useErrorDialogs: false));
+                  //   //   // ···
+                  //   // } on PlatformException catch (e) {
+                  //   //   customSnackbar(context, "Something went wrong... $e");
+                  //   // }
+                  // },
+                  //
                   child: SizedBox(
                       width: 130,
                       child: Image.asset("assets/demoimages/biometric.png")),

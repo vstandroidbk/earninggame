@@ -1,7 +1,5 @@
 import 'dart:convert';
 import 'package:earninggame/models/maingmbidhistorymodel.dart';
-import 'package:earninggame/models/maingmbidhistorymodel.dart';
-import 'package:earninggame/models/maingmbidhistorymodel.dart';
 import 'package:earninggame/models/responseincriptmodel.dart';
 import 'package:earninggame/networking/checkinternet.dart';
 import 'package:earninggame/networking/data_encryption.dart';

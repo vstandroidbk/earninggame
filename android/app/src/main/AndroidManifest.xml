@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.earninggame">
      <!-- xmlns:tools="http://schemas.android.com/tools"
     package="com.baseflow.permissionhandler.example"> -->
@@ -51,7 +52,8 @@
     <uses-permission android:name="android.permission.USE_SIP"/>
     <uses-permission android:name="android.permission.READ_CALL_LOG"/>
     <uses-permission android:name="android.permission.WRITE_CALL_LOG"/>
-    <uses-permission android:name="android.permission.BIND_CALL_REDIRECTION_SERVICE"/>
+    <uses-permission android:name="android.permission.BIND_CALL_REDIRECTION_SERVICE"
+        tools:ignore="ProtectedPermissions" />
 
     <!-- Permissions options for the `calendar` group -->
     <uses-permission android:name="android.permission.READ_CALENDAR" />
@@ -105,7 +107,7 @@
     <!-- for biometric by ganesh -->
     
    <application
-        android:label="earninggame"
+        android:label="Earning game"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

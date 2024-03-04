@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:earninggame/providers/gameuiproviders/halfsangramprovider.dart';
-import 'package:earninggame/providers/gameuiproviders/slgamesprovider.dart';
 import 'package:earninggame/providers/gameuiproviders/spdptpprovider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:earninggame/onbording/splashui.dart';
 import 'package:earninggame/providers/createuserprovider.dart';
 import 'package:earninggame/providers/forgetpassprovider.dart';
@@ -29,11 +31,59 @@ import 'package:earninggame/providers/starlinegameresultprovider.dart';
 import 'package:earninggame/providers/starlinegamesprovider.dart';
 import 'package:earninggame/providers/timerProvider.dart';
 import 'package:earninggame/providers/updatepassprovider.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/foundation.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+//   // If you're going to use other Firebase services in the background, such as Firestore,
+//   // make sure you call `initializeApp` before using other Firebase services.
+//   await Firebase.initializeApp();
+//
+//   print("Handling a background message: ${message.messageId}");
+// }
+ main() async {
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    // options: DefaultFirebaseOptions.currentPlatform,
+  );
+  final messaging = FirebaseMessaging.instance;
+
+  final settings = await messaging.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
+
+  // await FirebaseMessaging.instance.setAutoInitEnabled(true);
+  if (kDebugMode) {
+    log('Permission granted: ${settings.authorizationStatus}');
+  }
+  final fcmToken = await FirebaseMessaging.instance.getToken();
+  log("FCMToken ==$fcmToken==");
+
+  FirebaseMessaging.instance.onTokenRefresh
+      .listen((fcmToken) {
+    // TODO: If necessary send token to application server.
+
+    // Note: This callback is fired at each app startup and whenever a new
+    // token is generated.
+    log("Token refreshed");
+  })
+      .onError((err) {
+    // Error getting token.
+  });
+
+
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => PassbookProvider()),
@@ -101,3 +151,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
+

@@ -1,7 +1,5 @@
 import 'dart:convert';
 import 'package:earninggame/models/gdbidhistorymodel.dart';
-import 'package:earninggame/models/gdbidhistorymodel.dart';
-import 'package:earninggame/models/gdbidhistorymodel.dart';
 import 'package:earninggame/models/kingjackpotresultmodel.dart';
 import 'package:earninggame/models/responseincriptmodel.dart';
 import 'package:earninggame/networking/checkinternet.dart';

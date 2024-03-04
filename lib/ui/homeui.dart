@@ -1,11 +1,8 @@
-import 'dart:developer';
-
 import 'package:earninggame/models/homemodel.dart';
 import 'package:earninggame/providers/homeprovider.dart';
 import 'package:earninggame/providers/profileprovider.dart';
 import 'package:earninggame/ui/components/circularprogressindicator.dart';
 import 'package:earninggame/ui/components/drawer.dart';
-import 'package:earninggame/ui/gamestypeui.dart';
 import 'package:earninggame/ui/kingjackpot.dart';
 import 'package:earninggame/ui/kingstarlinegametypeui.dart';
 import 'package:earninggame/ui/notification.dart';
@@ -201,231 +198,286 @@ class _HomeUiState extends State<HomeUi> {
                         height: 15,
                       ),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          SizedBox(
-                              width: 25,
-                              child: Image.asset(
-                                  "assets/demoimages/whatsapp.png")),
-                          const SizedBox(
-                            width: 10,
+                          Row(
+                            children: [
+                              SizedBox(
+                                  width: 25,
+                                  child: Image.asset(
+                                      "assets/demoimages/whatsapp.png")),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                homeProvider.isloading
+                                    ? ''
+                                    : data.mobileNo ?? "....",
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w500),
+                              )
+                            ],
                           ),
-                          Text(
-                            homeProvider.isloading
-                                ? ''
-                                : data.mobileNo ?? "....",
-                            style: const TextStyle(fontWeight: FontWeight.w500),
-                          )
+                          Row(
+                            children: [
+                              SizedBox(
+                                  width: 25,
+                                  child: Image.asset(
+                                      "assets/images/phone-call.png")),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                homeProvider.isloading
+                                    ? ''
+                                    : data.mobileNo ?? "....",
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w500),
+                              )
+                            ],
+                          ),
                         ],
                       ),
                     ],
                   ),
                 ),
                 Expanded(
-                  child: homeProvider.isloading
-                      ? const CustomCircularProgress()
-                      : data.result?.length == 0 || data.result?.length == null
-                          ? const Center(
+                  child: RefreshIndicator(
+                    onRefresh: () async {
+                      Provider.of<ProfileProvider>(context,
+                          listen: false)
+                          .profileDataApiCall(context);
+                      Provider.of<HomeProvider>(context,
+                          listen: false)
+                          .homeDataApiCall(context);
+                      await Future.delayed(
+                          const Duration(seconds: 2));
+                    },
+                    child: homeProvider.isloading
+                        ? const CustomCircularProgress()
+                        :int.parse(data.userMinimumVersion.toString() )<0.0 ? const Text("Update app") :  data.maintainenceMsgStatus==1? Text("${data.appMaintainenceMsg}"): data.result?.length == 0 || data.result?.length == null
+                            ? const Center(
                               child: Text(
                                 "No Data Found",
                                 style: TextStyle(
-                                    fontWeight: FontWeight.w600, fontSize: 17),
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 17),
                               ),
                             )
-                          : ListView.builder(
-                              // physics: NeverScrollableScrollPhysics(),
-                              physics: const AlwaysScrollableScrollPhysics(),
-                              itemCount: data.result?.length ?? 0,
-                              shrinkWrap: true,
-                              // separatorBuilder: (context, index) {
-                              //   return
-                              // },
-                              itemBuilder: (context, index) {
-                                Result? gamedata = data.result?[index];
-                                // log("${} ============");
-                                return Container(
-                                  padding: const EdgeInsets.only(top: 8),
-                                  child: InkWell(
-                                    onTap: () {
-                                      if (gamedata?.msgStatus == 2) {
-                                        showDialog(
-                                            context: context,
-                                            builder: (context) {
-                                              return AlertDialog(
-                                                insetPadding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 10),
-                                                content: SizedBox(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.95,
+                            : ListView.builder(
+                                // physics: NeverScrollableScrollPhysics(),
+                                physics:
+                                    const AlwaysScrollableScrollPhysics(),
+                                itemCount: data.result?.length ?? 0,
+                                shrinkWrap: true,
+                                // separatorBuilder: (context, index) {
+                                //   return
+                                // },
+                                itemBuilder: (context, index) {
+                                  Result? gamedata = data.result?[index];
+                                  // log("${} ============");
+                                  return Container(
+                                    padding: const EdgeInsets.only(top: 8),
+                                    child: InkWell(
+                                      onTap: () {
+                                        if (gamedata?.msgStatus == 2) {
+                                          showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                return AlertDialog(
+                                                  insetPadding:
+                                                      const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 10),
+                                                  content: SizedBox(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.95,
+                                                    child: Column(
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
+                                                      children: [
+                                                        const SizedBox(
+                                                          height: 20,
+                                                        ),
+                                                        SizedBox(
+                                                          width: 100,
+                                                          child: Image.asset(
+                                                              "assets/demoimages/cancel.png"),
+                                                        ),
+                                                        const SizedBox(
+                                                          height: 10,
+                                                        ),
+                                                        Text(
+                                                          "Bidding Is Closed For Today",
+                                                          style: TextStyle(
+                                                              color:
+                                                                  clrRedDark),
+                                                        ),
+                                                        const SizedBox(
+                                                          height: 10,
+                                                        ),
+                                                        Text(
+                                                          "${data.result?[index].gameName}",
+                                                          style: const TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              fontSize: 18),
+                                                        ),
+                                                        const SizedBox(
+                                                          height: 10,
+                                                        ),
+                                                        const SizedBox(
+                                                          height: 10,
+                                                        ),
+                                                        SizedBox(
+                                                          width:
+                                                              double.infinity,
+                                                          child:
+                                                              customElevatedButton(
+                                                                  context,
+                                                                  "OK", () {
+                                                            Navigator.pop(
+                                                                context);
+                                                          }),
+                                                        ),
+                                                        const SizedBox(
+                                                          height: 10,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                );
+                                              });
+                                        } else {
+                                          Provider.of<MainGamesProvider>(
+                                                  context,
+                                                  listen: false)
+                                              .mainGameStatusCheckApiCall(
+                                                  context, gamedata?.gameId,
+                                                  gmName: gamedata?.gameName,
+                                                  closeTime:
+                                                      gamedata!.openTime);
+                                        }
+                                      },
+                                      child: Container(
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal: 10),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 15, vertical: 20),
+                                        decoration: BoxDecoration(
+                                            color: clrWhite,
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                  color: primaryColor,
+                                                  blurRadius: 1)
+                                            ]),
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  "${gamedata?.gameName}",
+                                                  style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontSize: 18),
+                                                ),
+                                                Text(
+                                                  "${gamedata?.msg}",
+                                                  style:
+                                                      gamedata?.msgStatus == 2
+                                                          ? TextStyle(
+                                                              color: clrRed)
+                                                          : TextStyle(
+                                                              color:
+                                                                  clrGreen),
+                                                )
+                                              ],
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Flexible(
+                                                  flex: 3,
                                                   child: Column(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
                                                     children: [
-                                                      const SizedBox(
-                                                        height: 20,
-                                                      ),
-                                                      SizedBox(
-                                                        width: 100,
-                                                        child: Image.asset(
-                                                            "assets/demoimages/cancel.png"),
-                                                      ),
-                                                      const SizedBox(
-                                                        height: 10,
-                                                      ),
                                                       Text(
-                                                        "Bidding Is Closed For Today",
+                                                        "${gamedata?.openResult}${gamedata?.closeResult}",
                                                         style: TextStyle(
-                                                            color: clrRedDark),
-                                                      ),
-                                                      const SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      Text(
-                                                        "${data.result?[index].gameName}",
-                                                        style: const TextStyle(
                                                             fontWeight:
-                                                                FontWeight.w600,
-                                                            fontSize: 18),
+                                                                FontWeight
+                                                                    .w600,
+                                                            fontSize: 17,
+                                                            color:
+                                                                primaryDarkClr),
                                                       ),
-                                                      const SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      const SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      SizedBox(
-                                                        width: double.infinity,
-                                                        child:
-                                                            customElevatedButton(
-                                                                context, "OK",
-                                                                () {
-                                                          Navigator.pop(
-                                                              context);
-                                                        }),
-                                                      ),
-                                                      const SizedBox(
-                                                        height: 10,
-                                                      ),
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Column(
+                                                            children: [
+                                                              const Text(
+                                                                  "Open Bids :"),
+                                                              Text(
+                                                                  "${gamedata?.openTime}")
+                                                            ],
+                                                          ),
+                                                          Column(
+                                                            children: [
+                                                              const Text(
+                                                                  "Close Bids :"),
+                                                              Text(
+                                                                  "${gamedata?.closeTime}")
+                                                            ],
+                                                          )
+                                                        ],
+                                                      )
                                                     ],
                                                   ),
                                                 ),
-                                              );
-                                            });
-                                      } else {
-                                        Provider.of<MainGamesProvider>(context,
-                                                listen: false)
-                                            .mainGameStatusCheckApiCall(
-                                                context, gamedata?.gameId,
-                                                gmName: gamedata?.gameName,closeTime: gamedata!.openTime);
-                                      }
-                                    },
-                                    child: Container(
-                                      margin: const EdgeInsets.symmetric(
-                                          horizontal: 10),
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 15, vertical: 20),
-                                      decoration: BoxDecoration(
-                                          color: clrWhite,
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                          boxShadow: [
-                                            BoxShadow(
-                                                color: primaryColor,
-                                                blurRadius: 1)
-                                          ]),
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                "${gamedata?.gameName}",
-                                                style: const TextStyle(
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 18),
-                                              ),
-                                              Text(
-                                                "${gamedata?.msg}",
-                                                style: gamedata?.msgStatus == 2
-                                                    ? TextStyle(color: clrRed)
-                                                    : TextStyle(
-                                                        color: clrGreen),
-                                              )
-                                            ],
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Flexible(
-                                                flex: 3,
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      "${gamedata?.openResult}${gamedata?.closeResult}",
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                          fontSize: 17,
-                                                          color:
-                                                              primaryDarkClr),
-                                                    ),
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Column(
-                                                          children: [
-                                                            const Text(
-                                                                "Open Bids :"),
-                                                            Text(
-                                                                "${gamedata?.openTime}")
-                                                          ],
-                                                        ),
-                                                        Column(
-                                                          children: [
-                                                            const Text(
-                                                                "Close Bids :"),
-                                                            Text(
-                                                                "${gamedata?.closeTime}")
-                                                          ],
-                                                        )
-                                                      ],
-                                                    )
-                                                  ],
-                                                ),
-                                              ),
-                                              Flexible(
-                                                flex: 2,
-                                                child: Column(
-                                                  // crossAxisAlignment: CrossAxisAlignment.center,
-                                                  children: [
-                                                    SizedBox(
-                                                        width: 40,
-                                                        child: Image.asset(
-                                                          "assets/demoimages/play.png",
-                                                          color: clrBlackLight,
-                                                        )),
-                                                    const Text(
-                                                      "Play Now",
-                                                    )
-                                                  ],
-                                                ),
-                                              )
-                                            ],
-                                          )
-                                        ],
+                                                Flexible(
+                                                  flex: 2,
+                                                  child: Column(
+                                                    // crossAxisAlignment: CrossAxisAlignment.center,
+                                                    children: [
+                                                      SizedBox(
+                                                          width: 40,
+                                                          child: Image.asset(
+                                                            "assets/demoimages/play.png",
+                                                            color:
+                                                                clrBlackLight,
+                                                          )),
+                                                      const Text(
+                                                        "Play Now",
+                                                      )
+                                                    ],
+                                                  ),
+                                                )
+                                              ],
+                                            )
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                );
-                              }),
+                                  );
+                                }),
+                  ),
                 )
               ],
             );

@@ -24,6 +24,7 @@ class DrawerManueUi extends StatefulWidget {
 }
 
 class _DrawerManueUiState extends State<DrawerManueUi> {
+  final GlobalKey formGlobalKey=GlobalKey<FormState>();
   List<Map>? sidebarManues;
   @override
   void initState() {
@@ -83,7 +84,7 @@ class _DrawerManueUiState extends State<DrawerManueUi> {
         "image": "assets/images/Chat.png",
         "title": "Support",
         "ontap": () {
-          alertCustomerSupport(context);
+          alertCustomerSupport(context,formGlobalKey);
           // Navigator.push(context, CupertinoPageRoute(builder: (context) {
           //   return NavigationUi(widgetIndex: 4);
           // }));

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "885297648913",
+    "project_id": "newearngame-notification",
+    "storage_bucket": "newearngame-notification.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:885297648913:android:bda88b6faaaf59f3fda8b0",
+        "android_client_info": {
+          "package_name": "com.example.earninggame"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzsObytd4mAbyaOHoP0r9rP3eIvVBm_5o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

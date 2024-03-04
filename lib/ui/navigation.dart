@@ -17,6 +17,7 @@ class NavigationUi extends StatefulWidget {
 }
 
 class _NavigationUiState extends State<NavigationUi> {
+  final GlobalKey formGlobalKey=GlobalKey<FormState>();
   late int currentIndex;
   @override
   void initState() {
@@ -118,7 +119,7 @@ class _NavigationUiState extends State<NavigationUi> {
             currentIndex: currentIndex,
             onTap: (value) {
               if (value == 4) {
-                alertCustomerSupport(context);
+                alertCustomerSupport(context,formGlobalKey);
               } else if (value == 1) {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return const PassbookUi();

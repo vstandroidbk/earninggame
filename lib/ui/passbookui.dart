@@ -1,5 +1,4 @@
 import 'package:earninggame/providers/passbookprovider.dart';
-import 'package:earninggame/ui/components/circularprogressindicator.dart';
 import 'package:earninggame/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

@@ -1,5 +1,3 @@
-import 'dart:developer';
-import 'package:earninggame/providers/gameuiproviders/spdptpprovider.dart';
 import 'package:earninggame/utils/components.dart';
 import 'package:earninggame/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -600,7 +598,9 @@ class _MainGameCommonUiState extends State<MainGameCommonUi> {
                                           gameName: widget.gameName,
                                           totalbid: totalBids.length,
                                           bidamount: totalpoints,
+
                                           data: totalBids);
+
                                     } else {
                                       return popupWorkingMoneyReduction(context,
                                           () {

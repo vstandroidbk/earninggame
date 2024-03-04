@@ -1,16 +1,70 @@
 class HomeModel {
-  String? msg;
-  int? msgStatus;
+  String? appLink;
+  String? shareMsg;
+  int? withdrawStatus;
+  String? appMaintainenceMsg;
+  String? maintainenceMsgStatus;
+  String? userCurrentVersion;
+  String? userMinimumVersion;
+  String? popStatus;
+  String? message;
+  String? link;
+  String? linkBtnText;
+  String? actionType;
+  String? actionBtnText;
+  String? appDate;
+  String? walletAmt;
+  String? bettingStatus;
+  String? transferPointStatus;
+  String? accountBlockStatus;
   List<Result>? result;
   String? mobileNo;
+  String? msg;
   bool? status;
 
   HomeModel(
-      {this.msg, this.msgStatus, this.result, this.mobileNo, this.status});
+      {this.appLink,
+        this.shareMsg,
+        this.withdrawStatus,
+        this.appMaintainenceMsg,
+        this.maintainenceMsgStatus,
+        this.userCurrentVersion,
+        this.userMinimumVersion,
+        this.popStatus,
+        this.message,
+        this.link,
+        this.linkBtnText,
+        this.actionType,
+        this.actionBtnText,
+        this.appDate,
+        this.walletAmt,
+        this.bettingStatus,
+        this.transferPointStatus,
+        this.accountBlockStatus,
+        this.result,
+        this.mobileNo,
+        this.msg,
+        this.status});
 
   HomeModel.fromJson(Map<String, dynamic> json) {
-    msg = json['msg'];
-    msgStatus = json['msg_status'];
+    appLink = json['app_link'];
+    shareMsg = json['share_msg'];
+    withdrawStatus = json['withdraw_status'];
+    appMaintainenceMsg = json['app_maintainence_msg'];
+    maintainenceMsgStatus = json['maintainence_msg_status'];
+    userCurrentVersion = json['user_current_version'];
+    userMinimumVersion = json['user_minimum_version'];
+    popStatus = json['pop_status'];
+    message = json['message'];
+    link = json['link'];
+    linkBtnText = json['link_btn_text'];
+    actionType = json['action_type'];
+    actionBtnText = json['action_btn_text'];
+    appDate = json['app_date'];
+    walletAmt = json['wallet_amt'];
+    bettingStatus = json['betting_status'];
+    transferPointStatus = json['transfer_point_status'];
+    accountBlockStatus = json['account_block_status'];
     if (json['result'] != null) {
       result = <Result>[];
       json['result'].forEach((v) {
@@ -18,17 +72,35 @@ class HomeModel {
       });
     }
     mobileNo = json['mobile_no'];
+    msg = json['msg'];
     status = json['status'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['msg'] = msg;
-    data['msg_status'] = msgStatus;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['app_link'] = appLink;
+    data['share_msg'] = shareMsg;
+    data['withdraw_status'] = withdrawStatus;
+    data['app_maintainence_msg'] = appMaintainenceMsg;
+    data['maintainence_msg_status'] = maintainenceMsgStatus;
+    data['user_current_version'] = userCurrentVersion;
+    data['user_minimum_version'] = userMinimumVersion;
+    data['pop_status'] = popStatus;
+    data['message'] = message;
+    data['link'] = link;
+    data['link_btn_text'] = linkBtnText;
+    data['action_type'] = actionType;
+    data['action_btn_text'] = actionBtnText;
+    data['app_date'] = appDate;
+    data['wallet_amt'] = walletAmt;
+    data['betting_status'] = bettingStatus;
+    data['transfer_point_status'] = transferPointStatus;
+    data['account_block_status'] = accountBlockStatus;
     if (result != null) {
       data['result'] = result!.map((v) => v.toJson()).toList();
     }
     data['mobile_no'] = mobileNo;
+    data['msg'] = msg;
     data['status'] = status;
     return data;
   }
@@ -81,7 +153,7 @@ class Result {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
+    final Map<String, dynamic> data = new Map<String, dynamic>();
     data['game_id'] = gameId;
     data['game_name'] = gameName;
     data['game_name_hindi'] = gameNameHindi;

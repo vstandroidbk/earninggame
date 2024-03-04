@@ -46,6 +46,7 @@ AppBar appBarComman(titlewidget) {
 TextFormField customInputField(controller, keybordType,
     {maxlength, textalign, hintText, prefixIcon,onedtingConmplete,focus,onchanged,suffixicon,obscureText}) {
   return TextFormField(
+
     obscureText:obscureText ?? false,
     onChanged:onchanged ,
     onEditingComplete:onedtingConmplete ,
@@ -55,6 +56,12 @@ TextFormField customInputField(controller, keybordType,
     inputFormatters: keybordType == TextInputType.number
         ? [FilteringTextInputFormatter.digitsOnly]
         : null,
+    validator: (value) {
+      if (value == null || value.isEmpty) {
+        return 'This field is required.';
+      }
+      return null;
+    },
     controller: controller,
     keyboardType: keybordType,
     decoration: InputDecoration(
@@ -145,10 +152,10 @@ customPinCodeTextfield(context,{required controller,required onComplete}){
 }
 
 TextFormField customInputFieldPin(controller, keybordType, context,
-    {maxlength, textalign, maxLines, hintText, horizontalpad, verticalpad,onedtingConmplete,focus}) {
+    {maxlength, textalign, maxLines, hintText, horizontalpad, verticalpad,onedtingConmplete,focus,formeter}) {
   return TextFormField(
 
-    inputFormatters: [ FilteringTextInputFormatter
+    inputFormatters:formeter !=null?null: [ FilteringTextInputFormatter
         .digitsOnly],
     focusNode: focus,
     onEditingComplete: onedtingConmplete,
@@ -159,6 +166,12 @@ TextFormField customInputFieldPin(controller, keybordType, context,
       FocusScope.of(context).nextFocus();
       }
 
+    },
+    validator: (value) {
+      if (value == null || value.isEmpty) {
+        return 'Please enter some texts';
+      }
+      return null;
     },
     maxLength: maxlength,
     controller: controller,
@@ -178,7 +191,7 @@ TextFormField customInputFieldPin(controller, keybordType, context,
   );
 }
 
-alertCustomerSupport(context) {
+alertCustomerSupport(context,formGlobalKey) {
   return showDialog(
       barrierDismissible: false,
       context: context,
@@ -191,7 +204,9 @@ alertCustomerSupport(context) {
           scrollable: true,
           content: SizedBox(
             width: double.maxFinite,
-            child: Column(
+            child:Form(
+              key: formGlobalKey,
+              child:  Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
@@ -237,8 +252,8 @@ alertCustomerSupport(context) {
                         height: 7,
                       ),
                       customInputFieldPin(
-                          issueController, TextInputType.emailAddress, context,
-                          maxLines: 5, maxlength: 2000, textalign: true),
+                          issueController, TextInputType.text, context,
+                          maxLines: 5, maxlength: 2000, textalign: true,formeter: false),
                       const SizedBox(
                         height: 15,
                       ),
@@ -261,9 +276,13 @@ alertCustomerSupport(context) {
                               width: double.infinity,
                               child: customElevatedButtonTop(
                                   context, const Text("Submit"), () {
-                                Navigator.pop(context);
-                                customSnackbar(
-                                    context, "Report Submitted Successfully.");
+                                    print("${formGlobalKey.currentState!.validate()} ======");
+                                    if(formGlobalKey.currentState!.validate()){
+                                      Navigator.pop(context);
+                                      customSnackbar(
+                                          context, "Report Submitted Successfully.");
+                                    }
+
                               }),
                             ),
                           ),
@@ -277,6 +296,7 @@ alertCustomerSupport(context) {
                 ),
               ],
             ),
+            )
           ),
         );
       });
